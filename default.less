@@ -1,0 +1,39 @@
+@arrows: url(img/arrow.png);
+
+.slider-Wrapper.default{
+	//SLIDER
+	&> div{
+		//NORMALIZE
+		img{
+			border: 0;
+		}
+		
+		//ARROWS
+		.slider-nav{
+			position: absolute;
+			width: 100%;
+			top: 50%;
+			margin-top: -26px;
+			
+			#left{
+				position: absolute;
+				width: 33px;
+				height: 52px;
+				background-image: @arrows;
+				left: 30px;
+				z-index: 100;
+				cursor: pointer;
+			}
+			#right{
+				position: absolute;
+				width: 33px;
+				height: 52px;
+				background-image: @arrows;
+				background-position-x: -33px;
+				right: 30px;
+				z-index: 100;
+				cursor: pointer;
+			}
+		}
+	}
+}
