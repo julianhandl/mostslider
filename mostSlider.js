@@ -6,6 +6,7 @@
         // GET THE OPTIONS
         var settings = $.extend({
             // SET DEFAULT
+            animation: "fade",
             aniSpeed: 1000
         }, options );
  
@@ -26,11 +27,28 @@
         slider.css({"position": "relative","width": "100%","height": "100%"});
         //STYLE THE SLIDES AND SET A ID/INDEX
         slider.children().each(function(index){
-	        $(this).css({"width":width,
+        	//DIFFERENT ANIMATIONS
+        	switch (settings.animation) { 
+        		//FADE
+	        	case 'fade': 
+	        		$(this).css({"width":width,
 	        			 "height":"auto",
 	        			 "overflow":"hidden",
 	        			 "position":"absolute",
+	        			 "z-index":0,
 	        			 "display":"none"}).attr("id",index+1);
+	        		break;
+	        		
+	        	//SLIDE-DOWN
+	        	case 'slidedown': 
+	        		$(this).css({"width":width,
+	        			 "height":"auto",
+	        			 "overflow":"hidden",
+	        			 "position":"absolute",
+	        			 "z-index":0,
+	        			 "display":"none"}).attr("id",index+1);
+	        		break;
+	        }
         });
         // SHOW THE FIRST ELEMENT
         slider.find('#' + current).css("display","block");
@@ -42,20 +60,47 @@
         slider.find("#right").click(function(e){
         	// START A QUEUE
 	        $(this).queue(function(){
-	        	// FADE OUT THE CURRENT SLIDE
-		        slider.find('#' + current).fadeOut(settings.aniSpeed);
-		        // IF SMALER THAN NUMBER OF CHILDREN, FADE TO NEXT ONE
-		        if(current<children_number){
-			        current += 1;
+	        	//DIFFERENT ANIMATIONS
+	        	switch (settings.animation) {
+	        		//FADE 
+	        		case 'fade': 
+			        	var last = current; 
+				        // IF SMALER THAN NUMBER OF CHILDREN, FADE TO NEXT ONE
+				        if(current<children_number){
+					        current += 1;
+				        }
+				        // IF HIGHER OR EQUAL TO NUMBER OF CHILDREN, SET CURRENT SLIDE TO FIRST ONE (LOOP)
+				        else{
+					        current = 1;
+				        }
+				        // FADE IN THE CURRENT SLIDE
+				        slider.find('#' + current).css("z-index",5).fadeIn(settings.aniSpeed,function(){
+				        	slider.find('#' + last).css({"z-index":0,"display":"none"});
+				        });
+				        // STOP/CLEAR THE QUEUE
+				        $(this).clearQueue();
+				        break;
+				        
+				    //SLIDE-DOWN
+				    case 'slidedown':
+				    	var last = current; 
+				        // IF SMALER THAN NUMBER OF CHILDREN, FADE TO NEXT ONE
+				        if(current<children_number){
+					        current += 1;
+				        }
+				        // IF HIGHER OR EQUAL TO NUMBER OF CHILDREN, SET CURRENT SLIDE TO FIRST ONE (LOOP)
+				        else{
+					        current = 1;
+				        }
+				        // SLIDE DOWN THE CURRENT SLIDE
+				        slider.find('#' + current).slideDown(settings.aniSpeed,function(){
+				        	//HIDE LAST SLIDE
+				        	slider.find('#' + last).hide()
+				        });
+				        // STOP/CLEAR THE QUEUE
+				        $(this).clearQueue();
+				        break;
 		        }
-		        // IF HIGHER OR EQUAL TO NUMBER OF CHILDREN, SET CURRENT SLIDE TO FIRST ONE (LOOP)
-		        else{
-			        current = 1;
-		        }
-		        // FADE IN THE NEXT SLIDE
-		        slider.find('#' + current).fadeIn(settings.aniSpeed);
-		        // STOP/CLEAR THE QUEUE
-		        $(this).clearQueue();
 	        });
         });
         
@@ -63,20 +108,47 @@
         slider.find("#left").click(function(e){
         	// START A QUEUE
 	        $(this).queue(function(){
-	        	// FADE OUT THE CURRENT SLIDE
-		        slider.find('#' + current).fadeOut(settings.aniSpeed);
-		        // IF FIRST SLIDE, THEN GO TO LAST SLIDE (LOOP)
-		        if(current==1){
-			        current = children_number;
+	        	//DIFFERENT ANIMATIONS
+	        	switch (settings.animation) {
+	        		//FADE 
+	        		case 'fade': 
+			        	var last = current; 
+				        // IF SMALER THAN NUMBER OF CHILDREN, FADE TO NEXT ONE
+				        if(current==1){
+					        current = children_number;
+				        }
+				        // IF HIGHER OR EQUAL TO NUMBER OF CHILDREN, SET CURRENT SLIDE TO FIRST ONE (LOOP)
+				        else{
+					        current -= 1;
+				        }
+				        // FADE IN THE CURRENT SLIDE
+				        slider.find('#' + current).css("z-index",5).fadeIn(settings.aniSpeed,function(){
+				        	slider.find('#' + last).css("z-index",0).hide();
+				        });
+				        // STOP/CLEAR THE QUEUE
+				        $(this).clearQueue();
+				        break;
+				    
+				    //SLIDE-DOWN
+				    case 'slidedown': 
+			        	var last = current; 
+				        // IF SMALER THAN NUMBER OF CHILDREN, FADE TO NEXT ONE
+				        if(current==1){
+					        current = children_number;
+				        }
+				        // IF HIGHER OR EQUAL TO NUMBER OF CHILDREN, SET CURRENT SLIDE TO FIRST ONE (LOOP)
+				        else{
+					        current -= 1;
+				        }
+				        // SLIDE DOWN THE CURRENT SLIDE
+				        slider.find('#' + current).slideDown(settings.aniSpeed,function(){
+				        	//HIDE LAST SLIDE
+				        	slider.find('#' + last).hide()
+				        });
+				        // STOP/CLEAR THE QUEUE
+				        $(this).clearQueue();
+				        break;
 		        }
-		        // IF NOT FIRST SLIDE, SET CURRENT SLIDE TO PREVIOUS ONE
-		        else{
-			        current -= 1;
-		        }
-		        // FADE IN THE NEXT SLIDE
-		        slider.find('#' + current).fadeIn(settings.aniSpeed);
-		        // STOP/CLEAR THE QUEUE
-		        $(this).clearQueue();
 	        });
         });
  
