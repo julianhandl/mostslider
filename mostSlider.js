@@ -7,10 +7,16 @@
         var settings = $.extend({
             // SET DEFAULT
             animation: "fade",
-            aniSpeed: 1000
+            aniSpeed: 1000,
+            autoPlay: true,
+            pauseTime: 3000
         }, options );
  
-        /*** VARIABLES ***/
+ 
+        /*********************/
+        /***** VARIABLES *****/
+        /*********************/
+        
         //CACHE THE SLIDER ELEMENT
         var slider = $(this);
         //CACHE THE SLIDERS WIDTH
@@ -21,8 +27,14 @@
         var children_number = children.length;
         //CURRENT SLIDE
         var current = 1;
+        //AUTOPLAY INTERVAL
+        var autoplay;
 
-        /*** CSS ***/
+
+        /***************/
+        /***** CSS *****/
+        /***************/
+        
         //LET THE SLIDER DIV FIT THE SLIDER-WRAPPER
         slider.css({"position": "relative","width": "100%","height": "100%"});
         //STYLE THE SLIDES AND SET A ID/INDEX
@@ -43,6 +55,11 @@
         // SHOW THE FIRST ELEMENT
         slider.find('#' + current).css("display","block");
         
+        
+        /*******************/
+        /***** INSERTS *****/
+        /*******************/
+        
         //INSERT BULLETS
         slider.append('<div id="bullets" />');
         for (var i=1;i<=children_number;i++)
@@ -55,137 +72,132 @@
         
         // INSERT ARROWS
         slider.prepend('<div id="slider-nav"><div id="left" /><div id="right" /></div>');
+        // HIDE/SHOW ARROWS
+        slider.mouseenter(function(){
+	        slider.find("#slider-nav").fadeIn(200);
+        });
+        slider.mouseleave(function(){
+	        slider.find("#slider-nav").fadeOut(200);
+        });
         
+        
+        /***********************/
+        /***** GO FUNCTION *****/
+        /***********************/
+        
+        // GO TO SLIDE
+        function goTo(index){
+			slider.queue(function(){
+				var last = current; 
+				// IF SMALER THAN NUMBER OF CHILDREN, FADE TO NEXT ONE
+				if((index <= children_number) && (index > 0) && (index != current)){
+					current = parseInt(index);
+					
+					// SET BULLETS
+					slider.find('#bullets > #' + last).removeClass("selected");
+					slider.find('#bullets > #' + current).addClass("selected");
+					// SET LAST SLIDE TO NORMAL Z INDEX
+					slider.find('> #' + last).css("z-index",0);
+					// GET CURRENT SLIDE IN FORGOUND AND MOVE
+					switch (settings.animation) {
+						//FADE
+						case 'fade':
+							slider.find('> #' + current).css("z-index",5).fadeIn(settings.aniSpeed,function(){
+								//HIDE LAST SLIDE
+							    slider.find('> #' + last).css("display","none");
+							});
+							break;
+							
+						//SLIDE DOWN
+						case 'slidedown':
+							slider.find('> #' + current).css("z-index",5).slideDown(settings.aniSpeed,function(){
+								//HIDE LAST SLIDE
+							    slider.find('> #' + last).css("display","none");
+							});
+							break;
+					}
+				}
+				
+				// STOP/CLEAR THE QUEUE
+				$(this).clearQueue();
+			});
+        }
         // GO RIGHT
-        slider.find("#right").click(function(e){
-        	// START A QUEUE
-	        $(this).queue(function(){
-	        	//DIFFERENT ANIMATIONS
-	        	switch (settings.animation) {
-	        		//FADE 
-	        		case 'fade': 
-			        	var last = current; 
-				        // IF SMALER THAN NUMBER OF CHILDREN, FADE TO NEXT ONE
-				        if(current<children_number){
-					        current += 1;
-				        }
-				        // IF HIGHER OR EQUAL TO NUMBER OF CHILDREN, SET CURRENT SLIDE TO FIRST ONE (LOOP)
-				        else{
-					        current = 1;
-				        }
-				        
-				        // MOVE RIGHT
-				        // SET BULLETS
-				        slider.find('#bullets > #' + last).removeClass("selected");
-				        slider.find('#bullets > #' + current).addClass("selected");
-				        // SET LAST SLIDE TO NORMAL Z INDEX
-				        slider.find('> #' + last).css("z-index",0);
-				        // GET CURRENT SLIDE IN FORGOUND AND SLIDE
-				        slider.find('> #' + current).css("z-index",5).fadeIn(settings.aniSpeed,function(){
-				        	//HIDE LAST SLIDE
-					        slider.find('> #' + last).css("display","none");
-				        });
-				        
-				        // STOP/CLEAR THE QUEUE
-				        $(this).clearQueue();
-				        break;
-				        
-				    //SLIDE-DOWN
-				    case 'slidedown':
-				    	var last = current; 
-				        // IF SMALER THAN NUMBER OF CHILDREN, FADE TO NEXT ONE
-				        if(current<children_number){
-					        current += 1;
-				        }
-				        // IF HIGHER OR EQUAL TO NUMBER OF CHILDREN, SET CURRENT SLIDE TO FIRST ONE (LOOP)
-				        else{
-					        current = 1;
-				        }
-				        
-				        // MOVE RIGHT
-				        // SET BULLETS
-				        slider.find('#bullets > #' + last).removeClass("selected");
-				        slider.find('#bullets > #' + current).addClass("selected");
-				        // SET LAST SLIDE TO NORMAL Z INDEX
-				        slider.find('> #' + last).css("z-index",0);
-				        // GET CURRENT SLIDE IN FORGOUND AND SLIDE
-				        slider.find('> #' + current).css("z-index",5).slideDown(settings.aniSpeed,function(){
-				        	//HIDE LAST SLIDE
-				        	slider.find('> #' + last).css("display","none");
-				        });
-				        
-				        // STOP/CLEAR THE QUEUE
-				        $(this).clearQueue();
-				        break;
-		        }
-	        });
+        function goRight(){
+	        var next;
+        	// IF SMALLER THAN NUMBER OF CHILDREN, SET NEXT SLIDE TO +1
+        	if(current<children_number){
+		        next = current+1;
+	        }
+	        // IF HIGHER OR EQUAL TO NUMBER OF CHILDREN, SET NEXT SLIDE TO FIRST ONE (LOOP)
+	        else{
+		        next = 1;
+	        }
+	        
+	        // GO TO NEXT SLIDE
+	        goTo(next);
+        }
+        // GO LEFT
+        function goLeft(){
+	        var next;
+        	// IF CURRENT SLIDE IS 1 SET NEXT SLIDE TO LAST SLIDE (LOOP)
+        	if(current<=1){
+		        next = children_number;
+	        }
+	        // IF BIGGER THAN 1, SET NEXT SLIDE TO PREVIOUS One
+	        else{
+		        next = current-1;
+	        }
+	        
+	        // GO TO NEXT SLIDE
+	        goTo(next);
+        }
+        
+        /**********************/
+        /***** NAVIGATION *****/
+        /**********************/
+        
+        slider.find("#right").click(function(){
+	       	goRight();
+	       	// RESTART AUTOPLAY
+	       	if(settings.autoPlay == true){
+		        clearInterval(autoplay);
+		        startAutoplay();
+	        }
         });
         
         // GO LEFT
-        slider.find("#left").click(function(e){
-        	// START A QUEUE
-	        $(this).queue(function(){
-	        	//DIFFERENT ANIMATIONS
-	        	switch (settings.animation) {
-	        		//FADE 
-	        		case 'fade': 
-			        	var last = current; 
-				        // IF SMALER THAN NUMBER OF CHILDREN, FADE TO NEXT ONE
-				        if(current==1){
-					        current = children_number;
-				        }
-				        // IF HIGHER OR EQUAL TO NUMBER OF CHILDREN, SET CURRENT SLIDE TO FIRST ONE (LOOP)
-				        else{
-					        current -= 1;
-				        }
-				        
-				        // MOVE LEFT
-				        // SET BULLETS
-				        slider.find('#bullets > #' + last).removeClass("selected");
-				        slider.find('#bullets > #' + current).addClass("selected");
-				        // SET LAST SLIDE TO NORMAL Z INDEX
-				        slider.find('> #' + last).css("z-index",0);
-				        // GET CURRENT SLIDE IN FORGOUND AND FADE
-				        slider.find('> #' + current).css("z-index",5).fadeIn(settings.aniSpeed,function(){
-				        	//HIDE LAST SLIDE
-					        slider.find('> #' + last).css("display","none");
-				        });
-				        
-				        // STOP/CLEAR THE QUEUE
-				        $(this).clearQueue();
-				        break;
-				    
-				    //SLIDE-DOWN
-				    case 'slidedown': 
-			        	var last = current; 
-				        // IF SMALER THAN NUMBER OF CHILDREN, FADE TO NEXT ONE
-				        if(current==1){
-					        current = children_number;
-				        }
-				        // IF HIGHER OR EQUAL TO NUMBER OF CHILDREN, SET CURRENT SLIDE TO FIRST ONE (LOOP)
-				        else{
-					        current -= 1;
-				        }
-				        
-				        // MOVE LEFT
-				        // SET BULLETS
-				        slider.find('#bullets > #' + last).removeClass("selected");
-				        slider.find('#bullets > #' + current).addClass("selected");
-				        // SET LAST SLIDE TO NORMAL Z INDEX
-				        slider.find('> #' + last).css("z-index",0);
-				        // GET CURRENT SLIDE IN FORGOUND AND SLIDE
-				        slider.find('> #' + current).css("z-index",5).slideDown(settings.aniSpeed,function(){
-				        	//HIDE LAST SLIDE
-					        slider.find('> #' + last).css("display","none");
-				        });
-				        
-				        // STOP/CLEAR THE QUEUE
-				        $(this).clearQueue();
-				        break;
-		        }
-	        });
+        slider.find("#left").click(function(){
+	        goLeft();
+	        // RESTART AUTOPLAY
+	        if(settings.autoPlay == true){
+		        clearInterval(autoplay);
+		        startAutoplay();
+	        }
         });
- 
+        
+        // BULLET NAVIGATION
+        slider.find(".bullet").click(function(){
+	        goTo($(this).attr("id"));
+	        // RESTART AUTOPLAY
+	        if(settings.autoPlay == true){
+		        clearInterval(autoplay);
+		        startAutoplay();
+	        }
+        });
+        
+        /********************/
+        /***** AUTOPLAY *****/
+        /********************/
+        function startAutoplay(){
+	        autoplay=setInterval(function(){
+	        	goRight()
+	        },settings.pauseTime + settings.aniSpeed);
+        }
+        if(settings.autoPlay == true){
+	        startAutoplay();
+        }
+        
     };
  
 }( jQuery ));

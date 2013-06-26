@@ -22,15 +22,15 @@
 				margin-right: 5px;
 				float: left;
 				
-				background-color: #FFF;
 				cursor: pointer;
-				opacity: 0.8;
+				background-color: rgb(180,180,180);
+				background-color: rgba(255,255,255,0.6);
 				
 				&:hover{
-					opacity: 1;
+					background-color: #fff;
 				}
 				&.selected{
-					opacity: 1;
+					background-color: #fff;
 				}
 			}
 		}
@@ -40,6 +40,8 @@
 			width: 100%;
 			top: 50%;
 			margin-top: -26px;
+			display: none;
+			z-index: 10;
 			
 			#left{
 				position: absolute;
