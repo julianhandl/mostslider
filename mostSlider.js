@@ -117,6 +117,9 @@
 							break;
 					}
 				}
+				else{
+					console.log('ERROR in goTo Function: ' + index + ' is an unvalid index. (mostSlider)');
+				}
 				
 				// STOP/CLEAR THE QUEUE
 				$(this).clearQueue();
