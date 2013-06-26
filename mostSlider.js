@@ -29,18 +29,8 @@
         slider.children().each(function(index){
         	//DIFFERENT ANIMATIONS
         	switch (settings.animation) { 
-        		//FADE
-	        	case 'fade': 
-	        		$(this).css({"width":width,
-	        			 "height":"auto",
-	        			 "overflow":"hidden",
-	        			 "position":"absolute",
-	        			 "z-index":0,
-	        			 "display":"none"}).attr("id",index+1);
-	        		break;
-	        		
-	        	//SLIDE-DOWN
-	        	case 'slidedown': 
+	        	//FADE, SLIDE-DOWN
+	        	default: 
 	        		$(this).css({"width":width,
 	        			 "height":"auto",
 	        			 "overflow":"hidden",
@@ -53,8 +43,18 @@
         // SHOW THE FIRST ELEMENT
         slider.find('#' + current).css("display","block");
         
+        //INSERT BULLETS
+        slider.append('<div id="bullets" />');
+        for (var i=1;i<=children_number;i++)
+		{ 
+			slider.find("#bullets").append('<div class="bullet" id="' + i + '" />');
+			if(i==1){
+				$('#bullets > #1').addClass("selected");
+			}
+		}
+        
         // INSERT ARROWS
-        slider.prepend('<div class="slider-nav"><div id="left" /><div id="right" /></div>');
+        slider.prepend('<div id="slider-nav"><div id="left" /><div id="right" /></div>');
         
         // GO RIGHT
         slider.find("#right").click(function(e){
@@ -73,10 +73,19 @@
 				        else{
 					        current = 1;
 				        }
-				        // FADE IN THE CURRENT SLIDE
-				        slider.find('#' + current).css("z-index",5).fadeIn(settings.aniSpeed,function(){
-				        	slider.find('#' + last).css({"z-index":0,"display":"none"});
+				        
+				        // MOVE RIGHT
+				        // SET BULLETS
+				        slider.find('#bullets > #' + last).removeClass("selected");
+				        slider.find('#bullets > #' + current).addClass("selected");
+				        // SET LAST SLIDE TO NORMAL Z INDEX
+				        slider.find('> #' + last).css("z-index",0);
+				        // GET CURRENT SLIDE IN FORGOUND AND SLIDE
+				        slider.find('> #' + current).css("z-index",5).fadeIn(settings.aniSpeed,function(){
+				        	//HIDE LAST SLIDE
+					        slider.find('> #' + last).css("display","none");
 				        });
+				        
 				        // STOP/CLEAR THE QUEUE
 				        $(this).clearQueue();
 				        break;
@@ -92,11 +101,19 @@
 				        else{
 					        current = 1;
 				        }
-				        // SLIDE DOWN THE CURRENT SLIDE
-				        slider.find('#' + current).slideDown(settings.aniSpeed,function(){
+				        
+				        // MOVE RIGHT
+				        // SET BULLETS
+				        slider.find('#bullets > #' + last).removeClass("selected");
+				        slider.find('#bullets > #' + current).addClass("selected");
+				        // SET LAST SLIDE TO NORMAL Z INDEX
+				        slider.find('> #' + last).css("z-index",0);
+				        // GET CURRENT SLIDE IN FORGOUND AND SLIDE
+				        slider.find('> #' + current).css("z-index",5).slideDown(settings.aniSpeed,function(){
 				        	//HIDE LAST SLIDE
-				        	slider.find('#' + last).hide()
+				        	slider.find('> #' + last).css("display","none");
 				        });
+				        
 				        // STOP/CLEAR THE QUEUE
 				        $(this).clearQueue();
 				        break;
@@ -121,10 +138,19 @@
 				        else{
 					        current -= 1;
 				        }
-				        // FADE IN THE CURRENT SLIDE
-				        slider.find('#' + current).css("z-index",5).fadeIn(settings.aniSpeed,function(){
-				        	slider.find('#' + last).css("z-index",0).hide();
+				        
+				        // MOVE LEFT
+				        // SET BULLETS
+				        slider.find('#bullets > #' + last).removeClass("selected");
+				        slider.find('#bullets > #' + current).addClass("selected");
+				        // SET LAST SLIDE TO NORMAL Z INDEX
+				        slider.find('> #' + last).css("z-index",0);
+				        // GET CURRENT SLIDE IN FORGOUND AND FADE
+				        slider.find('> #' + current).css("z-index",5).fadeIn(settings.aniSpeed,function(){
+				        	//HIDE LAST SLIDE
+					        slider.find('> #' + last).css("display","none");
 				        });
+				        
 				        // STOP/CLEAR THE QUEUE
 				        $(this).clearQueue();
 				        break;
@@ -140,11 +166,19 @@
 				        else{
 					        current -= 1;
 				        }
-				        // SLIDE DOWN THE CURRENT SLIDE
-				        slider.find('#' + current).slideDown(settings.aniSpeed,function(){
+				        
+				        // MOVE LEFT
+				        // SET BULLETS
+				        slider.find('#bullets > #' + last).removeClass("selected");
+				        slider.find('#bullets > #' + current).addClass("selected");
+				        // SET LAST SLIDE TO NORMAL Z INDEX
+				        slider.find('> #' + last).css("z-index",0);
+				        // GET CURRENT SLIDE IN FORGOUND AND SLIDE
+				        slider.find('> #' + current).css("z-index",5).slideDown(settings.aniSpeed,function(){
 				        	//HIDE LAST SLIDE
-				        	slider.find('#' + last).hide()
+					        slider.find('> #' + last).css("display","none");
 				        });
+				        
 				        // STOP/CLEAR THE QUEUE
 				        $(this).clearQueue();
 				        break;

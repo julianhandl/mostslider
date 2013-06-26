@@ -8,8 +8,34 @@
 			border: 0;
 		}
 		
+		//BULLETS
+		#bullets{
+			height: 10px;
+			position: absolute;
+			bottom: 10px;
+			right: 10px;
+			z-index: 10;
+			
+			.bullet{
+				height: 10px;
+				width: 10px;
+				margin-right: 5px;
+				float: left;
+				
+				background-color: #FFF;
+				cursor: pointer;
+				opacity: 0.8;
+				
+				&:hover{
+					opacity: 1;
+				}
+				&.selected{
+					opacity: 1;
+				}
+			}
+		}
 		//ARROWS
-		.slider-nav{
+		#slider-nav{
 			position: absolute;
 			width: 100%;
 			top: 50%;
