@@ -43,12 +43,16 @@
         	switch (settings.animation) { 
 	        	//FADE, SLIDE-DOWN
 	        	default: 
-	        		$(this).css({"width":width,
+	        		$(this).css({"width":"100%",
 	        			 "height":"auto",
 	        			 "overflow":"hidden",
 	        			 "position":"absolute",
 	        			 "z-index":0,
 	        			 "display":"none"}).attr("id",index+1);
+	        			 
+	        		// OVERTHING THISSOLUTION!?!?!?!?!?
+	        		$(this).find("img").css({"width":"100%",
+	        			 "height":"auto"});
 	        		break;
 	        }
         });
