@@ -45,7 +45,6 @@
 	        	default: 
 	        		$(this).css({"width":"100%",
 	        			 "height":"auto",
-	        			 "overflow":"hidden",
 	        			 "position":"absolute",
 	        			 "z-index":0,
 	        			 "display":"none"}).attr("id",index+1);
@@ -55,6 +54,11 @@
 	        			 "height":"auto"});
 	        		break;
 	        }
+        });
+        // SET SLIDER HEIGHT
+        slider.css("height",slider.find("#1").height());
+        $(window).resize(function(){
+	        slider.css("height",slider.find("#1").height());
         });
         // SHOW THE FIRST ELEMENT
         slider.find('#' + current).css("display","block");

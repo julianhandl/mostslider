@@ -62,8 +62,7 @@
         
         //INSERT BULLETS
         slider.append('<div id="bullets" />');
-        for (var i=1;i<=children_number;i++)
-		{ 
+        for (var i=1;i<=children_number;i++){ 
 			slider.find("#bullets").append('<div class="bullet" id="' + i + '" />');
 			if(i==1){
 				$('#bullets > #1').addClass("selected");
@@ -126,7 +125,7 @@
 			});
         }
         // GO RIGHT
-        function goRight(){
+        function next(){
 	        var next;
         	// IF SMALLER THAN NUMBER OF CHILDREN, SET NEXT SLIDE TO +1
         	if(current<children_number){
@@ -141,7 +140,7 @@
 	        goTo(next);
         }
         // GO LEFT
-        function goLeft(){
+        function prev(){
 	        var next;
         	// IF CURRENT SLIDE IS 1 SET NEXT SLIDE TO LAST SLIDE (LOOP)
         	if(current<=1){
@@ -163,7 +162,7 @@
         
         // GO RIGHT
         slider.find("#right").click(function(){
-	       	goRight();
+	       	next();
 	       	// RESTART AUTOPLAY
 	       	if(settings.autoPlay == true){
 		        clearInterval(autoplay);
@@ -173,7 +172,7 @@
         
         // GO LEFT
         slider.find("#left").click(function(){
-	        goLeft();
+	        prev();
 	        // RESTART AUTOPLAY
 	        if(settings.autoPlay == true){
 		        clearInterval(autoplay);
