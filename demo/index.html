@@ -27,7 +27,11 @@
         
         <div class="slider-Wrapper default">
 	        <div id="slider">
-		        <a href="http://www.flickr.com/photos/92833011@N00/2166105529/"><img src="slides/1.jpg" /></a>
+		        <div>
+		        	<a href="http://www.flickr.com/photos/92833011@N00/2166105529/"><img src="slides/1.jpg" /></a>
+		        	<!-- Animated Text -->
+		        	<h3 class="fade" style="position:absolute; top:0px;">Headline.</h3>
+		        </div>
 		        <a href="http://www.flickr.com/photos/joaoloureiro/491726079/"><img src="slides/2.jpg" /></a>
 		        <a href="http://www.flickr.com/photos/dawnashley/2418886560/"><img src="slides/3.jpg" /></a>
 		        <a href="http://www.flickr.com/photos/rudolfgetel/3513187252/"><img src="slides/4.jpg" /></a>
@@ -37,12 +41,20 @@
         <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
         <script src="js/mostSlider.js" type="text/javascript"></script>
         <script>
-		        $("#slider").mostSlider({
-		        	animation: "slidedown", //fade, slidedown
+        	$(document).ready(function(){
+	        	var slider = $("#slider").mostSlider({
+		        	animation: "fade", //fade, slidedown
 		        	aniSpeed: 1000, //speed of animation
 		        	autoPlay: false, //set autoplay
-		        	pauseTime: 3000 //autoplay pause time
+		        	pauseTime: 3000, //autoplay pause time
+		        	hideArrows: true //hide or show arrows
 		        });
+		        
+		        // AVALABLE FUNCTIONS
+		        //slider.goTo(index); - Index starts at 1
+		        //slider.next();
+		        //slider.prev();
+        	});
         </script>
     </body>
 </html>

@@ -9,7 +9,8 @@
             animation: "fade",
             aniSpeed: 1000,
             autoPlay: true,
-            pauseTime: 3000
+            pauseTime: 3000,
+            hideArrows: true
         }, options );
  
  
@@ -18,7 +19,7 @@
         /*********************/
         
         //CACHE THE SLIDER ELEMENT
-        var slider = $(this);
+        var slider = this;
         //CACHE THE SLIDERS WIDTH
         var width = slider.width();
         //CACHE THE SLIDERs CHILDREN/SLIDES
@@ -60,8 +61,14 @@
         $(window).resize(function(){
 	        slider.css("height",slider.find("#1").height());
         });
-        // SHOW THE FIRST ELEMENT
-        slider.find('#' + current).css("display","block");
+        
+        //STYLE THE INNER EFFECT ELEMENTS
+        slider.find(".middle").each(function(){
+	        $(this).css({"position": "absolute","top": "50%","margin": "auto","margin-top": $(this).height()/2*(-1)});
+        });
+        slider.find(".fade").each(function(){
+	        $(this).css("display","none");
+        });
         
         
         /*******************/
@@ -70,8 +77,7 @@
         
         //INSERT BULLETS
         slider.append('<div id="bullets" />');
-        for (var i=1;i<=children_number;i++)
-		{ 
+        for (var i=1;i<=children_number;i++){ 
 			slider.find("#bullets").append('<div class="bullet" id="' + i + '" />');
 			if(i==1){
 				$('#bullets > #1').addClass("selected");
@@ -81,25 +87,29 @@
         // INSERT ARROWS
         slider.prepend('<div id="slider-nav"><div id="left" /><div id="right" /></div>');
         // HIDE/SHOW ARROWS
-        slider.mouseenter(function(){
-	        slider.find("#slider-nav").fadeIn(200);
-        });
-        slider.mouseleave(function(){
-	        slider.find("#slider-nav").fadeOut(200);
-        });
+        if(settings.hideArrows == true){
+        	slider.find("#slider-nav").css("display","none");
+	        slider.mouseenter(function(){
+	        	slider.find("#slider-nav").fadeIn(200);
+	        });
+	        slider.mouseleave(function(){
+		        slider.find("#slider-nav").fadeOut(200);
+	        });
+        }
         
         
-        /***********************/
-        /***** GO FUNCTION *****/
-        /***********************/
+        /********************/
+        /***** FUNCTION *****/
+        /********************/
         
         // GO TO SLIDE
-        function goTo(index){
+        this.goTo = function (index){
 			slider.queue(function(){
-				var last = current; 
+				var last = current;
+				index = parseInt(index);
 				// IF SMALER THAN NUMBER OF CHILDREN, FADE TO NEXT ONE
-				if((index <= children_number) && (index > 0) && (index != current)){
-					current = parseInt(index);
+				if((index <= children_number) && (index > 0) && (index != current) && (index != null) && (index != "")){
+					current = index;
 					
 					// SET BULLETS
 					slider.find('#bullets > #' + last).removeClass("selected");
@@ -113,6 +123,8 @@
 							slider.find('> #' + current).css("z-index",5).fadeIn(settings.aniSpeed,function(){
 								//HIDE LAST SLIDE
 							    slider.find('> #' + last).css("display","none");
+							    slider.showInner(current);
+							    slider.hideInner(last);
 							});
 							break;
 							
@@ -121,6 +133,8 @@
 							slider.find('> #' + current).css("z-index",5).slideDown(settings.aniSpeed,function(){
 								//HIDE LAST SLIDE
 							    slider.find('> #' + last).css("display","none");
+							    slider.showInner(current);
+							    slider.hideInner(last);
 							});
 							break;
 					}
@@ -131,10 +145,12 @@
 				
 				// STOP/CLEAR THE QUEUE
 				$(this).clearQueue();
+				
+				return slider;
 			});
         }
         // GO RIGHT
-        function goRight(){
+        this.next = function (){
 	        var next;
         	// IF SMALLER THAN NUMBER OF CHILDREN, SET NEXT SLIDE TO +1
         	if(current<children_number){
@@ -146,10 +162,12 @@
 	        }
 	        
 	        // GO TO NEXT SLIDE
-	        goTo(next);
+	        slider.goTo(next);
+	        
+	        return slider;
         }
         // GO LEFT
-        function goLeft(){
+        this.prev = function (){
 	        var next;
         	// IF CURRENT SLIDE IS 1 SET NEXT SLIDE TO LAST SLIDE (LOOP)
         	if(current<=1){
@@ -161,7 +179,20 @@
 	        }
 	        
 	        // GO TO NEXT SLIDE
-	        goTo(next);
+	        slider.goTo(next);
+	        
+	        return slider;
+        }
+        
+        // SHOW INNER ELEMENTS
+        this.showInner = function (slide){
+	        $('#' + slide + ' .fade').fadeIn();
+	        return slider;
+        }
+        // HIDE INNER ELEMENTS
+        this.hideInner = function (slide){
+	        $('#' + slide + ' .fade').css("display","none");
+	        return slider;
         }
         
         
@@ -171,7 +202,7 @@
         
         // GO RIGHT
         slider.find("#right").click(function(){
-	       	goRight();
+	       	slider.next();
 	       	// RESTART AUTOPLAY
 	       	if(settings.autoPlay == true){
 		        clearInterval(autoplay);
@@ -181,7 +212,7 @@
         
         // GO LEFT
         slider.find("#left").click(function(){
-	        goLeft();
+	        slider.prev();
 	        // RESTART AUTOPLAY
 	        if(settings.autoPlay == true){
 		        clearInterval(autoplay);
@@ -191,7 +222,7 @@
         
         // BULLET NAVIGATION
         slider.find(".bullet").click(function(){
-	        goTo($(this).attr("id"));
+	        slider.goTo($(this).attr("id"));
 	        // RESTART AUTOPLAY
 	        if(settings.autoPlay == true){
 		        clearInterval(autoplay);
@@ -206,13 +237,25 @@
         
         function startAutoplay(){
 	        autoplay=setInterval(function(){
-	        	goRight()
+	        	slider.next()
 	        },settings.pauseTime + settings.aniSpeed);
         }
         if(settings.autoPlay == true){
 	        startAutoplay();
         }
         
+        
+        /***********************/
+        /***** PREPERATION *****/
+        /***********************/
+        
+        // SHOW THE FIRST ELEMENT
+        slider.find('#' + current).css("display","block");
+        slider.showInner(current);
+        
+        
+        // RETURN
+        return slider;
     };
  
 }( jQuery ));
