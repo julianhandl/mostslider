@@ -9,7 +9,8 @@
             animation: "fade",
             aniSpeed: 1000,
             autoPlay: true,
-            pauseTime: 3000
+            pauseTime: 3000,
+            hideArrows: true
         }, options );
  
  
@@ -18,7 +19,7 @@
         /*********************/
         
         //CACHE THE SLIDER ELEMENT
-        var slider = $(this);
+        var slider = this;
         //CACHE THE SLIDERS WIDTH
         var width = slider.width();
         //CACHE THE SLIDERs CHILDREN/SLIDES
@@ -43,17 +44,37 @@
         	switch (settings.animation) { 
 	        	//FADE, SLIDE-DOWN
 	        	default: 
-	        		$(this).css({"width":width,
+	        		$(this).css({"width":"100%",
 	        			 "height":"auto",
-	        			 "overflow":"hidden",
 	        			 "position":"absolute",
 	        			 "z-index":0,
 	        			 "display":"none"}).attr("id",index+1);
+	        			 
+	        		// OVERTHING THISSOLUTION!?!?!?!?!?
+	        		$(this).find("img").css({"width":"100%",
+	        			 "height":"auto"});
 	        		break;
 	        }
         });
-        // SHOW THE FIRST ELEMENT
-        slider.find('#' + current).css("display","block");
+        // SET SLIDER HEIGHT
+        slider.css("height",slider.find("#1").height());
+        $(window).resize(function(){
+	        slider.css("height",slider.find("#1").height());
+        });
+        
+        //STYLE THE INNER EFFECT ELEMENTS
+        slider.find(".middle").each(function(){
+	        $(this).css({"position": "absolute","top": "50%","margin": "auto","margin-top": $(this).height()/2*(-1)});
+        });
+        slider.find(".fade").each(function(){
+	        $(this).css("display","none");
+        });
+        slider.find(".from-left").each(function(){
+	        $(this).css("opacity",0);
+        });
+        slider.find(".from-right").each(function(){
+	        $(this).css("opacity",0);
+        });
         
         
         /*******************/
@@ -72,25 +93,29 @@
         // INSERT ARROWS
         slider.prepend('<div id="slider-nav"><div id="left" /><div id="right" /></div>');
         // HIDE/SHOW ARROWS
-        slider.mouseenter(function(){
-	        slider.find("#slider-nav").fadeIn(200);
-        });
-        slider.mouseleave(function(){
-	        slider.find("#slider-nav").fadeOut(200);
-        });
+        if(settings.hideArrows == true){
+        	slider.find("#slider-nav").css("display","none");
+	        slider.mouseenter(function(){
+	        	slider.find("#slider-nav").fadeIn(200);
+	        });
+	        slider.mouseleave(function(){
+		        slider.find("#slider-nav").fadeOut(200);
+	        });
+        }
         
         
-        /***********************/
-        /***** GO FUNCTION *****/
-        /***********************/
+        /********************/
+        /***** FUNCTION *****/
+        /********************/
         
         // GO TO SLIDE
-        function goTo(index){
+        this.goTo = function (index){
 			slider.queue(function(){
-				var last = current; 
+				var last = current;
+				index = parseInt(index);
 				// IF SMALER THAN NUMBER OF CHILDREN, FADE TO NEXT ONE
-				if((index <= children_number) && (index > 0) && (index != current)){
-					current = parseInt(index);
+				if((index <= children_number) && (index > 0) && (index != current) && (index != null) && (index != "")){
+					current = index;
 					
 					// SET BULLETS
 					slider.find('#bullets > #' + last).removeClass("selected");
@@ -104,6 +129,8 @@
 							slider.find('> #' + current).css("z-index",5).fadeIn(settings.aniSpeed,function(){
 								//HIDE LAST SLIDE
 							    slider.find('> #' + last).css("display","none");
+							    slider.showInner(current);
+							    slider.hideInner(last);
 							});
 							break;
 							
@@ -112,6 +139,8 @@
 							slider.find('> #' + current).css("z-index",5).slideDown(settings.aniSpeed,function(){
 								//HIDE LAST SLIDE
 							    slider.find('> #' + last).css("display","none");
+							    slider.showInner(current);
+							    slider.hideInner(last);
 							});
 							break;
 					}
@@ -122,10 +151,12 @@
 				
 				// STOP/CLEAR THE QUEUE
 				$(this).clearQueue();
+				
+				return slider;
 			});
         }
         // GO RIGHT
-        function next(){
+        this.next = function (){
 	        var next;
         	// IF SMALLER THAN NUMBER OF CHILDREN, SET NEXT SLIDE TO +1
         	if(current<children_number){
@@ -137,10 +168,12 @@
 	        }
 	        
 	        // GO TO NEXT SLIDE
-	        goTo(next);
+	        slider.goTo(next);
+	        
+	        return slider;
         }
         // GO LEFT
-        function prev(){
+        this.prev = function (){
 	        var next;
         	// IF CURRENT SLIDE IS 1 SET NEXT SLIDE TO LAST SLIDE (LOOP)
         	if(current<=1){
@@ -152,7 +185,43 @@
 	        }
 	        
 	        // GO TO NEXT SLIDE
-	        goTo(next);
+	        slider.goTo(next);
+	        
+	        return slider;
+        }
+        
+        // SHOW INNER ELEMENTS
+        this.showInner = function (slide){
+        	// FADE
+	        $('#' + slide + ' .fade').fadeIn();
+	        // from-Left
+	        $('#' + slide + ' .from-left').each(function(){
+	        	
+		        $(this).css({"margin-left":"-30px"});
+		        $(this).animate({
+			        "margin-left": "0px",
+			        "opacity": 1
+		        });
+	        });
+	        // from-Right
+	        $('#' + slide + ' .from-right').each(function(){
+	        	
+		        $(this).css({"margin-left":"30px"});
+		        $(this).animate({
+			        "margin-left": "0px",
+			        "opacity": 1
+		        });
+	        });
+	        
+	        return slider;
+        }
+        // HIDE INNER ELEMENTS
+        this.hideInner = function (slide){
+	        $('#' + slide + ' .fade').css("display","none");
+	        $('#' + slide + ' .from-left').css("opacity",0);
+	        $('#' + slide + ' .from-light').css("opacity",0);
+	        
+	        return slider;
         }
         
         
@@ -162,7 +231,7 @@
         
         // GO RIGHT
         slider.find("#right").click(function(){
-	       	next();
+	       	slider.next();
 	       	// RESTART AUTOPLAY
 	       	if(settings.autoPlay == true){
 		        clearInterval(autoplay);
@@ -172,7 +241,7 @@
         
         // GO LEFT
         slider.find("#left").click(function(){
-	        prev();
+	        slider.prev();
 	        // RESTART AUTOPLAY
 	        if(settings.autoPlay == true){
 		        clearInterval(autoplay);
@@ -182,7 +251,7 @@
         
         // BULLET NAVIGATION
         slider.find(".bullet").click(function(){
-	        goTo($(this).attr("id"));
+	        slider.goTo($(this).attr("id"));
 	        // RESTART AUTOPLAY
 	        if(settings.autoPlay == true){
 		        clearInterval(autoplay);
@@ -197,13 +266,25 @@
         
         function startAutoplay(){
 	        autoplay=setInterval(function(){
-	        	goRight()
+	        	slider.next()
 	        },settings.pauseTime + settings.aniSpeed);
         }
         if(settings.autoPlay == true){
 	        startAutoplay();
         }
         
+        
+        /***********************/
+        /***** PREPERATION *****/
+        /***********************/
+        
+        // SHOW THE FIRST ELEMENT
+        slider.find('#' + current).css("display","block");
+        slider.showInner(current);
+        
+        
+        // RETURN
+        return slider;
     };
  
 }( jQuery ));

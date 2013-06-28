@@ -69,6 +69,12 @@
         slider.find(".fade").each(function(){
 	        $(this).css("display","none");
         });
+        slider.find(".from-left").each(function(){
+	        $(this).css("opacity",0);
+        });
+        slider.find(".from-right").each(function(){
+	        $(this).css("opacity",0);
+        });
         
         
         /*******************/
@@ -186,12 +192,35 @@
         
         // SHOW INNER ELEMENTS
         this.showInner = function (slide){
+        	// FADE
 	        $('#' + slide + ' .fade').fadeIn();
+	        // from-Left
+	        $('#' + slide + ' .from-left').each(function(){
+	        	
+		        $(this).css({"margin-left":"-30px"});
+		        $(this).animate({
+			        "margin-left": "0px",
+			        "opacity": 1
+		        });
+	        });
+	        // from-Right
+	        $('#' + slide + ' .from-right').each(function(){
+	        	
+		        $(this).css({"margin-left":"30px"});
+		        $(this).animate({
+			        "margin-left": "0px",
+			        "opacity": 1
+		        });
+	        });
+	        
 	        return slider;
         }
         // HIDE INNER ELEMENTS
         this.hideInner = function (slide){
 	        $('#' + slide + ' .fade').css("display","none");
+	        $('#' + slide + ' .from-left').css("opacity",0);
+	        $('#' + slide + ' .from-light').css("opacity",0);
+	        
 	        return slider;
         }
         
