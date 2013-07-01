@@ -219,9 +219,9 @@
 	        // from-left
 	        $('#' + slide + ' .from-left').each(function(){
 	        	
-		        $(this).css({"margin-left":"-30px"});
+		        $(this).css({"margin-right":"30px"});
 		        $(this).animate({
-			        "margin-left": "0px",
+			        "margin-right": "0px",
 			        "opacity": 1
 		        });
 	        });
@@ -243,7 +243,7 @@
 	        $('#' + slide + ' .from-top').css("opacity",0);
 	        $('#' + slide + ' .from-bottom').css("opacity",0);
 	        $('#' + slide + ' .from-left').css("opacity",0);
-	        $('#' + slide + ' .from-light').css("opacity",0);
+	        $('#' + slide + ' .from-right').css("opacity",0);
 	        
 	        return slider;
         }

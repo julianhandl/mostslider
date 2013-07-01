@@ -63,11 +63,15 @@
         });
         
         //STYLE THE INNER EFFECT ELEMENTS
-        slider.find(".middle").each(function(){
-	        $(this).css({"position": "absolute","top": "50%","margin": "auto","margin-top": $(this).height()/2*(-1)});
-        });
+        
         slider.find(".fade").each(function(){
 	        $(this).css("display","none");
+        });
+        slider.find(".from-top").each(function(){
+	        $(this).css("opacity",0);
+        });
+        slider.find(".from-bottom").each(function(){
+	        $(this).css("opacity",0);
         });
         slider.find(".from-left").each(function(){
 	        $(this).css("opacity",0);
@@ -91,15 +95,15 @@
 		}
         
         // INSERT ARROWS
-        slider.prepend('<div id="slider-nav"><div id="left" /><div id="right" /></div>');
+        slider.prepend('<div id="left" class="slider-nav" /><div id="right" class="slider-nav" />');
         // HIDE/SHOW ARROWS
         if(settings.hideArrows == true){
-        	slider.find("#slider-nav").css("display","none");
+        	slider.find(".slider-nav").css("display","none");
 	        slider.mouseenter(function(){
-	        	slider.find("#slider-nav").fadeIn(200);
+	        	slider.find(".slider-nav").fadeIn(200);
 	        });
 	        slider.mouseleave(function(){
-		        slider.find("#slider-nav").fadeOut(200);
+		        slider.find(".slider-nav").fadeOut(200);
 	        });
         }
         
@@ -194,16 +198,34 @@
         this.showInner = function (slide){
         	// FADE
 	        $('#' + slide + ' .fade').fadeIn();
-	        // from-Left
-	        $('#' + slide + ' .from-left').each(function(){
+	        // from-top
+	        $('#' + slide + ' .from-top').each(function(){
 	        	
-		        $(this).css({"margin-left":"-30px"});
+		        $(this).css({"margin-top":"-20px"});
 		        $(this).animate({
-			        "margin-left": "0px",
+			        "margin-top": "0px",
 			        "opacity": 1
 		        });
 	        });
-	        // from-Right
+	        // from-bottom
+	        $('#' + slide + ' .from-bottom').each(function(){
+	        	
+		        $(this).css({"margin-top":"20px"});
+		        $(this).animate({
+			        "margin-top": "0px",
+			        "opacity": 1
+		        });
+	        });
+	        // from-left
+	        $('#' + slide + ' .from-left').each(function(){
+	        	
+		        $(this).css({"margin-right":"30px"});
+		        $(this).animate({
+			        "margin-right": "0px",
+			        "opacity": 1
+		        });
+	        });
+	        // from-right
 	        $('#' + slide + ' .from-right').each(function(){
 	        	
 		        $(this).css({"margin-left":"30px"});
@@ -218,8 +240,10 @@
         // HIDE INNER ELEMENTS
         this.hideInner = function (slide){
 	        $('#' + slide + ' .fade').css("display","none");
+	        $('#' + slide + ' .from-top').css("opacity",0);
+	        $('#' + slide + ' .from-bottom').css("opacity",0);
 	        $('#' + slide + ' .from-left').css("opacity",0);
-	        $('#' + slide + ' .from-light').css("opacity",0);
+	        $('#' + slide + ' .from-right').css("opacity",0);
 	        
 	        return slider;
         }
