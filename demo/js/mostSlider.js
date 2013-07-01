@@ -37,7 +37,7 @@
         /***************/
         
         //LET THE SLIDER DIV FIT THE SLIDER-WRAPPER
-        slider.css({"position": "relative","width": "100%","height": "100%"});
+        slider.css({"position": "relative","width": "100%","height": "100%","overflow": "hidden"});
         //STYLE THE SLIDES AND SET A ID/INDEX
         slider.children().each(function(index){
         	//DIFFERENT ANIMATIONS
@@ -147,6 +147,18 @@
 							    slider.hideInner(last);
 							});
 							break;
+							
+						//SLIDE UP
+						case 'slideup':
+							slider.find('> #' + current).css({"z-index":5,"display":"block"});
+							slider.find('> #' + last).css("z-index",10).slideUp(settings.aniSpeed,function(){
+								//HIDE LAST SLIDE
+							    slider.find('> #' + last).css({"z-index":0,"display":"none"});
+							    slider.showInner(current);
+							    slider.hideInner(last);
+							});
+							break;
+							
 					}
 				}
 				else{
