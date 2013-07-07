@@ -28,6 +28,8 @@
         var children_number = children.length;
         //CURRENT SLIDE
         var current = 1;
+        //SLIDE DIRECTION
+        var direction = "right";
         //AUTOPLAY INTERVAL
         var autoplay;
 
@@ -159,6 +161,46 @@
 							});
 							break;
 							
+						//SLIDE
+						case 'slide':
+							var current_slide = slider.find('> #' + current);
+							var last_slide = slider.find('> #' + last);
+							
+							// SLIDE DIRECTION
+							switch(direction){
+								//RIGHT
+								case "right":
+									current_slide.css({"margin-left":last_slide.width(),"display":"block"}).animate({
+										"margin-left": 0
+									},settings.aniSpeed);
+									last_slide.css("margin-left",0).animate({
+										"margin-left": last_slide.width()*(-1)
+									},settings.aniSpeed,function(){
+										//HIDE LAST SLIDE
+									    last_slide.css({"z-index":0,"display":"none"});
+									    slider.showInner(current);
+									    slider.hideInner(last);
+									});
+									break;
+									
+								//LEFT
+								case "left":
+									current_slide.css({"margin-left":last_slide.width()*(-1),"display":"block"}).animate({
+										"margin-left": 0
+									},settings.aniSpeed);
+									last_slide.css("margin-left",0).animate({
+										"margin-left": last_slide.width()
+									},settings.aniSpeed,function(){
+										//HIDE LAST SLIDE
+									    last_slide.css({"z-index":0,"display":"none"});
+									    slider.showInner(current);
+									    slider.hideInner(last);
+									});
+									break;
+							}
+							
+							break;
+							
 					}
 				}
 				else{
@@ -184,6 +226,7 @@
 	        }
 	        
 	        // GO TO NEXT SLIDE
+	        direction = "right";
 	        slider.goTo(next);
 	        
 	        return slider;
@@ -201,6 +244,7 @@
 	        }
 	        
 	        // GO TO NEXT SLIDE
+	        direction = "left";
 	        slider.goTo(next);
 	        
 	        return slider;
@@ -287,6 +331,13 @@
         
         // BULLET NAVIGATION
         slider.find(".bullet").click(function(){
+        	// DIRECTION
+        	if($(this).attr("id") > current){
+	        	direction = "right";
+        	}
+        	else{
+	        	direction = "left";
+        	}
 	        slider.goTo($(this).attr("id"));
 	        // RESTART AUTOPLAY
 	        if(settings.autoPlay == true){
