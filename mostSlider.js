@@ -10,6 +10,7 @@
             aniSpeed: 1000,
             autoPlay: true,
             pauseTime: 3000,
+            navigation: true,
             hideArrows: true
         }, options );
  
@@ -51,6 +52,14 @@
 	        			 "position":"absolute",
 	        			 "z-index":0,
 	        			 "display":"none"}).attr("id",index+1);
+	        		
+	        		//IFRAME (NOT FULLY WORKING)
+	        		if($(this).is("iframe")){
+		        		$(this).css({
+			        		"width": slider.find("#1").width(),
+			        		"height": slider.find("#1").height()
+		        		});
+	        		}
 	        			 
 	        		// OVERTHING THISSOLUTION!?!?!?!?!?
 	        		$(this).find("img").css({"width":"100%",
@@ -87,19 +96,21 @@
         /***** INSERTS *****/
         /*******************/
         
-        //INSERT BULLETS
-        slider.append('<div id="bullets" />');
-        for (var i=1;i<=children_number;i++){ 
+        // NAVIGATION
+        if(settings.navigation == true){
+	        //INSERT BULLETS
+	        slider.append('<div id="bullets" />');
+	        for (var i=1;i<=children_number;i++){ 
 			slider.find("#bullets").append('<div class="bullet" id="' + i + '" />');
 			if(i==1){
 				$('#bullets > #1').addClass("selected");
 			}
 		}
         
-        // INSERT ARROWS
-        slider.prepend('<div id="left" class="slider-nav" /><div id="right" class="slider-nav" />');
-        // HIDE/SHOW ARROWS
-        if(settings.hideArrows == true){
+	        // INSERT ARROWS
+	        slider.prepend('<div id="left" class="slider-nav" /><div id="right" class="slider-nav" />');
+	        // HIDE/SHOW ARROWS
+	        if(settings.hideArrows == true){
         	slider.find(".slider-nav").css("display","none");
 	        slider.mouseenter(function(){
 	        	slider.find(".slider-nav").fadeIn(200);
@@ -107,6 +118,7 @@
 	        slider.mouseleave(function(){
 		        slider.find(".slider-nav").fadeOut(200);
 	        });
+        }
         }
         
         
