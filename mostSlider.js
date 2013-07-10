@@ -40,7 +40,7 @@
         /***************/
         
         //LET THE SLIDER DIV FIT THE SLIDER-WRAPPER
-        slider.css({"position": "relative","width": "100%","height": "100%","overflow": "hidden"});
+        slider.css({"position": "relative","width": "100%","height": "100%","line-height": "0","overflow": "hidden"});
         //STYLE THE SLIDES AND SET A ID/INDEX
         slider.children().each(function(index){
         	//DIFFERENT ANIMATIONS
@@ -49,6 +49,7 @@
 	        	default: 
 	        		$(this).css({"width":"100%",
 	        			 "height":"auto",
+	        			 "line-height":"auto",
 	        			 "position":"absolute",
 	        			 "z-index":0,
 	        			 "display":"none"}).attr("id",index+1);
