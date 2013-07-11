@@ -9,7 +9,7 @@
         <title>mostSlider</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <link  rel="stylesheet" type="text/css" href="themes/dark/dark.css" />
+        <link  rel="stylesheet" type="text/css" href="themes/default/default.css" />
         
         <style>
         	body{
@@ -25,27 +25,27 @@
     </head>
     <body>
         
-        <div class="slider-Wrapper dark">
+        <div class="slider-Wrapper default">
 	        <div id="slider">
 		        <div>
 		        	<a href="http://www.flickr.com/photos/aigle_dore/7171671407/"><img src="slides/1.jpg" /></a>
 		        	<!-- Animated Text -->
-		        	<h3 class="from-top" style="position:absolute; top:20%; right:10%;">Foto by:<br />Moyan Brenn</h3>
+		        	<h3 class="content from-top" style="position:absolute; top:40%; right:10%;">Foto by:<br />Moyan Brenn</h3>
 		        </div>
 		        <div>
 		        	<a href="http://www.flickr.com/photos/joaoloureiro/491726079/"><img src="slides/2.jpg" /></a>
 		        	<!-- Animated Text -->
-		        	<h3 class="from-left" style="position:absolute; top:60%; right:10%;">Foto by:<br />João Loureiro</h3>
+		        	<h3 class="content from-left" style="position:absolute; top:60%; right:10%;">Foto by:<br />João Loureiro</h3>
 		        </div>
 		        <div>
 		        	<a href="http://www.flickr.com/photos/dawnashley/2418886560/"><img src="slides/3.jpg" /></a>
 		        	<!-- Animated Text -->
-		        	<h3 class="from-bottom" style="position:absolute; top:20%; right:10%;">Foto by:<br />Ashley Dawn</h3>
+		        	<h3 class="content from-bottom" style="position:absolute; top:20%; right:10%;">Foto by:<br />Ashley Dawn</h3>
 		        </div>
 		        <div>
 		        	<a href="http://www.flickr.com/photos/34547181@N00/5877517107/"><img src="slides/4.jpg" /></a>
 		        	<!-- Animated Text -->
-		        	<h3 class="from-right" style="position:absolute; top:60%; left:10%;">Foto by:<br />Philippe Put</h3>
+		        	<h3 class="content from-right" style="position:absolute; top:60%; left:10%;">Foto by:<br />Philippe Put</h3>
 		        </div>
 	        </div>
         </div>
@@ -55,12 +55,14 @@
         <script>
         	$(window).ready(function(){
 	        	var slider = $("#slider").mostSlider({
-		        	animation: "slide", //fade, slidedown, slideup, slide
-		        	aniSpeed: 1000, //speed of animation
-		        	autoPlay: false, //set autoplay
-		        	pauseTime: 3000, //autoplay pause time
-		        	navigation: true, //de/activate navigation
-		        	hideArrows: true //hide or show arrows
+		        	animation: "slide", //fade, slidedown, slideup, slide	// DEFAULT: FADE
+		        	aniSpeed: 1000, //speed of animation					// DEFAULT: 1000
+		        	autoPlay: false, //set autoplay							// DEFAULT: TRUE
+		        	pauseTime: 3000, //autoplay pause time					// DEFAULT: 3000
+		        	navigation: true, //de/activate navigation				// DEFAULT: TRUE
+		        	hideArrows: true, //hide or show arrows					// DEFAULT: TRUE
+		        	sbsContent: true, //Step by step content animation		// DEFAULT: FALSE
+		        	contentAniDelay: 500 //Content animation delay			// DEFAULT: 500
 		        });
 		        
 		        // AVALABLE FUNCTIONS
