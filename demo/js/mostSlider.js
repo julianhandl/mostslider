@@ -12,6 +12,7 @@
             pauseTime: 3000,
             navigation: true,
             hideArrows: true,
+            contentClass: "content",
             sbsContent: false,
 		    contentAniDelay: 500
         }, options );
@@ -63,9 +64,9 @@
 			        		"height": slider.find("#1").height()
 		        		});
 	        		}
-	        			 
+	        		
 	        		// OVERTHING THISSOLUTION!?!?!?!?!?
-	        		$(this).find("img").css({"width":"100%",
+	        		$(this).find("img.bg").css({"width":"100%",
 	        			 "height":"auto"});
 	        		break;
 	        }
@@ -269,12 +270,15 @@
         this.showInner = function (slide){
         	
         	var delay = 0;
+        	
+        	//SET DELAY IF SBSCONTENT IS TRUE
         	if(settings.sbsContent == true){
 	        	delay = settings.contentAniDelay;
         	}
+        	
         	var time = 0;
 
-			$('#' + slide + ' .content').each(function() {
+			$('#' + slide + ' .' + settings.contentClass).each(function() {
 			
 				var content_element = $(this);
 				
