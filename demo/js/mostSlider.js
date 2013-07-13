@@ -10,6 +10,7 @@
             aniSpeed: 1000,
             autoPlay: true,
             pauseTime: 3000,
+            thumbnails: false,
             navigation: true,
             hideArrows: true,
             contentClass: "content",
@@ -105,11 +106,16 @@
 	        //INSERT BULLETS
 	        slider.append('<div id="bullets" />');
 	        for (var i=1;i<=children_number;i++){ 
-			slider.find("#bullets").append('<div class="bullet" id="' + i + '" />');
-			if(i==1){
-				$('#bullets > #1').addClass("selected");
+	        	if(settings.thumbnails == true){
+		        	slider.find("#bullets").append('<div class="bullet" id="' + i + '"><img src="' + slider.find("> #" + i).attr('data-thumb') + '" /></div>');
+	        	}
+	        	else{
+		        	slider.find("#bullets").append('<div class="bullet" id="' + i + '" />');
+	        	}
+				if(i==1){
+					$('#bullets > #1').addClass("selected");
+				}
 			}
-		}
         
 	        // INSERT ARROWS
 	        slider.prepend('<div id="left" class="slider-nav" /><div id="right" class="slider-nav" />');
