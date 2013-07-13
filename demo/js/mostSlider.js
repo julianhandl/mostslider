@@ -44,7 +44,10 @@
         /***************/
         
         //LET THE SLIDER DIV FIT THE SLIDER-WRAPPER
-        slider.css({"position": "relative","width": "100%","height": "100%","line-height": "0","overflow": "hidden"});
+        slider.css({"position": "relative","width": "100%","height": "100%","line-height": "0"});
+        if(settings.animation == "slide"){
+	        slider.css("overflow","hidden");
+        }
         //STYLE THE SLIDES AND SET A ID/INDEX
         slider.children().each(function(index){
         	//DIFFERENT ANIMATIONS
