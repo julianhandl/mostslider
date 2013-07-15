@@ -37,6 +37,8 @@
         var direction = "right";
         //AUTOPLAY INTERVAL
         var autoplay;
+        //CURRENTLY SLIDING
+        var sliding = false;
 
 
         /***************/
@@ -145,103 +147,115 @@
         
         // GO TO SLIDE
         this.goTo = function (index){
-			slider.queue(function(){
-				var last = current;
-				index = parseInt(index);
-				// IF SMALER THAN NUMBER OF CHILDREN, FADE TO NEXT ONE
-				if((index <= children_number) && (index > 0) && (index != current) && (index != null) && (index != "")){
-					current = index;
-					
-					// SET BULLETS
-					slider.find('#bullets > #' + last).removeClass("selected");
-					slider.find('#bullets > #' + current).addClass("selected");
-					// SET LAST SLIDE TO NORMAL Z INDEX
-					slider.find('#slides #' + last).css("z-index",0);
-					// GET CURRENT SLIDE IN FORGOUND AND MOVE
-					switch (settings.animation) {
-						//FADE
-						case 'fade':
-							slider.find('#slides #' + current).css("z-index",5).fadeIn(settings.aniSpeed,function(){
-								//HIDE LAST SLIDE
-							    //slider.find('#slides #' + last).css("display","none");
-							    slider.showInner(current);
-							    slider.hideInner(last);
-							});
-							break;
-							
-						//SLIDE DOWN
-						case 'slidedown':
-							slider.find('#slides #' + current).css("z-index",5).slideDown(settings.aniSpeed,function(){
-								//HIDE LAST SLIDE
-							    slider.find('#slides #' + last).css("display","none");
-							    slider.showInner(current);
-							    slider.hideInner(last);
-							});
-							break;
-							
-						//SLIDE UP
-						case 'slideup':
-							slider.find('#slides #' + current).css({"z-index":5,"display":"block"});
-							slider.find('#slides #' + last).css("z-index",10).slideUp(settings.aniSpeed,function(){
-								//HIDE LAST SLIDE
-							    slider.find('#slides #' + last).css({"z-index":0,"display":"none"});
-							    slider.showInner(current);
-							    slider.hideInner(last);
-							});
-							break;
-							
-						//SLIDE
-						case 'slide':
-							var current_slide = slider.find('#slides #' + current);
-							var last_slide = slider.find('#slides #' + last);
-							
-							// SLIDE DIRECTION
-							switch(direction){
-								//RIGHT
-								case "right":
-									current_slide.css({"margin-left":last_slide.width(),"display":"block"}).animate({
-										"margin-left": 0
-									},settings.aniSpeed);
-									last_slide.css("margin-left",0).animate({
-										"margin-left": last_slide.width()*(-1)
-									},settings.aniSpeed,function(){
-										//HIDE LAST SLIDE
-									    last_slide.css({"z-index":0,"display":"none"});
-									    slider.showInner(current);
-									    slider.hideInner(last);
-									});
-									break;
-									
-								//LEFT
-								case "left":
-									current_slide.css({"margin-left":last_slide.width()*(-1),"display":"block"}).animate({
-										"margin-left": 0
-									},settings.aniSpeed);
-									last_slide.css("margin-left",0).animate({
-										"margin-left": last_slide.width()
-									},settings.aniSpeed,function(){
-										//HIDE LAST SLIDE
-									    last_slide.css({"z-index":0,"display":"none"});
-									    slider.showInner(current);
-									    slider.hideInner(last);
-									});
-									break;
-							}
-							
-							break;
-							
+        
+        	if(sliding == false){
+        		sliding = true;
+        
+				slider.queue(function(){
+				
+					var last = current;
+					index = parseInt(index);
+					// IF SMALER THAN NUMBER OF CHILDREN, FADE TO NEXT ONE
+					if((index <= children_number) && (index > 0) && (index != current) && (index != null) && (index != "")){
+						current = index;
+						
+						// SET BULLETS
+						slider.find('#bullets > #' + last).removeClass("selected");
+						slider.find('#bullets > #' + current).addClass("selected");
+						// SET LAST SLIDE TO NORMAL Z INDEX
+						slider.find('#slides #' + last).css("z-index",0);
+						// GET CURRENT SLIDE IN FORGOUND AND MOVE
+						switch (settings.animation) {
+							//FADE
+							case 'fade':
+								slider.find('#slides #' + current).css("z-index",5).fadeIn(settings.aniSpeed,function(){
+									//HIDE LAST SLIDE
+								    slider.find('#slides #' + last).css("display","none");
+								    slider.showInner(current);
+								    slider.hideInner(last);
+								    sliding = false;
+								});
+								break;
+								
+							//SLIDE DOWN
+							case 'slidedown':
+								slider.find('#slides #' + current).css("z-index",5).slideDown(settings.aniSpeed,function(){
+									//HIDE LAST SLIDE
+								    slider.find('#slides #' + last).css("display","none");
+								    slider.showInner(current);
+								    slider.hideInner(last);
+								    sliding = false;
+								});
+								break;
+								
+							//SLIDE UP
+							case 'slideup':
+								slider.find('#slides #' + current).css({"z-index":5,"display":"block"});
+								slider.find('#slides #' + last).css("z-index",10).slideUp(settings.aniSpeed,function(){
+									//HIDE LAST SLIDE
+								    slider.find('#slides #' + last).css({"z-index":0,"display":"none"});
+								    slider.showInner(current);
+								    slider.hideInner(last);
+								    sliding = false;
+								});
+								break;
+								
+							//SLIDE
+							case 'slide':
+								var current_slide = slider.find('#slides #' + current);
+								var last_slide = slider.find('#slides #' + last);
+								
+								// SLIDE DIRECTION
+								switch(direction){
+									//RIGHT
+									case "right":
+										current_slide.css({"margin-left":last_slide.width(),"display":"block"}).animate({
+											"margin-left": 0
+										},settings.aniSpeed);
+										last_slide.css("margin-left",0).animate({
+											"margin-left": last_slide.width()*(-1)
+										},settings.aniSpeed,function(){
+											//HIDE LAST SLIDE
+										    last_slide.css({"z-index":0,"display":"none"});
+										    slider.showInner(current);
+										    slider.hideInner(last);
+										    sliding = false;
+										});
+										break;
+										
+									//LEFT
+									case "left":
+										current_slide.css({"margin-left":last_slide.width()*(-1),"display":"block"}).animate({
+											"margin-left": 0
+										},settings.aniSpeed);
+										last_slide.css("margin-left",0).animate({
+											"margin-left": last_slide.width()
+										},settings.aniSpeed,function(){
+											//HIDE LAST SLIDE
+										    last_slide.css({"z-index":0,"display":"none"});
+										    slider.showInner(current);
+										    slider.hideInner(last);
+										    sliding = false;
+										});
+										break;
+								}
+								
+								break;
+								
+						}
 					}
-				}
-				else{
-					console.log('ERROR in goTo Function: ' + index + ' is an unvalid index. (mostSlider)');
-				}
+					else{
+						console.log('ERROR in goTo Function: ' + index + ' is an unvalid index. (mostSlider)');
+					}
 				
-				// STOP/CLEAR THE QUEUE
-				$(this).clearQueue();
+					// STOP/CLEAR THE QUEUE
+					$(this).clearQueue();
 				
-				return slider;
-			});
+					return slider;
+				});
+			}
         }
+        
         // GO RIGHT
         this.next = function (){
 	        var next;
