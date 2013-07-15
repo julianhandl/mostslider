@@ -9,7 +9,7 @@
         <title>mostSlider</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <link  rel="stylesheet" type="text/css" href="themes/default/default.css" />
+        <link  rel="stylesheet" type="text/css" href="themes/thumbnail/thumbnail.css" />
         
         <style>
         	body{
@@ -25,7 +25,7 @@
     </head>
     <body>
         
-        <div class="slider-Wrapper default">
+        <div class="slider-Wrapper thumbnail">
 	        <div id="slider">
 	        
 		        <div data-thumb="slides/thumbs/1.jpg">
@@ -60,11 +60,11 @@
         <script>
         	$(window).ready(function(){
 	        	var slider = $("#slider").mostSlider({
-		        	animation: "fade", //fade, slidedown, slideup, slide	// DEFAULT: "fade"
+		        	animation: "slide", //fade, slidedown, slideup, slide	// DEFAULT: "fade"
 		        	aniSpeed: 1000, //speed of animation					// DEFAULT: 1000
 		        	autoPlay: false, //set autoplay							// DEFAULT: TRUE
 		        	pauseTime: 3000, //autoplay pause time					// DEFAULT: 3000
-		        	thumbnails: false, //de/activate navigation				// DEFAULT: TRUE
+		        	thumbnails: true, //de/activate navigation				// DEFAULT: FALSE
 		        	navigation: true, //de/activate navigation				// DEFAULT: TRUE
 		        	hideArrows: true, //hide or show arrows					// DEFAULT: TRUE
 		        	contentClass: "content", //Animated Content's Class		// DEFAULT: "content"

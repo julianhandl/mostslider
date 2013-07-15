@@ -45,9 +45,6 @@
         
         //LET THE SLIDER DIV FIT THE SLIDER-WRAPPER
         slider.css({"position": "relative","width": "100%","height": "100%","line-height": "0"});
-        if(settings.animation == "slide"){
-	        slider.css("overflow","hidden");
-        }
         //STYLE THE SLIDES AND SET A ID/INDEX
         slider.children().each(function(index){
         	//DIFFERENT ANIMATIONS
@@ -75,6 +72,13 @@
 	        		break;
 	        }
         });
+        //SET WRAPER FOR SLIDE ANIMATION
+        if(settings.animation == "slide"){
+	        slider.wrapInner('<div id="slides" style="position:absolute;width:100%;height:100%;overflow:hidden;line-height:0;" />');
+        }
+        else{
+	        slider.wrapInner('<div id="slides" />');
+        }
         // SET SLIDER HEIGHT
         slider.css("height",slider.find("#1").height());
         $(window).resize(function(){
@@ -110,7 +114,7 @@
 	        slider.append('<div id="bullets" />');
 	        for (var i=1;i<=children_number;i++){ 
 	        	if(settings.thumbnails == true){
-		        	slider.find("#bullets").append('<div class="bullet" id="' + i + '"><img src="' + slider.find("> #" + i).attr('data-thumb') + '" /></div>');
+		        	slider.find("#bullets").append('<div class="bullet" id="' + i + '"><img src="' + slider.find("#slides #" + i).attr('data-thumb') + '" /></div>');
 	        	}
 	        	else{
 		        	slider.find("#bullets").append('<div class="bullet" id="' + i + '" />');
@@ -152,14 +156,14 @@
 					slider.find('#bullets > #' + last).removeClass("selected");
 					slider.find('#bullets > #' + current).addClass("selected");
 					// SET LAST SLIDE TO NORMAL Z INDEX
-					slider.find('> #' + last).css("z-index",0);
+					slider.find('#slides #' + last).css("z-index",0);
 					// GET CURRENT SLIDE IN FORGOUND AND MOVE
 					switch (settings.animation) {
 						//FADE
 						case 'fade':
-							slider.find('> #' + current).css("z-index",5).fadeIn(settings.aniSpeed,function(){
+							slider.find('#slides #' + current).css("z-index",5).fadeIn(settings.aniSpeed,function(){
 								//HIDE LAST SLIDE
-							    slider.find('> #' + last).css("display","none");
+							    slider.find('#slides #' + last).css("display","none");
 							    slider.showInner(current);
 							    slider.hideInner(last);
 							});
@@ -167,9 +171,9 @@
 							
 						//SLIDE DOWN
 						case 'slidedown':
-							slider.find('> #' + current).css("z-index",5).slideDown(settings.aniSpeed,function(){
+							slider.find('#slides #' + current).css("z-index",5).slideDown(settings.aniSpeed,function(){
 								//HIDE LAST SLIDE
-							    slider.find('> #' + last).css("display","none");
+							    slider.find('#slides #' + last).css("display","none");
 							    slider.showInner(current);
 							    slider.hideInner(last);
 							});
@@ -177,10 +181,10 @@
 							
 						//SLIDE UP
 						case 'slideup':
-							slider.find('> #' + current).css({"z-index":5,"display":"block"});
-							slider.find('> #' + last).css("z-index",10).slideUp(settings.aniSpeed,function(){
+							slider.find('#slides #' + current).css({"z-index":5,"display":"block"});
+							slider.find('#slides #' + last).css("z-index",10).slideUp(settings.aniSpeed,function(){
 								//HIDE LAST SLIDE
-							    slider.find('> #' + last).css({"z-index":0,"display":"none"});
+							    slider.find('#slides #' + last).css({"z-index":0,"display":"none"});
 							    slider.showInner(current);
 							    slider.hideInner(last);
 							});
@@ -188,8 +192,8 @@
 							
 						//SLIDE
 						case 'slide':
-							var current_slide = slider.find('> #' + current);
-							var last_slide = slider.find('> #' + last);
+							var current_slide = slider.find('#slides #' + current);
+							var last_slide = slider.find('#slides #' + last);
 							
 							// SLIDE DIRECTION
 							switch(direction){
