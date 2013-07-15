@@ -77,7 +77,7 @@
 	        slider.wrapInner('<div id="slides" style="position:absolute;width:100%;height:100%;overflow:hidden;line-height:0;" />');
         }
         else{
-	        slider.wrapInner('<div id="slides" />');
+	        slider.wrapInner('<div id="slides" style="line-height:0;" />');
         }
         // SET SLIDER HEIGHT
         slider.css("height",slider.find("#1").height());
@@ -163,7 +163,7 @@
 						case 'fade':
 							slider.find('#slides #' + current).css("z-index",5).fadeIn(settings.aniSpeed,function(){
 								//HIDE LAST SLIDE
-							    slider.find('#slides #' + last).css("display","none");
+							    //slider.find('#slides #' + last).css("display","none");
 							    slider.showInner(current);
 							    slider.hideInner(last);
 							});
