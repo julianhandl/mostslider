@@ -73,6 +73,12 @@
 	        			 "height":"auto"});
 	        		break;
 	        }
+	        
+	        /*SOCIAL LINKS
+	        if($(this).find("img.bg").length == 1){
+		        $(this).prepend('<a href="//pinterest.com/pin/create/button/?url='http%3A%2F%2Fmost.at'&media=http%3A%2F%2Fmost.at%2Fimg.jpg&description=most" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a>');
+	        } */
+	        
         });
         //SET WRAPER FOR SLIDE ANIMATION
         if(settings.animation == "slide"){
