@@ -45,8 +45,11 @@
         /***** CSS *****/
         /***************/
         
+        
+        
         //LET THE SLIDER DIV FIT THE SLIDER-WRAPPER
-        slider.css({"position": "relative","width": "100%","height": "100%","line-height": "0"});
+        slider.css({"position": "relative","width": "100%","line-height": "0"});
+        
         //STYLE THE SLIDES AND SET A ID/INDEX
         slider.children().each(function(index){
         	//DIFFERENT ANIMATIONS
@@ -87,14 +90,17 @@
         else{
 	        slider.wrapInner('<div id="slides" style="line-height:0;" />');
         }
+        
         // SET SLIDER HEIGHT
-        slider.css("height",slider.find("#1").height());
-        $(window).resize(function(){
+        // IF SET, DO NOTHING, IF NOT SET, SET TO FIRST CHILD
+        if(slider.height() == 0){
 	        slider.css("height",slider.find("#1").height());
-        });
+	        $(window).resize(function(){
+		        slider.css("height",slider.find("#1").height());
+	        });
+        }
         
         //STYLE THE INNER EFFECT ELEMENTS
-        
         slider.find(".fade").each(function(){
 	        $(this).css("display","none");
         });
@@ -255,7 +261,7 @@
 					}
 				
 					// STOP/CLEAR THE QUEUE
-					$(this).clearQueue();
+					slider.clearQueue();
 				
 					return slider;
 				});
