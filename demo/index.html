@@ -29,7 +29,7 @@
 	        <div id="slider">
 	        
 		        <div data-thumb="slides/thumbs/1.jpg">
-		        	<a href="http://www.flickr.com/photos/aigle_dore/7171671407/"><img src="slides/1.jpg" class="bg" /></a>
+		        	<a href="http://www.flickr.com/photos/aigle_dore/7171671407/"><img src="slides/1.jpg" class="bg pinterest" /></a>
 		        	<!-- Animated Text -->
 		        	<h3 class="content from-top" style="position:absolute; top:40%; right:10%;">Photo by:<br />Moyan Brenn</h3>
 		        </div>
@@ -60,16 +60,22 @@
         <script>
         	$(window).ready(function(){
 	        	var slider = $("#slider").mostSlider({
-		        	animation: "slide", //fade, slidedown, slideup, slide	// DEFAULT: "fade"
+		        	animation: "fade", //fade, slidedown, slideup, slide	// DEFAULT: "fade"
 		        	aniSpeed: 1000, //speed of animation					// DEFAULT: 1000
 		        	autoPlay: false, //set autoplay							// DEFAULT: TRUE
 		        	pauseTime: 3000, //autoplay pause time					// DEFAULT: 3000
 		        	thumbnails: false, //de/activate navigation				// DEFAULT: FALSE
 		        	navigation: true, //de/activate navigation				// DEFAULT: TRUE
 		        	hideArrows: true, //hide or show arrows					// DEFAULT: TRUE
+		        	transparancy: false, //Step by step content animation	// DEFAULT: FALSE
 		        	contentClass: "content", //Animated Content's Class		// DEFAULT: "content"
 		        	sbsContent: true, //Step by step content animation		// DEFAULT: FALSE
-		        	contentAniDelay: 500 //Content animation delay			// DEFAULT: 500
+		        	contentAniDelay: 500, //Content animation delay			// DEFAULT: 500
+		        	socialButtons: true, //Enables sharing buttons			// DEFAULT: FALSE
+		        	socialUrl: "http://mostslider.jurihandl.at", //Sets sharing url						// DEFAULT: ""
+				    facebook: false, //Enables facebook button				// DEFAULT: FALSE
+				    twitter: false, //Enables twitter button				// DEFAULT: FALSE
+				    pinterest: true //Enables pinterest button				// DEFAULT: FALSE
 		        });
 		        
 		        // AVALABLE FUNCTIONS

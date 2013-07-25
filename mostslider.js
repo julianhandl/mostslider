@@ -13,9 +13,15 @@
             thumbnails: false,
             navigation: true,
             hideArrows: true,
+            transparancy: false,
             contentClass: "content",
             sbsContent: false,
-		    contentAniDelay: 500
+		    contentAniDelay: 500,
+		    socialButtons: false,
+		    socialUrl: "",
+		    facebook: false,
+		    twitter: false,
+		    pinterest: false
         }, options );
  
  
@@ -63,6 +69,10 @@
 	        			 "z-index":0,
 	        			 "display":"none"}).attr("id",index+1);
 	        		
+	        		/*****************/
+	        		/* SPECIAL CASES */
+	        		/*****************/
+	        		
 	        		//IFRAME (NOT FULLY WORKING)
 	        		if($(this).is("iframe")){
 		        		$(this).css({
@@ -70,17 +80,41 @@
 			        		"height": slider.find("#1").height()
 		        		});
 	        		}
+	        		//SLIDE IS IMAGE
+	        		$(this).find("> img:only-child").css({
+	        			"width":"100%",
+	        			"height":"auto"
+		        	});
+		        	
+	        		//SLIDE IS IMAGE IN LINK
+	        		$(this).find("> a > img:only-child").css({
+	        			"width":"100%",
+	        			"height":"auto"
+		        	});
 	        		
 	        		// OVERTHING THISSOLUTION!?!?!?!?!?
-	        		$(this).find("img.bg").css({"width":"100%",
-	        			 "height":"auto"});
+	        		$(this).find("img.bg").css({
+	        			"width":"100%",
+	        			"height":"auto"
+	        		});
+	        		
+	        		/******************/
+	        		/* SOCIAL BUTTONS */
+	        		/******************/
+	        		
+	        		/*
+	        		if(settings.socialButtons == true && settings.pinterest == true && settings.socialUrl != "" && $(this).find(".pinterest").length>0){
+	        			var url = settings.socialUrl;
+	        			var src = $(this).find(".pinterest").attr('src');
+	        			var description = $(this).find(".pinterest").attr('alt');
+	        			alert(src);
+	        			url = url.replace(/:/g,'%3A').replace(/\//g,'%2F');
+	        			src = src.replace(/:/g,'%3A').replace(/\//g,'%2F');
+		        		$(this).prepend('<a href="//pinterest.com/pin/create/button/?url=' + url + '&media=' + src + '&description=' + description + '" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a>');
+	        		}*/
+	        		
 	        		break;
 	        }
-	        
-	        /*SOCIAL LINKS
-	        if($(this).find("img.bg").length == 1){
-		        $(this).prepend('<a href="//pinterest.com/pin/create/button/?url='http%3A%2F%2Fmost.at'&media=http%3A%2F%2Fmost.at%2Fimg.jpg&description=most" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a>');
-	        } */
 	        
         });
         //SET WRAPER FOR SLIDE ANIMATION
@@ -101,6 +135,9 @@
         }
         
         //STYLE THE INNER EFFECT ELEMENTS
+        slider.find(".center").each(function(){
+	        $(this).css("display:","inline-block");
+        });
         slider.find(".fade").each(function(){
 	        $(this).css("display","none");
         });
@@ -180,13 +217,25 @@
 						switch (settings.animation) {
 							//FADE
 							case 'fade':
-								slider.find('#slides #' + current).css("z-index",5).fadeIn(settings.aniSpeed,function(){
-									//HIDE LAST SLIDE
-								    slider.find('#slides #' + last).css("display","none");
-								    slider.showInner(current);
-								    slider.hideInner(last);
-								    sliding = false;
-								});
+								if(settings.transparancy == true){
+									slider.find('#slides #' + current).css("z-index",5).fadeIn(settings.aniSpeed);
+									slider.find('#slides #' + last).css("z-index",5).fadeOut(settings.aniSpeed,function(){
+										//HIDE LAST SLIDE
+									    
+									    slider.showInner(current);
+									    slider.hideInner(last);
+									    sliding = false;
+									});
+								}
+								else{
+									slider.find('#slides #' + current).css("z-index",5).fadeIn(settings.aniSpeed,function(){
+										//HIDE LAST SLIDE
+									    slider.find('#slides #' + last).css("display","none");
+									    slider.showInner(current);
+									    slider.hideInner(last);
+									    sliding = false;
+									});
+								}
 								break;
 								
 							//SLIDE DOWN
@@ -454,3 +503,11 @@
     };
  
 }( jQuery ));
+
+(function(d){
+  var f = d.getElementsByTagName('SCRIPT')[0], p = d.createElement('SCRIPT');
+  p.type = 'text/javascript';
+  p.async = true;
+  p.src = '//assets.pinterest.com/js/pinit.js';
+  f.parentNode.insertBefore(p, f);
+}(document));
