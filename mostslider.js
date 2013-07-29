@@ -98,21 +98,6 @@
 	        			"height":"auto"
 	        		});
 	        		
-	        		/******************/
-	        		/* SOCIAL BUTTONS */
-	        		/******************/
-	        		
-	        		/*
-	        		if(settings.socialButtons == true && settings.pinterest == true && settings.socialUrl != "" && $(this).find(".pinterest").length>0){
-	        			var url = settings.socialUrl;
-	        			var src = $(this).find(".pinterest").attr('src');
-	        			var description = $(this).find(".pinterest").attr('alt');
-	        			alert(src);
-	        			url = url.replace(/:/g,'%3A').replace(/\//g,'%2F');
-	        			src = src.replace(/:/g,'%3A').replace(/\//g,'%2F');
-		        		$(this).prepend('<a href="//pinterest.com/pin/create/button/?url=' + url + '&media=' + src + '&description=' + description + '" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a>');
-	        		}*/
-	        		
 	        		break;
 	        }
 	        
@@ -189,10 +174,27 @@
         }
         }
         
+		// SOCIAL BUTTONS
+		if(settings.socialButtons == true && settings.pinterest == true && settings.socialUrl != "" && $(this).find('#' + current + " .pinterest").length == 1){
+			// URL OF SITE
+			var url = settings.socialUrl.replace(/:/g,'%3A').replace(/\//g,'%2F');
+			// IMAGE OBJECT
+			var img = $(this).find('#' + current + " .pinterest");
+			// ABSOLUTE URL TO IMAGE
+			var src = img.get(0).src.replace(/:/g,'%3A').replace(/\//g,'%2F');
+			// IMAGE DESCRIPTION
+			var description = $(this).find('#' + current + " .pinterest").attr('alt');
+
+			$(this).prepend('<div id="social" />');
+			
+			// BILD LINK FOR PINTEREST
+    		$(this).find("#social").prepend('<a id="pinterest" href="//pinterest.com/pin/create/button/?url=' + url + '&media=' + src + '&description=' + description + '" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a>');
+		}
         
-        /********************/
-        /***** FUNCTION *****/
-        /********************/
+        
+        /***************************/
+        /***** PUBLIC FUNCTION *****/
+        /***************************/
         
         // GO TO SLIDE
         this.goTo = function (index){
@@ -430,6 +432,16 @@
 	        $('#' + slide + ' .from-right').css("opacity",0);
 	        
 	        return slider;
+        }
+        
+        
+        /****************************/
+        /***** PRIVATE FUNCTION *****/
+        /****************************/
+        
+        // SET SOCIAL BUTTONS
+        function setSocial(){
+	        
         }
         
         
