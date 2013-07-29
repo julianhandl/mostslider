@@ -175,21 +175,34 @@
         }
         
 		// SOCIAL BUTTONS
-		if(settings.socialButtons == true && settings.pinterest == true && settings.socialUrl != "" && $(this).find('#' + current + " .pinterest").length == 1){
-			// URL OF SITE
-			var url = settings.socialUrl.replace(/:/g,'%3A').replace(/\//g,'%2F');
-			// IMAGE OBJECT
-			var img = $(this).find('#' + current + " .pinterest");
-			// ABSOLUTE URL TO IMAGE
-			var src = img.get(0).src.replace(/:/g,'%3A').replace(/\//g,'%2F');
-			// IMAGE DESCRIPTION
-			var description = $(this).find('#' + current + " .pinterest").attr('alt');
-
-			$(this).prepend('<div id="social" />');
+		if(settings.socialButtons == true){
+			// INSERT CONTAINER FOR SOCIAL BUTTONS
+			slider.prepend('<div id="social" />');
 			
-			// BILD LINK FOR PINTEREST
-    		$(this).find("#social").prepend('<a id="pinterest" href="//pinterest.com/pin/create/button/?url=' + url + '&media=' + src + '&description=' + description + '" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a>');
+			// PINTEREST
+			if(settings.pinterest == true && settings.socialUrl != "" && slider.find('#' + current + " .pinterest").length == 1){
+				// URL OF SITE
+				var url = settings.socialUrl.replace(/:/g,'%3A').replace(/\//g,'%2F');
+				// IMAGE OBJECT
+				var img = $(this).find('#' + current + " .pinterest");
+				// ABSOLUTE URL TO IMAGE
+				var src = img.get(0).src.replace(/:/g,'%3A').replace(/\//g,'%2F');
+				// IMAGE DESCRIPTION
+				var description = slider.find('#' + current + " .pinterest").attr('alt');
+	
+				
+				
+				// BILD LINK FOR PINTEREST
+	    		slider.find("#social").prepend('<a id="pinterest" href="//pinterest.com/pin/create/button/?url=' + url + '&media=' + src + '&description=' + description + '" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a>');
+			}
+			
+			// FACEBOOK
+			if(settings.twitter == true && settings.socialUrl != ""){
+				
+			}
 		}
+		
+		
         
         
         /***************************/
@@ -441,7 +454,23 @@
         
         // SET SOCIAL BUTTONS
         function setSocial(){
-	        
+        
+        	// PINTEREST
+	        if(settings.socialButtons == true && settings.pinterest == true && settings.socialUrl != "" && slider.find('#' + current + " .pinterest").length == 1){
+				// URL OF SITE
+				var url = settings.socialUrl.replace(/:/g,'%3A').replace(/\//g,'%2F');
+				// IMAGE OBJECT
+				var img = slider.find('#' + current + " .pinterest");
+				// ABSOLUTE URL TO IMAGE
+				var src = img.get(0).src.replace(/:/g,'%3A').replace(/\//g,'%2F');
+				// IMAGE DESCRIPTION
+				var description = slider.find('#' + current + " .pinterest").attr('alt');
+	
+				
+				
+				// BILD LINK FOR PINTEREST
+	    		slider.find("#social #pinterest").attr('href','//pinterest.com/pin/create/button/?url=' + url + '&media=' + src + '&description=' + description);
+			}
         }
         
         
@@ -516,6 +545,7 @@
  
 }( jQuery ));
 
+// PINTEREST
 (function(d){
   var f = d.getElementsByTagName('SCRIPT')[0], p = d.createElement('SCRIPT');
   p.type = 'text/javascript';
