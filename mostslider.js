@@ -46,7 +46,7 @@
         var autoplay;
         //CURRENTLY SLIDING
         var sliding = false;
-        //SOCIAL BUTTON INITIALIZED
+        //PINTEREST BUTTON INITIALIZED
         var socal_init = false;
 
 
@@ -436,6 +436,8 @@
         // INIT SOCIAL BUTTONS
         function initSocial(){
         
+        	var pinterest = false;
+        
         	if(settings.socialButtons == true){
 				// INSERT CONTAINER FOR SOCIAL BUTTONS
 				slider.prepend('<div id="social" />');
@@ -455,6 +457,9 @@
 					
 					// BILD LINK FOR PINTEREST
 		    		slider.find("#social").prepend('<div id="pinterest"><a href="//pinterest.com/pin/create/button/?url=' + url + '&media=' + src + '&description=' + description + '" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a></div>');
+		    		
+		    		// SET TO INITIALISED (TRUE)
+		    		pinterest = true;
 				}
 				
 				// FACEBOOK
@@ -462,7 +467,11 @@
 					
 				}
 				
-				socal_init = true;
+				// IF WANTED SOCIAL BUTTONS ARE INITIALISED, SET INIT TRUE
+				if(settings.pinterest == pinterest){
+					socal_init = true;
+				}
+				
 			}
 			
         }
@@ -477,6 +486,7 @@
 				
 					if(socal_init == false){
 						initSocial();
+						alert("init");
 					}
 					else{
 						
