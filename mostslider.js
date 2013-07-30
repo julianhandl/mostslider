@@ -13,6 +13,7 @@
             thumbnails: false,
             navigation: true,
             hideArrows: true,
+            linkable: false,
             transparancy: false,
             contentClass: "content",
             sbsContent: false,
@@ -45,6 +46,8 @@
         var autoplay;
         //CURRENTLY SLIDING
         var sliding = false;
+        //SOCIAL BUTTON INITIALIZED
+        var socal_init = false;
 
 
         /***************/
@@ -173,34 +176,6 @@
 	        });
         }
         }
-        
-		// SOCIAL BUTTONS
-		if(settings.socialButtons == true){
-			// INSERT CONTAINER FOR SOCIAL BUTTONS
-			slider.prepend('<div id="social" />');
-			
-			// PINTEREST
-			if(settings.pinterest == true && settings.socialUrl != "" && slider.find('#' + current + " .pinterest").length == 1){
-				// URL OF SITE
-				var url = settings.socialUrl.replace(/:/g,'%3A').replace(/\//g,'%2F');
-				// IMAGE OBJECT
-				var img = $(this).find('#' + current + " .pinterest");
-				// ABSOLUTE URL TO IMAGE
-				var src = img.get(0).src.replace(/:/g,'%3A').replace(/\//g,'%2F');
-				// IMAGE DESCRIPTION
-				var description = slider.find('#' + current + " .pinterest").attr('alt');
-	
-				
-				
-				// BILD LINK FOR PINTEREST
-	    		slider.find("#social").prepend('<a id="pinterest" href="//pinterest.com/pin/create/button/?url=' + url + '&media=' + src + '&description=' + description + '" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a>');
-			}
-			
-			// FACEBOOK
-			if(settings.twitter == true && settings.socialUrl != ""){
-				
-			}
-		}
 		
 		
         
@@ -319,9 +294,15 @@
 								break;
 								
 						}
+						
 					}
 					else{
 						console.log('ERROR in goTo Function: ' + index + ' is an unvalid index. (mostSlider)');
+					}
+				
+					// SET SOCIAL LINKS FOR CURRENT SLIDE
+					if(socal_init == true){
+						setSocial();
 					}
 				
 					// STOP/CLEAR THE QUEUE
@@ -452,24 +433,83 @@
         /***** PRIVATE FUNCTION *****/
         /****************************/
         
+        // INIT SOCIAL BUTTONS
+        function initSocial(){
+        
+        	if(settings.socialButtons == true){
+				// INSERT CONTAINER FOR SOCIAL BUTTONS
+				slider.prepend('<div id="social" />');
+				
+				// PINTEREST
+				if(settings.pinterest == true && settings.socialUrl != "" && slider.find('#' + current + " .pinterest").length == 1){
+					// URL OF SITE
+					var url = settings.socialUrl.replace(/:/g,'%3A').replace(/\//g,'%2F');
+					// IMAGE OBJECT
+					var img = slider.find('#' + current + " .pinterest");
+					// ABSOLUTE URL TO IMAGE
+					var src = img.get(0).src.replace(/:/g,'%3A').replace(/\//g,'%2F');
+					// IMAGE DESCRIPTION
+					var description = img.attr('alt');
+		
+					
+					
+					// BILD LINK FOR PINTEREST
+		    		slider.find("#social").prepend('<div id="pinterest"><a href="//pinterest.com/pin/create/button/?url=' + url + '&media=' + src + '&description=' + description + '" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a></div>');
+				}
+				
+				// FACEBOOK
+				if(settings.twitter == true && settings.socialUrl != ""){
+					
+				}
+				
+				socal_init = true;
+			}
+			
+        }
+        
         // SET SOCIAL BUTTONS
         function setSocial(){
         
-        	// PINTEREST
-	        if(settings.socialButtons == true && settings.pinterest == true && settings.socialUrl != "" && slider.find('#' + current + " .pinterest").length == 1){
-				// URL OF SITE
-				var url = settings.socialUrl.replace(/:/g,'%3A').replace(/\//g,'%2F');
-				// IMAGE OBJECT
-				var img = slider.find('#' + current + " .pinterest");
-				// ABSOLUTE URL TO IMAGE
-				var src = img.get(0).src.replace(/:/g,'%3A').replace(/\//g,'%2F');
-				// IMAGE DESCRIPTION
-				var description = slider.find('#' + current + " .pinterest").attr('alt');
-	
+        	if(settings.socialButtons == true){
+        	
+				// PINTEREST
+				if(settings.pinterest == true && settings.socialUrl != "" && slider.find('#' + current + " .pinterest").length == 1){
 				
-				
-				// BILD LINK FOR PINTEREST
-	    		slider.find("#social #pinterest").attr('href','//pinterest.com/pin/create/button/?url=' + url + '&media=' + src + '&description=' + description);
+					if(socal_init == false){
+						initSocial();
+					}
+					else{
+						
+						slider.find("#social #pinterest").show();
+						
+						// URL OF SITE
+						var url = settings.socialUrl.replace(/:/g,'%3A').replace(/\//g,'%2F');
+						// IMAGE OBJECT
+						var img = slider.find('#' + current + " .pinterest");
+						
+						// ABSOLUTE URL TO IMAGE
+						var src = img.get(0).src.replace(/:/g,'%3A').replace(/\//g,'%2F');
+						// IMAGE DESCRIPTION
+						var description = img.attr('alt');
+						
+						// BOUNDS FOR SRC URL IN BUTTON
+						var src_beginn = slider.find("#social #pinterest > a")[0].href.indexOf('media')+6;
+						var src_end = slider.find("#social #pinterest > a")[0].href.indexOf('&guid');
+						
+						
+						
+						// OLD IMAGE SRC
+						var old_url = slider.find("#social #pinterest > a")[0].href.slice(src_beginn,src_end);
+						
+						// REPLACE WITH NEW IMAGE SRC
+						slider.find("#social #pinterest > a")[0].href = slider.find("#social #pinterest > a")[0].href.replace(old_url, src);
+						
+					}
+
+				}
+				else{
+					slider.find("#social #pinterest").hide();
+				}
 			}
         }
         
@@ -530,13 +570,28 @@
         }
         
         
-        /***********************/
-        /***** PREPERATION *****/
-        /***********************/
+        /*******************/
+        /***** INITIAL *****/
+        /*******************/
         
         // SHOW THE FIRST ELEMENT
         slider.find('#' + current).css("display","block");
         slider.showInner(current);
+        
+        // NAVIGATE SO SLIDE IF SET IN URL
+        if(settings.linkable == true){
+        	
+        	// GET URL PARAMETER
+        	var param = getURLParameter('slider');
+        	// SLIDE TO GIVEN NUMBER IF A VALID SLIDE
+        	if(param > 0 && param <= children_number){
+        		slider.goTo(param);
+        	}
+        	
+        }
+        
+        // INIT SOCIAL BUTTONS
+        initSocial();
         
         
         // RETURN
@@ -544,6 +599,13 @@
     };
  
 }( jQuery ));
+
+// GET URL PARA
+function getURLParameter(name) {
+    return decodeURI(
+        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+    );
+}
 
 // PINTEREST
 (function(d){
