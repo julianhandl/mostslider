@@ -46,13 +46,11 @@
         var autoplay;
         //CURRENTLY SLIDING
         var sliding = false;
-        //PINTEREST BUTTON INITIALIZED
-        var socal_init = false;
 
 
-        /***************/
-        /***** CSS *****/
-        /***************/
+        /*****************/
+        /***** INITS *****/
+        /*****************/
         
         
         
@@ -61,6 +59,7 @@
         
         //STYLE THE SLIDES AND SET A ID/INDEX
         slider.children().each(function(index){
+        
         	//DIFFERENT ANIMATIONS
         	switch (settings.animation) { 
 	        	//FADE, SLIDE-DOWN
@@ -103,6 +102,35 @@
 	        		
 	        		break;
 	        }
+        	
+        	//SOCIAL BUTTONS
+	        if(settings.socialButtons == true){
+				// INSERT CONTAINER FOR SOCIAL BUTTONS
+				$(this).prepend('<div class="social" />');
+				
+				// PINTEREST
+				if(settings.pinterest == true && settings.socialUrl != "" && $(this).find(".pinterest").length == 1){
+				
+					// URL OF SITE
+					var url = settings.socialUrl.replace(/:/g,'%3A').replace(/\//g,'%2F');
+					// IMAGE OBJECT
+					var img = $(this).find(".pinterest");
+					// ABSOLUTE URL TO IMAGE
+					var src = img.get(0).src.replace(/:/g,'%3A').replace(/\//g,'%2F');
+					// IMAGE DESCRIPTION
+					var description = img.attr('alt');
+					
+					// BILD LINK FOR PINTEREST
+		    		$(this).find(".social").prepend('<div id="pinterest"><a href="//pinterest.com/pin/create/button/?url=' + url + '&media=' + src + '&description=' + description + '" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a></div>');
+		    		
+				}
+				
+				// FACEBOOK
+				if(settings.twitter == true && settings.socialUrl != ""){
+					
+				}
+				
+			}
 	        
         });
         //SET WRAPER FOR SLIDE ANIMATION
@@ -176,8 +204,6 @@
 	        });
         }
         }
-		
-		
         
         
         /***************************/
@@ -298,11 +324,6 @@
 					}
 					else{
 						console.log('ERROR in goTo Function: ' + index + ' is an unvalid index. (mostSlider)');
-					}
-				
-					// SET SOCIAL LINKS FOR CURRENT SLIDE
-					if(socal_init == true){
-						setSocial();
 					}
 				
 					// STOP/CLEAR THE QUEUE
@@ -599,9 +620,6 @@
         	}
         	
         }
-        
-        // INIT SOCIAL BUTTONS
-        initSocial();
         
         
         // RETURN
