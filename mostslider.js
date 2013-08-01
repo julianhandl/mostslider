@@ -95,7 +95,7 @@
 	        			"height":"auto"
 		        	});
 	        		
-	        		// OVERTHING THISSOLUTION!?!?!?!?!?
+	        		// MAKE BG CLASS SETABLE!?!?!?!?!?
 	        		$(this).find("img.bg").css({
 	        			"width":"100%",
 	        			"height":"auto"
