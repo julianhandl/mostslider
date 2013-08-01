@@ -20,8 +20,9 @@
 		    contentAniDelay: 500,
 		    socialButtons: false,
 		    socialUrl: "",
-		    facebook: false,
+		    /* facebook: false, */
 		    twitter: false,
+		    twitterID: "",
 		    pinterest: false
         }, options );
  
@@ -119,14 +120,48 @@
 					var src = img.get(0).src.replace(/:/g,'%3A').replace(/\//g,'%2F');
 					// IMAGE DESCRIPTION
 					var description = img.attr('alt');
+					if(description == "undefined"){
+						description = "";
+					}
 					
 					// BILD LINK FOR PINTEREST
 		    		$(this).find(".social").prepend('<div id="pinterest"><a href="//pinterest.com/pin/create/button/?url=' + url + '&media=' + src + '&description=' + description + '" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a></div>');
 		    		
 				}
 				
-				// FACEBOOK
-				if(settings.twitter == true && settings.socialUrl != ""){
+				// FACEBOOK NOT WORKING
+				/* if(settings.facebook == true && settings.socialUrl != ""){
+				
+					var url = document.URL;
+					var number = parseInt(index) + 1;
+					if(url.indexOf('?') > 0){
+						url = url + "&slider=" + number;
+					}
+					else{
+						url = url + "?slider=" + number;
+					}
+					
+					slider.prepend('<div id="fb-root"></div>');
+					$(this).find(".social").prepend('<div id="facebook"><div class="fb-like" data-href="' + url + '" data-width="450" data-layout="button_count" data-show-faces="true" data-send="true"></div></div>');
+				} */
+				
+				// TWITTER
+				if(settings.twitter == true){
+					
+					var url = document.URL;
+					var number = parseInt(index) + 1;
+					if(url.indexOf('?') > 0 && url.search("slider=")>0){
+						slider_url = url.substr(url.search("slider="), 8)
+						url = url.replace(slider_url,'slider=' + number);
+					}
+					else if(url.indexOf('?') > 0 && url.search("slider=") < 0){
+						url = url + "&slider=" + number;
+					}
+					else{
+						url = url + "?slider=" + number;
+					}
+				
+					$(this).find(".social").prepend('<div id="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-text="' + url + '" data-url="' + url + '" data-via="' + settings.twitterID + '" data-lang="de" data-count="none">Twittern</a></div>');
 					
 				}
 				
@@ -203,6 +238,11 @@
 		        slider.find(".slider-nav").fadeOut(200);
 	        });
         }
+        }
+        
+        // SOCIAL
+        if(settings.facebook == true && settings.socialButtons == true){
+	        slider.prepend('<div id="fb-root"></div>');
         }
         
         
@@ -454,95 +494,7 @@
         /***** PRIVATE FUNCTION *****/
         /****************************/
         
-        // INIT SOCIAL BUTTONS
-        function initSocial(){
-        
-        	var pinterest = false;
-        
-        	if(settings.socialButtons == true){
-				// INSERT CONTAINER FOR SOCIAL BUTTONS
-				slider.prepend('<div id="social" />');
-				
-				// PINTEREST
-				if(settings.pinterest == true && settings.socialUrl != "" && slider.find('#' + current + " .pinterest").length == 1){
-					// URL OF SITE
-					var url = settings.socialUrl.replace(/:/g,'%3A').replace(/\//g,'%2F');
-					// IMAGE OBJECT
-					var img = slider.find('#' + current + " .pinterest");
-					// ABSOLUTE URL TO IMAGE
-					var src = img.get(0).src.replace(/:/g,'%3A').replace(/\//g,'%2F');
-					// IMAGE DESCRIPTION
-					var description = img.attr('alt');
-		
-					
-					
-					// BILD LINK FOR PINTEREST
-		    		slider.find("#social").prepend('<div id="pinterest"><a href="//pinterest.com/pin/create/button/?url=' + url + '&media=' + src + '&description=' + description + '" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a></div>');
-		    		
-		    		// SET TO INITIALISED (TRUE)
-		    		pinterest = true;
-				}
-				
-				// FACEBOOK
-				if(settings.twitter == true && settings.socialUrl != ""){
-					
-				}
-				
-				// IF WANTED SOCIAL BUTTONS ARE INITIALISED, SET INIT TRUE
-				if(settings.pinterest == pinterest){
-					socal_init = true;
-				}
-				
-			}
-			
-        }
-        
-        // SET SOCIAL BUTTONS
-        function setSocial(){
-        
-        	if(settings.socialButtons == true){
-        	
-				// PINTEREST
-				if(settings.pinterest == true && settings.socialUrl != "" && slider.find('#' + current + " .pinterest").length == 1){
-				
-					if(socal_init == false){
-						initSocial();
-						alert("init");
-					}
-					else{
-						
-						slider.find("#social #pinterest").show();
-						
-						// URL OF SITE
-						var url = settings.socialUrl.replace(/:/g,'%3A').replace(/\//g,'%2F');
-						// IMAGE OBJECT
-						var img = slider.find('#' + current + " .pinterest");
-						
-						// ABSOLUTE URL TO IMAGE
-						var src = img.get(0).src.replace(/:/g,'%3A').replace(/\//g,'%2F');
-						// IMAGE DESCRIPTION
-						var description = img.attr('alt');
-						
-						// BOUNDS FOR SRC URL IN BUTTON
-						var src_beginn = slider.find("#social #pinterest > a")[0].href.indexOf('media')+6;
-						var src_end = slider.find("#social #pinterest > a")[0].href.indexOf('&guid');
-						
-						
-						
-						// OLD IMAGE SRC
-						var old_url = slider.find("#social #pinterest > a")[0].href.slice(src_beginn,src_end);
-						
-						// REPLACE WITH NEW IMAGE SRC
-						slider.find("#social #pinterest > a")[0].href = slider.find("#social #pinterest > a")[0].href.replace(old_url, src);
-						
-					}
 
-				}
-				else{
-					slider.find("#social #pinterest").hide();
-				}
-			}
-        }
         
         
         /**********************/
@@ -643,3 +595,15 @@ function getURLParameter(name) {
   p.src = '//assets.pinterest.com/js/pinit.js';
   f.parentNode.insertBefore(p, f);
 }(document));
+
+// FACEBOOK
+/* (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/de_DE/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk')); */
+
+// TWITTER
+!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
