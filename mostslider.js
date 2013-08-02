@@ -17,7 +17,7 @@
             transparancy: false,
             contentClass: "content",
             sbsContent: false,
-		    contentAniDelay: 500,
+		    contentAniDelay: 300,
 		    socialButtons: false,
 		    socialUrl: "",
 		    /* facebook: false, */
@@ -56,7 +56,7 @@
         
         
         //LET THE SLIDER DIV FIT THE SLIDER-WRAPPER
-        slider.css({"position": "relative","width": "100%","line-height": "0"});
+        slider.css({"position": "relative","width": "100%","height": "100%","line-height": "0"});
         
         //STYLE THE SLIDES AND SET A ID/INDEX
         slider.children().each(function(index){
@@ -182,6 +182,12 @@
 	        slider.css("height",slider.find("#1").height());
 	        $(window).resize(function(){
 		        slider.css("height",slider.find("#1").height());
+	        });
+        }
+        else{
+	        slider.find("#slides").children().css("height",slider.height());
+	        $(window).resize(function(){
+		        slider.find("#slides").children().css("height",slider.height());
 	        });
         }
         
