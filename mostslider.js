@@ -266,9 +266,13 @@
 				
 					var last = current;
 					index = parseInt(index);
+					
 					// IF SMALER THAN NUMBER OF CHILDREN, FADE TO NEXT ONE
 					if((index <= children_number) && (index > 0) && (index != current) && (index != null) && (index != "")){
 						current = index;
+						
+						// HIDE INNER ELEMENTS
+						slider.hideInner(current);
 						
 						// SET BULLETS
 						slider.find('#bullets > #' + last).removeClass("selected");
