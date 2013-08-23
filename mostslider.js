@@ -179,10 +179,18 @@
         // SET SLIDER HEIGHT
         // IF SET, DO NOTHING, IF NOT SET, SET TO FIRST CHILD
         if(slider.height() == 0){
-	        slider.css("height",slider.find("#1").height());
-	        $(window).resize(function(){
+        	if(slider.find('#1 img.bg').length > 0){
+	        	slider.css("height",slider.find("#1 img.bg").height());
+		        $(window).resize(function(){
+			        slider.css("height",slider.find("#1 img.bg").height());
+		        });
+        	}
+        	else{
 		        slider.css("height",slider.find("#1").height());
-	        });
+		        $(window).resize(function(){
+			        slider.css("height",slider.find("#1").height());
+		        });
+	        }
         }
         else{
 	        slider.find("#slides").children().css("height",slider.height());
@@ -190,6 +198,7 @@
 		        slider.find("#slides").children().css("height",slider.height());
 	        });
         }
+        
         
         //STYLE THE INNER EFFECT ELEMENTS
         slider.find(".center").each(function(){
