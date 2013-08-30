@@ -56,7 +56,7 @@
         
         
         //LET THE SLIDER DIV FIT THE SLIDER-WRAPPER
-        slider.css({"position": "relative","width": "100%","height": "100%","line-height": "0"});
+        slider.css({"position": "relative","width": "100%","line-height": "0"});
         
         //STYLE THE SLIDES AND SET A ID/INDEX
         slider.children().each(function(index){
@@ -179,18 +179,10 @@
         // SET SLIDER HEIGHT
         // IF SET, DO NOTHING, IF NOT SET, SET TO FIRST CHILD
         if(slider.height() == 0){
-        	if(slider.find('#1 img.bg').length > 0){
-	        	slider.css("height",slider.find("#1 img.bg").height());
-		        $(window).resize(function(){
-			        slider.css("height",slider.find("#1 img.bg").height());
-		        });
-        	}
-        	else{
+        	slider.css("height",slider.find("#1").height());
+	        $(window).resize(function(){
 		        slider.css("height",slider.find("#1").height());
-		        $(window).resize(function(){
-			        slider.css("height",slider.find("#1").height());
-		        });
-	        }
+	        });
         }
         else{
 	        slider.find("#slides").children().css("height",slider.height());
