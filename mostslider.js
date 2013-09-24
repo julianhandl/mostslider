@@ -178,17 +178,19 @@
         
         // SET SLIDER HEIGHT
         // IF SET, DO NOTHING, IF NOT SET, SET TO FIRST CHILD
-        if(slider.height() == 0){
-        	slider.css("height",slider.find("#1").height());
-	        $(window).resize(function(){
-		        slider.css("height",slider.find("#1").height());
-	        });
-        }
-        else{
-	        slider.find("#slides").children().css("height",slider.height());
-	        $(window).resize(function(){
+        function initHeight(){
+	        if(slider.height() == 0){
+	        	slider.css("height",slider.find("#1").height());
+		        $(window).resize(function(){
+			        slider.css("height",slider.find("#1").height());
+		        });
+	        }
+	        else{
 		        slider.find("#slides").children().css("height",slider.height());
-	        });
+		        $(window).resize(function(){
+			        slider.find("#slides").children().css("height",slider.height());
+		        });
+	        }
         }
         
         
@@ -583,6 +585,11 @@
         	}
         	
         }
+        
+        //INITIALIZE HEIGHT WHEN IMAGES ARE LOADED
+        slider.find("img").load(function(){
+	        initHeight();
+        });
         
         
         // RETURN
