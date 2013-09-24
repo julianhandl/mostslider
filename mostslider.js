@@ -6,18 +6,35 @@
         // GET THE OPTIONS
         var settings = $.extend({
             // SET DEFAULT
+            // ANIMATION
             animation: "fade",
             aniSpeed: 1000,
+            
+            // SPEED
             autoPlay: true,
             pauseTime: 3000,
+            
+            // METRICS
+            metrics: {
+            	// RATIO
+	            width: 0,
+	            height: 0
+            },
+            
+            // NAVIGATION
             thumbnails: false,
             navigation: true,
             hideArrows: true,
+            
+            // FUNCTION
             linkable: false,
+            
+            // CONTENT
             transparancy: false,
             contentClass: "content",
             sbsContent: false,
 		    contentAniDelay: 300,
+		    
 		    socialButtons: false,
 		    socialUrl: "",
 		    /* facebook: false, */
@@ -35,6 +52,8 @@
         var slider = this;
         //CACHE THE SLIDERS WIDTH
         var width = slider.width();
+        //SLIDER RATION
+        var ratio = settings.metrics.height / settings.metrics.width;
         //CACHE THE SLIDERs CHILDREN/SLIDES
         var children = slider.children();
         //CACHE THE NUMBER OF CHILDREN/SLIDES
@@ -173,25 +192,44 @@
 	        slider.wrapInner('<div id="slides" style="position:absolute;width:100%;height:100%;overflow:hidden;line-height:0;" />');
         }
         else{
-	        slider.wrapInner('<div id="slides" style="line-height:0;" />');
+	        slider.wrapInner('<div id="slides" style="line-height:0;overflow:hidden;" />');
         }
+        
+        
         
         // SET SLIDER HEIGHT
         // IF SET, DO NOTHING, IF NOT SET, SET TO FIRST CHILD
         function initHeight(){
-	        if(slider.height() == 0){
-	        	slider.css("height",slider.find("#1").height());
-		        $(window).resize(function(){
-			        slider.css("height",slider.find("#1").height());
-		        });
+	        if((settings.metrics.width > 0) && (settings.metrics.height > 0)){
+		        if(slider.width() < settings.metrics.width){
+		        	var tmp = ratio*slider.width();
+			        slider.find("#slides").css("height",tmp).children().css("height",tmp);
+		        }
+		        else{
+			        slider.find("#slides").css("height",settings.metrics.height).children().css("height",settings.metrics.height);
+		        }
 	        }
 	        else{
-		        slider.find("#slides").children().css("height",slider.height());
-		        $(window).resize(function(){
-			        slider.find("#slides").children().css("height",slider.height());
-		        });
+	        	var tmp = slider.find("#slides #1").height();
+		        slider.find("#slides").css("height",tmp).css("height",tmp);
 	        }
         }
+        // RESIZING
+        $(window).resize(function(){
+	        if((settings.metrics.width > 0) && (settings.metrics.height > 0)){
+		        if(slider.width() < settings.metrics.width){
+			        slider.find("#slides").css("height",ratio*slider.width()).children().css("height",ratio*slider.width());
+		        }
+		        else{
+			        slider.find("#slides").css("height",settings.metrics.height).children().css("height",settings.metrics.height);
+		        }
+	        }
+	        else{
+		        slider.find("#slides").css("height",slider.find("#slides #1").height()).css("height",slider.find("#slides #1").height());
+	        }
+        });
+        
+        
         
         
         //STYLE THE INNER EFFECT ELEMENTS
@@ -213,6 +251,8 @@
         slider.find(".from-right").each(function(){
 	        $(this).css({"opacity":0,"margin-top":0});
         });
+        
+        
         
         
         /*******************/
@@ -436,7 +476,7 @@
         	
         	var time = 0;
 
-			$('#' + slide + ' .' + settings.contentClass).each(function() {
+			slider.find('#' + slide + ' .' + settings.contentClass).each(function() {
 			
 				var content_element = $(this);
 				
@@ -493,11 +533,11 @@
         }
         // HIDE INNER ELEMENTS
         this.hideInner = function (slide){
-	        $('#' + slide + ' .fade').css("display","none");
-	        $('#' + slide + ' .from-top').css("opacity",0);
-	        $('#' + slide + ' .from-bottom').css("opacity",0);
-	        $('#' + slide + ' .from-left').css("opacity",0);
-	        $('#' + slide + ' .from-right').css("opacity",0);
+	        slider.find('#' + slide + ' .fade').css("display","none");
+	        slider.find('#' + slide + ' .from-top').css("opacity",0);
+	        slider.find('#' + slide + ' .from-bottom').css("opacity",0);
+	        slider.find('#' + slide + ' .from-left').css("opacity",0);
+	        slider.find('#' + slide + ' .from-right').css("opacity",0);
 	        
 	        return slider;
         }
