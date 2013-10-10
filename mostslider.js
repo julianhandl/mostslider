@@ -208,7 +208,7 @@
 			        slider.css("height",tmp).find("#slides").css("height",tmp).children().css("height",tmp);
 		        }
 		        else{
-			        slider.css("height",settings.metrics.height).find("#slides").css("height",settings.metrics.height).children().css("height",settings.metrics.height);
+					slider.css("height",settings.metrics.height).find("#slides").css("height",settings.metrics.height).children().css("height",settings.metrics.height);
 		        }
 	        }
 	        else{
