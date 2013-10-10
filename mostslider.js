@@ -66,6 +66,8 @@
         var autoplay;
         //CURRENTLY SLIDING
         var sliding = false;
+        //INITIALISED?
+        var initialised = false;
 
 
         /*****************/
@@ -213,6 +215,7 @@
 	        	var tmp = slider.find("#slides #1").height();
 		        slider.css("height",tmp).find("#slides").css("height",tmp).css("height",tmp);
 	        }
+	        initialised = true;
         }
         // RESIZING
         $(window).resize(function(){
@@ -626,10 +629,16 @@
         	
         }
         
-        //INITIALIZE HEIGHT WHEN IMAGES ARE LOADED
+        //INITIALIZE HEIGHT WHEN IMAGES ARE LOADED AND FIRE LOAD EVENT WHEN IMAGED ARE CACHED
         slider.find("img").load(function(){
-	        initHeight();
-        });
+        	if(initialised==false){
+	        	initHeight();
+	        }
+        }).each(function(){
+			if(this.complete){
+				$(this).load();
+			}
+		});
         
         
         // RETURN
