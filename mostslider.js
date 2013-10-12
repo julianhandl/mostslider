@@ -37,10 +37,7 @@
 		    
 		    socialButtons: false,
 		    socialUrl: "",
-		    /* facebook: false, */
-		    twitter: false,
-		    twitterID: "",
-		    pinterest: false
+		    twitterID: ""
         }, options );
  
  
@@ -130,8 +127,13 @@
 				// INSERT CONTAINER FOR SOCIAL BUTTONS
 				$(this).prepend('<div class="social" />');
 				
+				var data_social = "none";
+				if($(this).attr('data-social') != undefined){
+					data_social = $(this).attr('data-social');
+				}
+				
 				// PINTEREST
-				if(settings.pinterest == true && settings.socialUrl != "" && $(this).find(".pinterest").length == 1){
+				if(data_social.indexOf('pinterest') > 0 && settings.socialUrl != "" && $(this).find(".pinterest").length == 1){
 				
 					// URL OF SITE
 					var url = settings.socialUrl.replace(/:/g,'%3A').replace(/\//g,'%2F');
@@ -167,7 +169,7 @@
 				} */
 				
 				// TWITTER
-				if(settings.twitter == true){
+				if(data_social.indexOf('twitter') >= 0){
 					
 					var url = document.URL;
 					var number = parseInt(index) + 1;
