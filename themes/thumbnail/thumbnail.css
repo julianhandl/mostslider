@@ -1,10 +1,81 @@
 @import url(http://fonts.googleapis.com/css?family=Raleway:400,200,800);
-.slider-Wrapper.thumbnail>div #slides{font-family:'Raleway','Arial';font-weight:400;color:#fff;line-height:normal}.slider-Wrapper.thumbnail>div #slides img{border:0}
-.slider-Wrapper.thumbnail>div #slides>a{line-height:0}
-.slider-Wrapper.thumbnail>div #slides h1,.slider-Wrapper.thumbnail>div #slides h2,.slider-Wrapper.thumbnail>div #slides h3,.slider-Wrapper.thumbnail>div #slides h4{padding:1% 3% 1% 3%;color:#000;background-color:#fff;line-height:normal}
-.slider-Wrapper.thumbnail>div #slides span,.slider-Wrapper.thumbnail>div #slides p{line-height:normal}
-.slider-Wrapper.thumbnail>div #bullets{width:100%;height:40px;position:absolute;bottom:0;margin-bottom:-40px;left:0;z-index:10000;white-space:nowrap;overflow-x:auto;overflow-y:hidden}.slider-Wrapper.thumbnail>div #bullets .bullet{height:40px;width:auto;display:inline;opacity:.7;cursor:pointer}.slider-Wrapper.thumbnail>div #bullets .bullet img{height:40px;width:auto}
-.slider-Wrapper.thumbnail>div #bullets .bullet:hover{opacity:1}
-.slider-Wrapper.thumbnail>div #bullets .bullet.selected{opacity:1}
-.slider-Wrapper.thumbnail>div #left{position:absolute;width:27px;height:41px;background-image:url(img/arrow.png);left:5%;top:50%;margin-top:-20px;z-index:999999;cursor:pointer}
-.slider-Wrapper.thumbnail>div #right{position:absolute;width:27px;height:41px;background-image:url(img/arrow.png);background-position:right top;right:5%;top:50%;margin-top:-20px;z-index:999999;cursor:pointer}
+.slider-Wrapper.thumbnail > div {
+  display: none;
+}
+.slider-Wrapper.thumbnail > div #slides {
+  font-family: 'Raleway', 'Arial';
+  font-weight: 400;
+  color: white;
+  line-height: normal;
+}
+.slider-Wrapper.thumbnail > div #slides img {
+  border: 0;
+}
+.slider-Wrapper.thumbnail > div #slides > a {
+  line-height: 0px;
+}
+.slider-Wrapper.thumbnail > div #slides h1,
+.slider-Wrapper.thumbnail > div #slides h2,
+.slider-Wrapper.thumbnail > div #slides h3,
+.slider-Wrapper.thumbnail > div #slides h4 {
+  padding: 1% 3% 1% 3%;
+  color: #000;
+  background-color: #ffffff;
+  line-height: normal;
+}
+.slider-Wrapper.thumbnail > div #slides span,
+.slider-Wrapper.thumbnail > div #slides p {
+  line-height: normal;
+}
+.slider-Wrapper.thumbnail > div #bullets {
+  width: 100%;
+  height: 40px;
+  position: absolute;
+  bottom: 0px;
+  margin-bottom: -40px;
+  left: 0px;
+  z-index: 10000;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.slider-Wrapper.thumbnail > div #bullets .bullet {
+  height: 40px;
+  width: auto;
+  display: inline;
+  opacity: 0.7;
+  cursor: pointer;
+}
+.slider-Wrapper.thumbnail > div #bullets .bullet img {
+  height: 40px;
+  width: auto;
+}
+.slider-Wrapper.thumbnail > div #bullets .bullet:hover {
+  opacity: 1;
+}
+.slider-Wrapper.thumbnail > div #bullets .bullet.selected {
+  opacity: 1;
+}
+.slider-Wrapper.thumbnail > div #left {
+  position: absolute;
+  width: 27px;
+  height: 41px;
+  background-image: url(img/arrow.png);
+  left: 5%;
+  top: 50%;
+  margin-top: -20px;
+  z-index: 999999;
+  cursor: pointer;
+}
+.slider-Wrapper.thumbnail > div #right {
+  position: absolute;
+  width: 27px;
+  height: 41px;
+  background-image: url(img/arrow.png);
+  background-position: right top;
+  right: 5%;
+  top: 50%;
+  margin-top: -20px;
+  z-index: 999999;
+  cursor: pointer;
+}

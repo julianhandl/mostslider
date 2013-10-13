@@ -203,7 +203,10 @@
         
         // SET SLIDER HEIGHT
         // IF SET, DO NOTHING, IF NOT SET, SET TO FIRST CHILD
-        function initHeight(){
+        this.init = function(){
+        
+        	slider.css("display","block");
+        	
 	        if((settings.metrics.width > 0) && (settings.metrics.height > 0)){
 		        if(slider.width() < settings.metrics.width){
 		        	var tmp = ratio*slider.width();
@@ -219,6 +222,7 @@
 	        }
 	        initialised = true;
         }
+        
         // RESIZING
         $(window).resize(function(){
 	        if((settings.metrics.width > 0) && (settings.metrics.height > 0)){
@@ -632,12 +636,13 @@
         }
         
         //INITIALIZE HEIGHT WHEN IMAGES ARE LOADED AND FIRE LOAD EVENT WHEN IMAGED ARE CACHED
+        var images = slider.find("img").length;
         slider.find("img").load(function(){
         	if(initialised==false){
-	        	initHeight();
+	        	slider.init();
 	        }
-        }).each(function(){
-			if(this.complete){
+        }).each(function(index){
+			if(this.complete && index == images-1){
 				$(this).load();
 			}
 		});
