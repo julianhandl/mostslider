@@ -72,7 +72,6 @@
         /*****************/
         
         
-        
         //LET THE SLIDER DIV FIT THE SLIDER-WRAPPER
         slider.css({"position": "relative","width": "100%","line-height": "0"});
         
@@ -133,7 +132,7 @@
 				}
 				
 				// PINTEREST
-				if(data_social.indexOf('pinterest') > 0 && settings.socialUrl != "" && $(this).find(".pinterest").length == 1){
+				if(data_social.indexOf('pinterest') >= 0 && settings.socialUrl != "" && $(this).find(".pinterest").length == 1){
 				
 					// URL OF SITE
 					var url = settings.socialUrl.replace(/:/g,'%3A').replace(/\//g,'%2F');
@@ -152,24 +151,8 @@
 		    		
 				}
 				
-				// FACEBOOK NOT WORKING
-				/* if(settings.facebook == true && settings.socialUrl != ""){
-				
-					var url = document.URL;
-					var number = parseInt(index) + 1;
-					if(url.indexOf('?') > 0){
-						url = url + "&slider=" + number;
-					}
-					else{
-						url = url + "?slider=" + number;
-					}
-					
-					slider.prepend('<div id="fb-root"></div>');
-					$(this).find(".social").prepend('<div id="facebook"><div class="fb-like" data-href="' + url + '" data-width="450" data-layout="button_count" data-show-faces="true" data-send="true"></div></div>');
-				} */
-				
 				// TWITTER
-				if(data_social.indexOf('twitter') >= 0){
+				if(data_social.indexOf('twitter') >= 0 && settings.twitterID != ""){
 					
 					var url = document.URL;
 					var number = parseInt(index) + 1;
@@ -187,6 +170,23 @@
 					$(this).find(".social").prepend('<div id="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-text="' + url + '" data-url="' + url + '" data-via="' + settings.twitterID + '" data-lang="de" data-count="none">Twittern</a></div>');
 					
 				}
+				
+				// FACEBOOK
+				if(data_social.indexOf('facebook') >= 0 && settings.twitterID != ""){
+				
+					var url = document.URL;
+					var number = parseInt(index) + 1;
+					if(url.indexOf('?') > 0){
+						url = url + "&slider=" + number;
+					}
+					else{
+						url = url + "?slider=" + number;
+					}
+					url = url.replace(/\:/g, '%3A').replace(/\//g, '%2F').replace(/\=/g, '%3D').replace(/\?/g, '%3F').replace(/\-/g, '%2D');
+					
+					//slider.parent().prepend('<div id="fb-root"></div>');
+					$(this).find(".social").prepend('<div id="facebook"><iframe src="//www.facebook.com/plugins/like.php?href=' + url + '&amp;width=100&amp;height=21&amp;colorscheme=light&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;send=false" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:21px;" allowTransparency="true"></iframe></div>');
+				}		
 				
 			}
 	        
@@ -671,13 +671,13 @@ function getURLParameter(name) {
 }(document));
 
 // FACEBOOK
-/* (function(d, s, id) {
+(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
   js.src = "//connect.facebook.net/de_DE/all.js#xfbml=1";
   fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk')); */
+}(document, 'script', 'facebook-jssdk'));
 
 // TWITTER
 !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
