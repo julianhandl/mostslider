@@ -10,6 +10,11 @@ See demos and documentation at the link below at "Documentation"!
 
 #Releases
 
+##v1.2
+
+- fixed social button issues
+- added facebook button support
+
 ##v1.1
 
 - Slider is now hidden until it is fully loaded
