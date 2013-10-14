@@ -131,6 +131,23 @@
 					data_social = $(this).attr('data-social');
 				}
 				
+				// FACEBOOK
+				if(data_social.indexOf('facebook') >= 0 && settings.twitterID != ""){
+				
+					var url = document.URL;
+					var number = parseInt(index) + 1;
+					if(url.indexOf('?') > 0){
+						url = url + "&slider=" + number;
+					}
+					else{
+						url = url + "?slider=" + number;
+					}
+					url = url.replace(/\:/g, '%3A').replace(/\//g, '%2F').replace(/\=/g, '%3D').replace(/\?/g, '%3F').replace(/\-/g, '%2D');
+					
+					//slider.parent().prepend('<div id="fb-root"></div>');
+					$(this).find(".social").prepend('<div id="facebook"><iframe src="//www.facebook.com/plugins/like.php?href=' + url + '&amp;width=130&amp;height=21&amp;colorscheme=light&amp;layout=button_count&amp;data-layout=simple&amp;action=like&amp;show_faces=false&amp;send=false" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:130px; height:21px;" allowTransparency="true"></iframe></div>');
+				}
+				
 				// PINTEREST
 				if(data_social.indexOf('pinterest') >= 0 && settings.socialUrl != "" && $(this).find(".pinterest").length == 1){
 				
@@ -169,23 +186,6 @@
 				
 					$(this).find(".social").prepend('<div id="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-text="' + url + '" data-url="' + url + '" data-via="' + settings.twitterID + '" data-lang="de" data-count="none">Twittern</a></div>');
 					
-				}
-				
-				// FACEBOOK
-				if(data_social.indexOf('facebook') >= 0 && settings.twitterID != ""){
-				
-					var url = document.URL;
-					var number = parseInt(index) + 1;
-					if(url.indexOf('?') > 0){
-						url = url + "&slider=" + number;
-					}
-					else{
-						url = url + "?slider=" + number;
-					}
-					url = url.replace(/\:/g, '%3A').replace(/\//g, '%2F').replace(/\=/g, '%3D').replace(/\?/g, '%3F').replace(/\-/g, '%2D');
-					
-					//slider.parent().prepend('<div id="fb-root"></div>');
-					$(this).find(".social").prepend('<div id="facebook"><iframe src="//www.facebook.com/plugins/like.php?href=' + url + '&amp;width=100&amp;height=21&amp;colorscheme=light&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;send=false" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:21px;" allowTransparency="true"></iframe></div>');
 				}		
 				
 			}
