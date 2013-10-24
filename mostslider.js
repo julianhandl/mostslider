@@ -620,7 +620,8 @@
         /*******************/
         
         // SHOW THE FIRST ELEMENT
-        slider.find('#' + current).css("display","block");
+        slider.find('#slides #' + current).css("display","block");
+        slider.find('#bullets #' + current).addClass('selected');
         slider.showInner(current);
         
         // NAVIGATE SO SLIDE IF SET IN URL
