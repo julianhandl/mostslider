@@ -201,6 +201,7 @@
         
         
         
+        // VERY SERIOUS BUSINESS HERE! MAGIC MAGIC MAGIC! THINK TWICE BEFORE TOUCHING
         // SET SLIDER HEIGHT
         // IF SET, DO NOTHING, IF NOT SET, SET TO FIRST CHILD
         this.init = function(){
@@ -210,15 +211,15 @@
 	        if((settings.metrics.width > 0) && (settings.metrics.height > 0)){
 		        if(slider.width() < settings.metrics.width){
 		        	var tmp = ratio*slider.width();
-			        slider.css("height",tmp).find("#slides").css("height",tmp).children().css("height",tmp);
+			        slider.find("#slides").css("height",tmp).children().css("height",tmp);
 		        }
 		        else{
-					slider.css("height",settings.metrics.height).find("#slides").css("height",settings.metrics.height).children().css("height",settings.metrics.height);
+					slider.find("#slides").css("height",settings.metrics.height).children().css("height",settings.metrics.height);
 		        }
 	        }
 	        else{
 	        	var tmp = slider.find("#slides #1").height();
-		        slider.css("height",tmp).find("#slides").css("height",tmp).css("height",tmp);
+		        slider.find("#slides").css("height",tmp).css("height",tmp);
 	        }
 	        initialised = true;
         }
@@ -227,16 +228,18 @@
         $(window).resize(function(){
 	        if((settings.metrics.width > 0) && (settings.metrics.height > 0)){
 		        if(slider.width() < settings.metrics.width){
-			        slider.css("height",ratio*slider.width()).find("#slides").css("height",ratio*slider.width()).children().css("height",ratio*slider.width());
+			        slider.find("#slides").css("height",ratio*slider.width()).children().css("height",ratio*slider.width());
 		        }
 		        else{
-			        slider.css("height",settings.metrics.height).find("#slides").css("height",settings.metrics.height).children().css("height",settings.metrics.height);
+			        slider.find("#slides").css("height",settings.metrics.height).children().css("height",settings.metrics.height);
 		        }
 	        }
 	        else{
-		        slider.css("height",slider.find("#slides #1").height()).find("#slides").css("height",slider.find("#slides #1").height());
+		        slider.find("#slides").css("height",slider.find("#slides #1").height());
 	        }
         });
+        
+        // SERIOUS BUSINESS ENDING HERE
         
         
         

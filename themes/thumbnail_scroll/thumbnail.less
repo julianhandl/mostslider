@@ -36,19 +36,27 @@
 		//BULLETS
 		#bullets{
 			width: 100%;
+			height: 40px;
+			position: absolute;
+			bottom: 0px;
+			margin-bottom: -40px;
+			left: 0px;
 			z-index: 10000;
+			white-space: nowrap;
+			overflow-x: auto;
+			overflow-y: hidden;
 			
 			.bullet{
-				display: block;
-				float: left;
-				margin: 5px 5px 0 0;
+				height: 40px;
+				width: auto;
+				display: inline;
 				
 				opacity: 0.5;
 				cursor: pointer;
 				
 				img{
-					width: auto;
 					height: 40px;
+					width: auto;
 				}
 				
 				&:hover{
