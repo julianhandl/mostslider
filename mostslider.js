@@ -9,6 +9,8 @@
             // ANIMATION
             animation: "fade",
             aniSpeed: 1000,
+            // BACKGROUND CENTERING - only avilable if metrics are set
+            background_center: false,
             
             // SPEED
             autoPlay: true,
@@ -87,7 +89,8 @@
 	        			 "line-height":"auto",
 	        			 "position":"absolute",
 	        			 "z-index":0,
-	        			 "display":"none"}).attr("id",index+1);
+	        			 "display":"none",
+	        			 "overflow":"hidden"}).attr("id",index+1);
 	        		
 	        		/*****************/
 	        		/* SPECIAL CASES */
@@ -112,11 +115,30 @@
 	        			"height":"auto"
 		        	});
 	        		
-	        		// MAKE BG CLASS SETABLE!?!?!?!?!?
-	        		$(this).find("img.bg").css({
-	        			"width":"100%",
-	        			"height":"auto"
-	        		});
+	        		// BACKGROUND IMAGES
+	        		if($(this).find("img.bg").length > 0){
+	        		
+	        			// IF BACKGROUND CENTERING ACTIVE AND METRICS ARE SET (experimental)
+	        			if(settings.background_center == true && (settings.metrics.width > 0 && settings.metrics.width != '') && (settings.metrics.height > 0 && settings.metrics.height != '')){
+			        		$(this).css({
+				        		"background-image": 'url(' + $(this).find("img.bg").attr('src') + ')',
+				        		"background-repeat":"no-repeat",
+				        		"background-position":"center center",
+				        		"background-size":"cover",
+				        		"-webkit-background-size":"cover",
+				        		"-moz-background-size":"cover",
+				        		"-o-background-size":"cover",
+			        		});
+			        		$(this).find("img.bg").hide();
+		        		}
+		        		// DEFAULT BG HANDLING
+		        		else{
+			        		$(this).find("img.bg").css({
+			        			"width":"100%",
+			        			"height":"auto"
+			        		});
+		        		}
+	        		}
 	        		
 	        		break;
 	        }
