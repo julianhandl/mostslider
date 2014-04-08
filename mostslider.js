@@ -116,6 +116,15 @@
 		        	});
 	        		
 	        		// BACKGROUND IMAGES
+	        		if($(this).find("img.portrait").length > 0){
+		        		$(this).find("img.portrait").css({
+		        			"width":"auto",
+		        			"height":"100%"
+		        		});
+		        		settings.transparancy = true
+	        		}
+	        		
+	        		// BACKGROUND IMAGES
 	        		if($(this).find("img.bg").length > 0){
 	        		
 	        			// IF BACKGROUND CENTERING ACTIVE AND METRICS ARE SET (experimental)
