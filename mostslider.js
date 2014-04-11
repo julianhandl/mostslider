@@ -137,6 +137,8 @@
 				        		"-webkit-background-size":"cover",
 				        		"-moz-background-size":"cover",
 				        		"-o-background-size":"cover",
+				        		"filter":"progid:DXImageTransform.Microsoft.AlphaImageLoader(src=" + $(this).find("img.bg").attr('src') + ",sizingMethod='scale')",
+				        		"-ms-filter": "\"progid:DXImageTransform.Microsoft.AlphaImageLoader(src=" + $(this).find("img.bg").attr('src') + ",sizingMethod='scale')\"",
 			        		});
 			        		$(this).find("img.bg").hide();
 		        		}
