@@ -37,6 +37,11 @@
             sbsContent: false,
 		    contentAniDelay: 300,
 		    
+		    // IMAGES
+		    responsive_images: false,
+		    responsive_break_tablet: 481,
+            responsive_break_desktop: 1024,
+		    
 		    socialButtons: false,
 		    socialUrl: "",
 		    twitterID: ""
@@ -79,6 +84,24 @@
         
         //STYLE THE SLIDES AND SET A ID/INDEX
         slider.children().each(function(index){
+        
+        	// RESPONSIVE IMAGES
+        	if(settings.responsive_images = true){
+        		var window_width = $(window).width();
+        		
+        		$(this).find("img[data-responsive-images='true']").each(function(){
+	        		// DESKTOP
+	        		if(window_width >= settings.responsive_break_desktop){
+		        		$(this).attr("src",$(this).attr("data-image-desktop"));
+		        		alert("desktop");
+	        		}
+	        		// TABLET
+	        		else if(window_width >= settings.responsive_break_tablet){
+		        		$(this).attr("src",$(this).attr("data-image-tablet"));
+		        		alert("tablet");
+	        		}
+        		});
+    		}
         
         	//DIFFERENT ANIMATIONS
         	switch (settings.animation) { 
