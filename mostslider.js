@@ -93,12 +93,10 @@
 	        		// DESKTOP
 	        		if(window_width >= settings.responsive_break_desktop){
 		        		$(this).attr("src",$(this).attr("data-image-desktop"));
-		        		alert("desktop");
 	        		}
 	        		// TABLET
 	        		else if(window_width >= settings.responsive_break_tablet){
 		        		$(this).attr("src",$(this).attr("data-image-tablet"));
-		        		alert("tablet");
 	        		}
         		});
     		}
@@ -333,7 +331,7 @@
 	        slider.append('<div id="bullets" />');
 	        for (var i=1;i<=children_number;i++){ 
 	        	if(settings.thumbnails == true){
-		        	slider.find("#bullets").append('<div class="bullet" id="' + i + '"><img src="' + slider.find("#slides #" + i).attr('data-thumb') + '" /></div>');
+		        	slider.find("#bullets").append('<div class="bullet" style="background-image:url(' + slider.find("#slides #" + i).attr('data-thumb') + ');" id="' + i + '"></div>');
 	        	}
 	        	else{
 		        	slider.find("#bullets").append('<div class="bullet" id="' + i + '" />');
