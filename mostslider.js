@@ -20,7 +20,8 @@
             metrics: {
             	// RATIO
 	            width: 0,
-	            height: 0
+	            height: 0,
+	            solidHeight: false,
             },
             
             // NAVIGATION
@@ -263,7 +264,7 @@
         	slider.css("display","block");
         	
 	        if((settings.metrics.width > 0) && (settings.metrics.height > 0)){
-		        if(slider.width() < settings.metrics.width){
+		        if((slider.width() < settings.metrics.width) && (settings.metrics.solidHeight == false)){
 		        	var tmp = ratio*slider.width();
 			        slider.find("#slides").css("height",tmp).children().css("height",tmp);
 		        }
@@ -281,7 +282,7 @@
         // RESIZING
         $(window).resize(function(){
 	        if((settings.metrics.width > 0) && (settings.metrics.height > 0)){
-		        if(slider.width() < settings.metrics.width){
+		        if((slider.width() < settings.metrics.width) && (settings.metrics.solidHeight == false)){
 			        slider.find("#slides").css("height",ratio*slider.width()).children().css("height",ratio*slider.width());
 		        }
 		        else{
