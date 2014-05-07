@@ -73,6 +73,11 @@
         var sliding = false;
         //INITIALISED?
         var initialised = false;
+        //OLD IE BROWSER
+        var oldIE = false;
+		if ($('html').is('.ie6, .ie7, .ie8') || $('body').is('.ie6, .ie7, .ie8')) {
+	        oldIE = true;
+	    }
 
 
         /*****************/
@@ -159,9 +164,13 @@
 				        		"-webkit-background-size":"cover",
 				        		"-moz-background-size":"cover",
 				        		"-o-background-size":"cover",
-				        		"filter":"progid:DXImageTransform.Microsoft.AlphaImageLoader(src=" + $(this).find("img.bg").attr('src') + ",sizingMethod='scale')",
-				        		"-ms-filter": "\"progid:DXImageTransform.Microsoft.AlphaImageLoader(src=" + $(this).find("img.bg").attr('src') + ",sizingMethod='scale')\"",
 			        		});
+			        		if(oldIE){
+				        		$(this).css({
+					        		"filter":"progid:DXImageTransform.Microsoft.AlphaImageLoader(src=" + $(this).find("img.bg").attr('src') + ",sizingMethod='scale')",
+					        		"-ms-filter": "\"progid:DXImageTransform.Microsoft.AlphaImageLoader(src=" + $(this).find("img.bg").attr('src') + ",sizingMethod='scale')\"",
+				        		});
+			        		}
 			        		$(this).find("img.bg").hide();
 		        		}
 		        		// DEFAULT BG HANDLING
