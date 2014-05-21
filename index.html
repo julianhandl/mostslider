@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Mostslider - Demo</title>
+        <meta name="description" content="Mostslider is a lightweight and simple to use jQuery content slider by Julian Handl.">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="css/normalize.min.css">
+        <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,700,400italic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/mostslider-doku/editr/editr.css">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="mostslider/themes/default/default.css">
+
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <script src="js/main.js"></script>
+    </head>
+    <body>
+    
+    
+    
+    
+
+	    <div id="container">
+		    <div id="head">
+			    <a href="http://mostslider.jurihandl.at"><img src="img/logo.png" id="logo" /></a>
+			    <a href="#head" id="totop">Back to top</a>
+		    </div>
+		    <div class="section">
+			    <h1>Mostslider</h1>
+			    <p>Mostslider is a lightweight and easy to use jQuery content slider.</p>
+			    <p>
+			    	<ul>
+				    	<li>Minified version is only 9kb.</li>
+				    	<li>Easy to setup and use.</li>
+				    	<li>Sliding any content.</li>
+				    	<li>Responsive.</li>
+				    	<li>Built in social sharing buttons.</li>
+				    	<li>Linkable slides.</li>
+			    	</ul>
+			    </p>
+		    </div>
+		    
+		    <a href="https://github.com/julianhandl/mostslider/archive/master.zip" class="button">Download latest (.zip) 650kb</a>
+		    
+		    <div id="navi">
+			    <ul>
+				    <li><a href="#image-sliding">Basic image sliding</a></li>
+				    <li><a href="#image-content-sliding">Image and content sliding</a></li>
+				    <li><a href="#content-sliding">Content sliding</a></li>
+				    <li><a href="doku.html">Customisation</a></li>
+				    <li><a href="#donation">Donation</a></li>
+				    <li><a href="#social">Social</a></li>
+				    <li><a href="#licence">Licence</a></li>
+			    </ul>
+		    </div>
+		    
+		    <div class="section" id="image-sliding">
+			    <h1>Basic image sliding</h1>
+			    <div class="slider-wrapper default">
+				    <div id="image-slider">
+					    <a href="http://500px.com/photo/47412316" target="_blank"><img src="img/demo-images/1.jpg" /></a>
+					    <a href="http://500px.com/photo/39845938" target="_blank"><img src="img/demo-images/2.jpg" /></a>
+					    <a href="http://500px.com/photo/43565628" target="_blank"><img src="img/demo-images/3.jpg" /></a>
+				    </div>
+			    </div>
+			    
+			    <h2>HTML</h2>
+			    <div class="code">
+				    <div id="image_sliding-code">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;mostSlider&lt;/title&gt;
+        &lt;link  rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;themes/default/default.css&quot; /&gt;
+       
+    &lt;/head&gt;
+    &lt;body&gt;
+        
+        &lt;div class=&quot;slider-wrapper default&quot;&gt;
+	        &lt;div id=&quot;slider&quot;&gt;
+		        &lt;a href=&quot;#&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;1.jpg&quot; /&gt;&lt;/a&gt;
+		        &lt;a href=&quot;#&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;2.jpg&quot; /&gt;&lt;/a&gt;
+		        &lt;a href=&quot;#&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;3.jpg&quot; /&gt;&lt;/a&gt;
+	        &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;script src=&quot;//code.jquery.com/jquery-1.10.1.min.js&quot;&gt;&lt;/script&gt;
+        &lt;script src=&quot;mostslider.min.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+        
+        &lt;script&gt;
+        	$(document).ready(function(){
+	        	var slider = $(&quot;#slider&quot;).mostSlider();
+        	});
+        &lt;/script&gt;
+        
+    &lt;/body&gt;
+&lt;/html&gt;</div>
+			    </div>
+			    
+			    <h2>Tip</h2>
+			    <div class="tip">
+				    <p>If you want to slide only the images without the links, simply drop the links and put only the images inside the slider.</p>
+			    </div>
+			    
+		    </div>
+		    
+		    <div class="section" id="image-content-sliding">
+			    <h1>Image and content sliding</h1>
+			    <div class="slider-wrapper default">
+				    <div id="image-content-slider">
+					    <a href="http://500px.com/photo/47412316" target="_blank" data-social="twitter pinterest facebook">
+					    	<img src="img/demo-images/1.jpg" class="bg pinterest" />
+					    	<h2 class="content from-right" style="position:absolute;top:70%;left:70%;">Carina</h2>
+					    </a>
+					    <a href="http://500px.com/photo/39845938" target="_blank">
+					    	<img src="img/demo-images/2.jpg" class="bg" />
+					    	<h2 class="content from-left" style="position:absolute;top:70%;right:70%;">Oliver</h2>
+					    </a>
+					    <a href="http://500px.com/photo/43565628" target="_blank">
+					    	<img src="img/demo-images/3.jpg" class="bg" />
+					    	<h2 class="content from-top" style="position:absolute;top:20%;left:70%;">Karin</h2>
+					    </a>
+				    </div>
+			    </div>
+			    
+			    <h2>HTML</h2>
+			    <div class="code">
+				    <div id="image_content_sliding-code">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;mostSlider&lt;/title&gt;
+        &lt;link  rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;themes/default/default.css&quot; /&gt;
+       
+    &lt;/head&gt;
+    &lt;body&gt;
+        
+        &lt;div class=&quot;slider-wrapper default&quot;&gt;
+	        &lt;div id=&quot;slider&quot;&gt;
+		        &lt;a href=&quot;#&quot; target=&quot;_blank&quot;&gt;
+		        	&lt;h2 class=&quot;content from-left&quot; style=&quot;position:absolute;top:70%;right:70%;&quot;&gt;Karin&lt;/h2&gt;
+		        	&lt;img src=&quot;1.jpg&quot; class=&quot;bg&quot; /&gt;
+		        &lt;/a&gt;
+		        &lt;a href=&quot;#&quot; target=&quot;_blank&quot;&gt;
+		        	&lt;h2 class=&quot;content from-bottom&quot; style=&quot;position:absolute;top:70%;left:70%;&quot;&gt;Oliver&lt;/h2&gt;
+		        	&lt;img src=&quot;2.jpg&quot; class=&quot;bg&quot; /&gt;
+		        &lt;/a&gt;
+		        &lt;a href=&quot;#&quot; target=&quot;_blank&quot;&gt;
+		        	&lt;h2 class=&quot;content from-right&quot; style=&quot;position:absolute;top:20%;left:70%;&quot;&gt;Carina&lt;/h2&gt;
+		        	&lt;img src=&quot;3.jpg&quot; class=&quot;bg&quot; /&gt;
+		        &lt;/a&gt;
+	        &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;script src=&quot;//code.jquery.com/jquery-1.10.1.min.js&quot;&gt;&lt;/script&gt;
+        &lt;script src=&quot;mostslider.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+        
+        &lt;script&gt;
+        	$(document).ready(function(){
+	        	var slider = $(&quot;#slider&quot;).mostSlider();
+        	});
+        &lt;/script&gt;
+        
+    &lt;/body&gt;
+&lt;/html&gt;</div>
+			    </div>
+			    
+			    <h2>Tip</h2>
+			    <div class="tip">
+				    <p>One of the most difficult thing about a slider that slides images and content is to let the slider know what should be the <b>background image</b> and what should be <b>the content.</b></p>
+				    <p>I couldn't come up with an intelligent algorithm for this problem yet, so you have to add the class <b>".bg"</b> to the image that should be <b>the background image.</b></p>
+				    <p>Content elements must have the <b>".content" class (customizable).</b> Also the need to be <b>positioned absolute and with top, right, bottom and left css attributes</b>. You can also add a effect class to each content element called <b>".from-top", ".from-right", ".from-bottom", ".from-left" and ".fade".</b></p>
+			    </div>
+			    
+		    </div>
+		    
+		    <div class="section" id="content-sliding">
+			    <h1>Content sliding</h1>
+			    <div class="slider-wrapper default">
+				    <div id="content-slider">
+					    <div>
+							<div style="position:absolute;bottom:27%;width:100%;text-align:center">
+								<img src="img/demo-images/mbp.png" alt="mbp" style="display:inline;width:50%;height:auto;">
+							</div>
+							<div class="content from-top" style="position:absolute;top:77%;width:100%;text-align:center">
+								<h4>We create awesome websites.</h4>
+							</div>
+						</div>
+						<div>
+							<h4 class="content from-left" style="position:absolute;top:29%;right:51%;width:32%;"><i class="icon-coffee"></i> Website</h4>
+							<h4 class="content from-right" style="position:absolute;top:29%;left:51%;width:32%;"><i class="icon-rocket"></i> Webapplikation</h4>
+							
+							<h4 class="content from-left" style="position:absolute;top:44%;right:51%;width:32%;"><i class="icon-desktop"></i> Webportal</h4>
+							<h4 class="content from-right" style="position:absolute;top:44%;left:51%;width:32%;"><i class="icon-globe"></i> Technology</h4>
+							
+							<h4 class="content from-left" style="position:absolute;top:59%;right:51%;width:32%;"><i class="icon-check-sign"></i> Agencyservice</h4>
+							<h4 class="content from-right" style="position:absolute;top:59%;left:51%;width:32%;"><i class="icon-cloud"></i> Hosting</h4>
+						</div>
+						<div>
+							<div style="position:absolute;bottom:30%;width:100%;text-align:center">
+								<img src="img/demo-images/responsive.png" alt="mbp" style="display:inline;width:50%;height:auto;">
+							</div>
+							<div class="content from-top" style="position:absolute;top:77%;width:100%;text-align:center">
+								<h4>Next Gen-Web: Responsive Design</h4>
+							</div>
+						</div>
+				    </div>
+			    </div>
+			    
+			    <h2>HTML</h2>
+			    <div class="code">
+				    <div id="content_sliding-code">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;mostSlider&lt;/title&gt;
+        &lt;link  rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;themes/default/default.css&quot; /&gt;
+        &lt;link  rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css&quot; /&gt;
+       
+    &lt;/head&gt;
+    &lt;body&gt;
+        
+        &lt;div class=&quot;slider-wrapper default&quot;&gt;
+	        &lt;div id=&quot;slider&quot;&gt;
+		        &lt;div&gt;
+					&lt;div style=&quot;position:absolute;bottom:27%;width:100%;text-align:center&quot;&gt;
+						&lt;img src=&quot;mbp.png&quot; alt=&quot;mbp&quot; style=&quot;display:inline;width:50%;height:auto;&quot;&gt;
+					&lt;/div&gt;
+					&lt;div class=&quot;content from-top&quot; style=&quot;position:absolute;top:77%;width:100%;text-align:center&quot;&gt;
+						&lt;h4&gt;We create awesome websites.&lt;/h4&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+				&lt;div&gt;
+					&lt;h4 class=&quot;content from-left&quot; style=&quot;position:absolute;top:29%;right:51%;width:32%;&quot;&gt;&lt;i class=&quot;icon-coffee&quot;&gt;&lt;/i&gt; Website&lt;/h4&gt;
+					&lt;h4 class=&quot;content from-right&quot; style=&quot;position:absolute;top:29%;left:51%;width:32%;&quot;&gt;&lt;i class=&quot;icon-rocket&quot;&gt;&lt;/i&gt; Webapplikation&lt;/h4&gt;
+					
+					&lt;h4 class=&quot;content from-left&quot; style=&quot;position:absolute;top:44%;right:51%;width:32%;&quot;&gt;&lt;i class=&quot;icon-desktop&quot;&gt;&lt;/i&gt; Webportal&lt;/h4&gt;
+					&lt;h4 class=&quot;content from-right&quot; style=&quot;position:absolute;top:44%;left:51%;width:32%;&quot;&gt;&lt;i class=&quot;icon-globe&quot;&gt;&lt;/i&gt; Technology&lt;/h4&gt;
+					
+					&lt;h4 class=&quot;content from-left&quot; style=&quot;position:absolute;top:59%;right:51%;width:32%;&quot;&gt;&lt;i class=&quot;icon-check-sign&quot;&gt;&lt;/i&gt; Agencyservice&lt;/h4&gt;
+					&lt;h4 class=&quot;content from-right&quot; style=&quot;position:absolute;top:59%;left:51%;width:32%;&quot;&gt;&lt;i class=&quot;icon-cloud&quot;&gt;&lt;/i&gt; Hosting&lt;/h4&gt;
+				&lt;/div&gt;
+				&lt;div&gt;
+					&lt;div style=&quot;position:absolute;bottom:30%;width:100%;text-align:center&quot;&gt;
+						&lt;img src=&quot;responsive.png&quot; alt=&quot;mbp&quot; style=&quot;display:inline;width:50%;height:auto;&quot;&gt;
+					&lt;/div&gt;
+					&lt;div class=&quot;content from-top&quot; style=&quot;position:absolute;top:77%;width:100%;text-align:center&quot;&gt;
+						&lt;h4&gt;Next Gen-Web: Responsive Design&lt;/h4&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+	        &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;script src=&quot;//code.jquery.com/jquery-1.10.1.min.js&quot;&gt;&lt;/script&gt;
+        &lt;script src=&quot;mostslider.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+        
+        &lt;script&gt;
+        	$(document).ready(function(){
+	        	var slider = $(&quot;#slider&quot;).mostSlider({
+		        	aniSpeed: 1000,
+                    pauseTime: 6000,
+                    transparancy: true,
+                    metrics: {
+                            width: 940,
+                            height: 450
+                    },
+                    contentClass: &quot;content&quot;,
+                    sbsContent: true,
+                    contentAniDelay: 300,
+	        	});
+        	});
+        &lt;/script&gt;
+        
+    &lt;/body&gt;
+&lt;/html&gt;</div>
+			    </div>
+			    
+			    <h2>Tip</h2>
+			    <div class="tip">
+				    <p>You need <b>div objects to indicate the slides.</b> Inside these divs you can do nearly everything.</p>
+				    <p>The slider options are described below.</p>
+			    </div>
+			    
+		    </div>
+		    
+		    <div class="section" id="donation">
+			    <h1>Donation</h1>
+			    <p>If you like mostslider and/or use mostslider in a commercial project, which earns you money, it would be great if you send a donation to help me provide the hosting, spend even more hours optimizing and improving mostslider, spend time on support.</p>
+			    <p>If the donations go well, I will work on providing the mostslider resources over a cdn.</p>
+			    <p>Thanks! You are awesome!</p>
+			    <script type="text/javascript" src="https://d3cir4unl8h07a.cloudfront.net/assets/embed.js"></script><a href="https://www.simplegoods.co/i/NCKGWDRW" style="margin-top:20px;margin-bottom:10px;font-size:36px;" class="simple-goods-btn">Donate</a>
+		    </div>
+		    
+		    <div class="section" id="social">
+			    <h1>Social</h1>
+			    <p>If you would like to follow me on the progression on mostslider, here are the links.</p>
+			    <p>
+				    <a href="https://github.com/julianhandl/mostslider" target="_blank"><i class="icon-github"></i> Github</a>
+				    <a href="https://twitter.com/jurihandl" target="_blank"><i class="icon-twitter-sign"></i> Twitter</a>
+				    <a href="https://www.facebook.com/mostslider" target="_blank"><i class="icon-facebook-sign"></i> Facebook</a>
+			    </p>
+		    </div>
+		    
+		    <div class="section" id="licence">
+			    <h1>Licence</h1>
+			    <p>Mostslider is licensed under the <a href="http://opensource.org/licenses/MIT" target="_blank">MIT Licence</a>.</p>
+			    <p>The MIT License (MIT)<br />
+				<br />
+				Copyright (c) 2013 Julian Handl<br />
+				<br />
+				Permission is hereby granted, free of charge, to any person obtaining a copy
+				of this software and associated documentation files (the "Software"), to deal
+				in the Software without restriction, including without limitation the rights
+				to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+				copies of the Software, and to permit persons to whom the Software is
+				furnished to do so, subject to the following conditions:<br />
+				<br />
+				The above copyright notice and this permission notice shall be included in
+				all copies or substantial portions of the Software.<br />
+				<br />
+				THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+				IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+				FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+				AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+				LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+				OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+				THE SOFTWARE.
+				</p>
+		    </div>
+        </div>
+        
+        
+        
+        
+        
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+        
+        <<script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="mostslider/mostslider.min.js"></script>
+
+        <script>
+        
+        	$(document).ready(function(){
+	        	$("#image-slider").mostSlider();
+	        	$("#image-content-slider").mostSlider({
+	        		linkable: true,
+		        	socialButtons: true,
+				    socialUrl: "mostslider.jurihandl.at",
+				    twitterID: "jurihandl"
+	        	});
+	        	$("#content-slider").mostSlider({
+                    aniSpeed: 1000,
+                    pauseTime: 6000,
+                    transparancy: true,
+                    metrics: {
+                            width: 940,
+                            height: 450
+                    },
+                    contentClass: "content",
+                    sbsContent: true,
+                    contentAniDelay: 300,
+	        	});
+			});
+        	
+        	var image_sliding = ace.edit("image_sliding-code");
+		    image_sliding.setTheme("ace/theme/github");
+		    image_sliding.getSession().setMode("ace/mode/html");
+		    image_sliding.setReadOnly(true);
+		    
+		    var image_content_sliding = ace.edit("image_content_sliding-code");
+		    image_content_sliding.setTheme("ace/theme/github");
+		    image_content_sliding.getSession().setMode("ace/mode/html");
+		    image_content_sliding.setReadOnly(true);
+		    
+		    var content_sliding = ace.edit("content_sliding-code");
+		    content_sliding.setTheme("ace/theme/github");
+		    content_sliding.getSession().setMode("ace/mode/html");
+		    content_sliding.setReadOnly(true);
+		    
+        
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			
+			ga('create', 'UA-42285420-3', 'jurihandl.at');
+			ga('send', 'pageview');
+
+        </script>
+    </body>
+</html>

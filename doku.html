@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Mostslider - Doku</title>
+        <meta name="description" content="Mostslider is a lightweight and simple to use jQuery content slider by Julian Handl.">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="css/normalize.min.css">
+        <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,700,400italic' rel='stylesheet' type='text/css'>
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body>
+    
+    
+    
+    
+
+	    <div id="container">
+		    <div id="head">
+			    <a href="http://mostslider.jurihandl.at"><img src="img/logo.png" id="logo" /></a>
+			    <a href="#head" id="totop">Back to top</a>
+		    </div>
+		    <div class="section">
+			    <h1>Mostslider - Customisation</h1>
+			    <p>This site covers all options and the api to customize the mostslider.</p>
+		    </div>
+		    
+		    <a href="https://github.com/julianhandl/mostslider/archive/master.zip" class="button">Download latest (.zip) 650kb</a>
+		    
+		    <div id="navi">
+			    <ul>
+				    <li><a href="index.html#image-sliding">Basic image sliding</a></li>
+				    <li><a href="index.html#image-content-sliding">Image and content sliding</a></li>
+				    <li><a href="index.html#content-sliding">Content sliding</a></li>
+				    <li><a href="doku.html">Customisation</a></li>
+				    <li><a href="index.html#donation">Donation</a></li>
+				    <li><a href="index.html#licence">Licence</a></li>
+			    </ul>
+		    </div>
+		    
+		    <div class="section">
+			    <h1>Basic js options</h1>
+			    
+			    <table width="100%">
+				    <tr>
+					    <th>Option</th>
+					    <th>Default</th>
+					    <th>Options</th>
+					    <th>Description</th>
+				    </tr>
+				    <tr>
+					    <td>animation</td>
+					    <td>fade</td>
+					    <td>fade<br>slide<br>slidedown<br>slideup</td>
+					    <td>Defines the type of animation.</td>
+				    </tr>
+				    <tr>
+					    <td>aniSpeed</td>
+					    <td>1000</td>
+					    <td>Any number in ms</td>
+					    <td>Defines the speed of animation.</td>
+				    </tr>
+				    <tr>
+					    <td>autoPlay</td>
+					    <td>false</td>
+					    <td>true<br>false</td>
+					    <td>Turns autoPlay on and off.</td>
+				    </tr>
+				    <tr>
+					    <td>pauseTime</td>
+					    <td>3000</td>
+					    <td>Any number in ms</td>
+					    <td>Defines the time each slide is shown.</td>
+				    </tr>
+				    <tr>
+					    <td>navigation</td>
+					    <td>true</td>
+					    <td>true<br>false</td>
+					    <td>Turn navigation arrows on and off.</td>
+				    </tr>
+				    <tr>
+					    <td>hideArrows</td>
+					    <td>true</td>
+					    <td>true<br>false</td>
+					    <td>Toggles if arrows should be faded out when cursor leaves the slider.</td>
+				    </tr>
+				    <tr>
+					    <td>metrics</td>
+					    <td>width: 0,<br>height: 0</td>
+					    <td>width: x,<br>height: y</td>
+					    <td>This sets a ratio for your slider, so it will stay the same ratio when it grows or shrinks. This is important if you need your slider to be responsive and if you use only content on your slides and no filling objects like images. The easiest method is to set it to the dimensions your slider has at it's biggest size.</td>
+				    </tr>
+			    </table>
+			    
+		    </div>
+		    
+		    <div class="section">
+			    <h1>Advanced js options</h1>
+			    
+			    <table width="100%">
+				    <tr>
+					    <th>Option</th>
+					    <th>Default</th>
+					    <th>Options</th>
+					    <th>Description</th>
+				    </tr>
+				    <tr>
+					    <td>thumbnails</td>
+					    <td>false</td>
+					    <td>true<br>false</td>
+					    <td>Turns thumbnail support on and off. See more at <a href="#thumbnails">Thumbnails</a>.</td>
+				    </tr>
+				    <tr>
+					    <td>linkable</td>
+					    <td>false</td>
+					    <td>true<br>false</td>
+					    <td>Activates specific urls for each slide. See more at <a href="#linkable">Linkable</a>.</td>
+				    </tr>
+				    <tr>
+					    <td>transparancy</td>
+					    <td>false</td>
+					    <td>true<br>false</td>
+					    <td>Set this option to "true" if you are using transparent .png or .gif files. Otherwise the animation will look weird.</td>
+				    </tr>
+				    <tr>
+					    <td>contentClass</td>
+					    <td>".content"</td>
+					    <td>string</td>
+					    <td>Sets the class that defines animated content.</td>
+				    </tr>
+				    <tr>
+					    <td>sbsContent</td>
+					    <td>false</td>
+					    <td>true<br>false</td>
+					    <td>If you have multiple animated content blocks on your slide, this option sets if all content is shown at once or step by step.</td>
+				    </tr>
+				    <tr>
+					    <td>contentAniDelay</td>
+					    <td>300</td>
+					    <td>Any number in ms</td>
+					    <td>Defines the delay between each content element when sbsContent is enabled.</td>
+				    </tr>
+				    <tr>
+					    <td>socialButtons</td>
+					    <td>false</td>
+					    <td>ture<br>false</td>
+					    <td>Turnes the social sharing buttons on or off. See more at <a href="#social">Social Buttons</a>.</td>
+				    </tr>
+				    <tr>
+					    <td>socialUrl</td>
+					    <td>""</td>
+					    <td>An URL as string</td>
+					    <td>Defines the main url of your site. This is important for facebook and pinterest sharing.</td>
+				    </tr>
+				    <tr>
+					    <td>twitterID</td>
+					    <td>""</td>
+					    <td>Your twitter ID (username)</td>
+					    <td>Defines your twitter ID. This is important for twitter sharing.</td>
+				    </tr>
+			    </table>
+			    
+		    </div>
+		    
+		    <div class="section">
+			    <h1>How to</h1>
+			    
+			    <table width="100%">
+				    <tr>
+					    <th>Option</th>
+					    <th>Description</th>
+				    </tr>
+				    <tr>
+					    <td id="thumbnails">Ad an<br>option</td>
+					    <td>To an an option via javascript simply call the slider like this:<pre>$(&quot;#slider&quot;).mostSlider({
+   aniSpeed: 1000,
+   pauseTime: 6000,
+   transparancy: true,
+   metrics: {
+           width: 940,
+           height: 450
+   },
+   contentClass: &quot;content&quot;,
+   sbsContent: true,
+   contentAniDelay: 300,
+});</pre></td>
+				    </tr>
+				    <tr>
+					    <td id="thumbnails">thumbnails</td>
+					    <td>To show thumbnails instead of a dot for each slide you have to activate the thumbnail option. Then you have to set the <pre>data-thumbnail</pre> attribute on each slide element and set it to an url of a picture that should be displayed as thumbnail. It is highly recommended to use the same metrics for each thumbnail.<br>Example:<pre>&lt;div data-thumb=&quot;slides/thumbs/1.jpg&quot;&gt;</pre></td>
+				    </tr>
+				    <tr>
+					    <td id="linkable">linkable</td>
+					    <td>This enables that you can link to each slide in a slider with a specific url. (Can only be used in one slider per site)<br>By add adding:<pre>/?slider=number_of_slide</pre>to your url, you can link to a specific slide on the enabled slider. If you already have some other GET options in your URL, simply add:<pre>&slider=number_of_slide</pre>at the end of your url.</td>
+				    </tr>
+				    <tr>
+					    <td id="social">Social Buttons</td>
+					    <td>To add social buttons to a slide you have to enable the js option and set your socialUrl and your twitterID.
+						    <p>
+							    <h4>Twitter</h4>
+							    To add a twitter button to your slide you have to set the<pre>data-social</pre>attribute on your slide element to "twitter".<br>Example:<pre>&lt;div href=&quot;#&quot; data-social=&quot;twitter&quot;&gt;</pre>
+						    </p>
+						    <p>
+							    <h4>Pinterest</h4>
+							    To add a pin it button to your slide you have to set the<pre>data-social</pre>attribute on your slide element to "pinterest". Then you have give the image that should be pinned the class "pinterest".<br>Example:<pre>&lt;div href=&quot;#&quot; data-social=&quot;pinterest&quot;&gt;
+   &lt;img src=&quot;img/demo-images/1.jpg&quot; class=&quot;bg pinterest&quot; /&gt;
+&lt;/div&gt;</pre>
+						    </p>
+						    <p>
+							    <h4>Facebook</h4>
+							    To add a facebook-like button to your slide you have to set the<pre>data-social</pre>attribute on your slide element to "facebook".<br>Example:<pre>&lt;div href=&quot;#&quot; data-social=&quot;facebook&quot;&gt;</pre>
+						    </p>
+						    <p>
+							    <h4>Addition</h4>
+							    It is possible to use several sharing buttons on one slide.
+						    </p>
+					    </td>
+				    </tr>
+			    </table>
+			    
+		    </div>
+		    
+		    <div class="section" id="donation">
+			    <h1>Donation</h1>
+			    <p>If you like mostslider and/or use mostslider in a commercial project, which earns you money, it would be great if you send a donation to help me provide the hosting, spend even more hours optimizing and improving mostslider, spend time on support.</p>
+			    <p>If the donations go well, I will work on providing the mostslider resources over a cdn.</p>
+			    <p>Thanks! You are awesome!</p>
+			    <script type="text/javascript" src="https://d3cir4unl8h07a.cloudfront.net/assets/embed.js"></script><a href="https://www.simplegoods.co/i/NCKGWDRW" style="margin-top:20px;margin-bottom:10px;font-size:36px;" class="simple-goods-btn">Donate</a>
+		    </div>
+		    
+		    <div class="section" id="social">
+			    <h1>Social</h1>
+			    <p>If you would like to follow me on the progression on mostslider, here are the links.</p>
+			    <p>
+				    <a href="https://github.com/julianhandl/mostslider" target="_blank"><i class="icon-github"></i> Github</a>
+				    <a href="https://twitter.com/jurihandl" target="_blank"><i class="icon-twitter-sign"></i> Twitter</a>
+				    <a href="https://www.facebook.com/mostslider" target="_blank"><i class="icon-facebook-sign"></i> Facebook</a>
+			    </p>
+		    </div>
+		    
+		    <div class="section" id="licence">
+			    <h1>Licence</h1>
+			    <p>Mostslider is licensed under the <a href="http://opensource.org/licenses/MIT" target="_blank">MIT Licence</a>.</p>
+			    <p>The MIT License (MIT)<br />
+				<br />
+				Copyright (c) 2013 Julian Handl<br />
+				<br />
+				Permission is hereby granted, free of charge, to any person obtaining a copy
+				of this software and associated documentation files (the "Software"), to deal
+				in the Software without restriction, including without limitation the rights
+				to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+				copies of the Software, and to permit persons to whom the Software is
+				furnished to do so, subject to the following conditions:<br />
+				<br />
+				The above copyright notice and this permission notice shall be included in
+				all copies or substantial portions of the Software.<br />
+				<br />
+				THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+				IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+				FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+				AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+				LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+				OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+				THE SOFTWARE.
+				</p>
+		    </div>
+        </div>
+        
+        
+        
+        
+        
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+
+        <script src="js/main.js"></script>
+
+        <script>
+        
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			
+			ga('create', 'UA-42285420-3', 'jurihandl.at');
+			ga('send', 'pageview');
+        </script>
+    </body>
+</html>
