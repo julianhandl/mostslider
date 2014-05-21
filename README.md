@@ -6,7 +6,7 @@ See demos and documentation at the link below at "Documentation"!
 
 #Documentation
 
-[mostslider.jurihandl.at](http://mostslider.jurihandl.at/)
+[Github Pages](http://julianhandl.github.io/mostslider/)
 
 #Releases
 
