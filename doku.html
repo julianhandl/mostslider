@@ -109,12 +109,48 @@
 					    <th>Options</th>
 					    <th>Description</th>
 				    </tr>
+                    <tr>
+                        <td>background_center</td>
+                        <td>false</td>
+                        <td>true<br>false</td>
+                        <td>Uses the background image (class='bg') as css background for the slide. The images gets centered and scaled to show the best result. Basically it looks like a normal slide but the image isn't clickable. This can be used as a very basic method to prevent your images to be stolen.</td>
+                    </tr>
 				    <tr>
 					    <td>thumbnails</td>
 					    <td>false</td>
 					    <td>true<br>false</td>
 					    <td>Turns thumbnail support on and off. See more at <a href="#thumbnails">Thumbnails</a>.</td>
 				    </tr>
+                    <tr>
+                        <td>thumb_bg</td>
+                        <td>false</td>
+                        <td>true<br>false</td>
+                        <td>If this option is enabled the bullets will be given a css background instead of an image tag. Works only if the <a href="#thumbnails">thumbnails</a> option is enabled.</td>
+                    </tr>
+                    <tr>
+                        <td>solidHeight</td>
+                        <td>false</td>
+                        <td>true<br>false</td>
+                        <td>Use only with metrics option. Your slider will stay at the same height during resizing.</td>
+                    </tr>
+                    <tr>
+                        <td>responsive_images</td>
+                        <td>false</td>
+                        <td>true<br>false</td>
+                        <td>Use different images (different sizes of the same image) for different sizes of the slider. This reduces traffic and is usefull for responsive design. All other responsive options must be set. <a href="#responsive_images">How to use it</a></td>
+                    </tr>
+                    <tr>
+                        <td>responsive_break_tablet</td>
+                        <td>481</td>
+                        <td>integer</td>
+                        <td>This sets the windows width where the slider switches from the tablet image to the mobile image. Use the last value where the tablet view is still active. So if the mobile view ranges from 480 - 0, use 481.</td>
+                    </tr>
+                    <tr>
+                        <td>responsive_break_desktop</td>
+                        <td>1024</td>
+                        <td>integer</td>
+                        <td>This sets the windows width where the slider switches from the desktop image to the tablet image. The method how to choose the correct value is described above.
+                    </tr>
 				    <tr>
 					    <td>linkable</td>
 					    <td>false</td>
@@ -194,6 +230,10 @@
 					    <td id="thumbnails">thumbnails</td>
 					    <td>To show thumbnails instead of a dot for each slide you have to activate the thumbnail option. Then you have to set the <pre>data-thumb</pre> attribute on each slide element and set it to an url of a picture that should be displayed as thumbnail. It is highly recommended to use the same metrics for each thumbnail.<br>Example:<pre>&lt;div data-thumb=&quot;slides/thumbs/1.jpg&quot;&gt;</pre></td>
 				    </tr>
+                    <tr>
+                        <td id="responsive_images">responsive_images</td>
+                        <td>Add the <pre>data-responsive-images="true"</pre> attribute to an image that should be changes during rescaling. Specify the images that should be used with <pre>data-image-tablet="url-to-tablet-image"</pre> and <pre>data-image-desktop="url-to-desktop-image"</pre>IMPORTANT:<br>Put the url from the smallest image that should be used for mobile devices inside the default <pre>src="url-to-mobile-image"</pre> tag.</td>
+                    </tr>
 				    <tr>
 					    <td id="linkable">linkable</td>
 					    <td>This enables that you can link to each slide in a slider with a specific url. (Can only be used in one slider per site)<br>By add adding:<pre>/?slider=number_of_slide</pre>to your url, you can link to a specific slide on the enabled slider. If you already have some other GET options in your URL, simply add:<pre>&slider=number_of_slide</pre>at the end of your url.</td>
@@ -223,14 +263,6 @@
 				    </tr>
 			    </table>
 			    
-		    </div>
-		    
-		    <div class="section" id="donation">
-			    <h1>Donation</h1>
-			    <p>If you like mostslider and/or use mostslider in a commercial project, which earns you money, it would be great if you send a donation to help me provide the hosting, spend even more hours optimizing and improving mostslider, spend time on support.</p>
-			    <p>If the donations go well, I will work on providing the mostslider resources over a cdn.</p>
-			    <p>Thanks! You are awesome!</p>
-			    <script type="text/javascript" src="https://d3cir4unl8h07a.cloudfront.net/assets/embed.js"></script><a href="https://www.simplegoods.co/i/NCKGWDRW" style="margin-top:20px;margin-bottom:10px;font-size:36px;" class="simple-goods-btn">Donate</a>
 		    </div>
 		    
 		    <div class="section" id="social">
