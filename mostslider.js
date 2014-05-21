@@ -7,44 +7,68 @@
         var settings = $.extend({
             // SET DEFAULT
             // ANIMATION
+            // animation effect
             animation: "fade",
+            // animation speed
             aniSpeed: 1000,
-            // BACKGROUND CENTERING - only avilable if metrics are set
+            // put slider image as background and center it - only avilable if metrics are set
             background_center: false,
             
             // SPEED
+            // slide automatically
             autoPlay: true,
+            // time between slide
             pauseTime: 3000,
             
             // METRICS
+            // slider width and height
             metrics: {
             	// RATIO
+            	// max width
 	            width: 0,
+	            // max height
 	            height: 0,
-	            solidHeight: false,
             },
+            // stay the same height during resize
+            solidHeight: false,
             
             // NAVIGATION
+            // use bullets as thumbnails
             thumbnails: false,
+            // put thumbnailimage in background
+            thumb_bg: false,
+            // en/disable navigation
             navigation: true,
+            // hide the arrows
             hideArrows: true,
             
             // FUNCTION
+            // enable linking to slides via url
             linkable: false,
             
             // CONTENT
+            // if content has transparancies
             transparancy: false,
+            // specify the content class or animated content
             contentClass: "content",
+            // proceed content animation StepByStey
             sbsContent: false,
+            // time between each content animation step
 		    contentAniDelay: 300,
 		    
 		    // IMAGES
+		    // user different images for different slider sizes
 		    responsive_images: false,
+		    // breakpoint between mobile and tablet (min tablet)
 		    responsive_break_tablet: 481,
+		    // breakpoint between tablet and desktop (min desktop)
             responsive_break_desktop: 1024,
 		    
+		    // enable social button for each slide
 		    socialButtons: false,
+		    // url for social buttons
 		    socialUrl: "",
+		    // twitter id
 		    twitterID: ""
         }, options );
  
@@ -341,7 +365,12 @@
 	        slider.append('<div id="bullets" />');
 	        for (var i=1;i<=children_number;i++){ 
 	        	if(settings.thumbnails == true){
-		        	slider.find("#bullets").append('<div class="bullet" style="background-image:url(' + slider.find("#slides #" + i).attr('data-thumb') + ');" id="' + i + '"></div>');
+	        		if(settings.thumb_bg == true){
+		        		slider.find("#bullets").append('<div class="bullet" style="background-image:url(' + slider.find("#slides #" + i).attr('data-thumb') + ');" id="' + i + '"></div>');
+	        		}
+	        		else{
+			        	slider.find("#bullets").append('<div class="bullet" id="' + i + '">' + slider.find("#slides #" + i).attr('data-thumb') + '</div>');
+		        	}
 	        	}
 	        	else{
 		        	slider.find("#bullets").append('<div class="bullet" id="' + i + '" />');
