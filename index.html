@@ -157,7 +157,16 @@
         
         &lt;script&gt;
         	$(document).ready(function(){
-	        	var slider = $(&quot;#slider&quot;).mostSlider();
+	        	var slider = $(&quot;#slider&quot;).mostSlider({
+                    socialButtons: true,
+                    socialUrl: "http://julianhandl.github.io/mostslider/",
+                    twitterID: "jurihandl",
+                    metrics: {
+                        width: 658,
+                        height: 439
+                    },
+                    background_center: true
+                });
         	});
         &lt;/script&gt;
         
@@ -339,8 +348,13 @@
 	        	$("#image-content-slider").mostSlider({
 	        		linkable: true,
 		        	socialButtons: true,
-				    socialUrl: "mostslider.jurihandl.at",
-				    twitterID: "jurihandl"
+				    socialUrl: "http://julianhandl.github.io/mostslider/",
+				    twitterID: "jurihandl",
+                    metrics: {
+                        width: 658,
+                        height: 439
+                    },
+                    background_center: true,
 	        	});
 	        	$("#content-slider").mostSlider({
                     aniSpeed: 1000,
