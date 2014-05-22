@@ -223,6 +223,21 @@
                             </pre>
                         </td>
                     </tr>
+                    <tr>
+                        <td>markup</td>
+                        <td>old IE</td>
+                        <td>The slider looks for a class in the html tag to specify if IE8 or older is uesd to optimize some visuals.<br>Use this markup for your html document:
+                            <pre>
+&lt;!DOCTYPE html&gt;
+&lt;!--[if lt IE 7 ]&gt; &lt;html class=&quot;ie6 no-js&quot;&gt; &lt;![endif]--&gt;
+&lt;!--[if IE 7 ]&gt; &lt;html class=&quot;ie7 no-js&quot;&gt; &lt;![endif]--&gt;
+&lt;!--[if IE 8 ]&gt; &lt;html class=&quot;ie8 no-js&quot;&gt; &lt;![endif]--&gt;
+&lt;!--[if IE 9 ]&gt; &lt;html class=&quot;ie9 no-js&quot;&gt; &lt;![endif]--&gt;
+&lt;!--[if (gt IE 9)|!(IE)]&gt;&lt;!--&gt;
+&lt;html class=&quot;no-js&quot;&gt; &lt;!--&lt;![endif]--&gt;
+                            </pre>
+                        </td>
+                    </tr>
                 </table>
             </div>
 		    
