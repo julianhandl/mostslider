@@ -297,7 +297,7 @@
         	slider.css("display","block");
         	
 	        if((settings.metrics.width > 0) && (settings.metrics.height > 0)){
-		        if((slider.width() < settings.metrics.width) && (settings.metrics.solidHeight == false)){
+		        if((slider.width() < settings.metrics.width) && (settings.solidHeight == false)){
 		        	var tmp = ratio*slider.width();
 			        slider.find("#slides").css("height",tmp).children().css("height",tmp);
 		        }
@@ -315,7 +315,7 @@
         // RESIZING
         $(window).resize(function(){
 	        if((settings.metrics.width > 0) && (settings.metrics.height > 0)){
-		        if((slider.width() < settings.metrics.width) && (settings.metrics.solidHeight == false)){
+		        if((slider.width() < settings.metrics.width) && (settings.solidHeight == false)){
 			        slider.find("#slides").css("height",ratio*slider.width()).children().css("height",ratio*slider.width());
 		        }
 		        else{
