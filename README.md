@@ -10,6 +10,10 @@ See demos and documentation at the link below at "Documentation"!
 
 #Releases
 
+##v1.3.1
+
+- fixed really awful thumbnail bug
+
 ##v1.3
 
 - fixed overflow issue
