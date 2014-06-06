@@ -369,7 +369,7 @@
 		        		slider.find("#bullets").append('<div class="bullet" style="background-image:url(' + slider.find("#slides #" + i).attr('data-thumb') + ');" id="' + i + '"></div>');
 	        		}
 	        		else{
-			        	slider.find("#bullets").append('<div class="bullet" id="' + i + '">' + slider.find("#slides #" + i).attr('data-thumb') + '</div>');
+			        	slider.find("#bullets").append('<div class="bullet" id="' + i + '"><img src="' + slider.find("#slides #" + i).attr('data-thumb') + '" /></div>');
 		        	}
 	        	}
 	        	else{
@@ -384,14 +384,14 @@
 	        slider.prepend('<div id="left" class="slider-nav" /><div id="right" class="slider-nav" />');
 	        // HIDE/SHOW ARROWS
 	        if(settings.hideArrows == true){
-        	slider.find(".slider-nav").css("display","none");
-	        slider.mouseenter(function(){
-	        	slider.find(".slider-nav").fadeIn(200);
-	        });
-	        slider.mouseleave(function(){
-		        slider.find(".slider-nav").fadeOut(200);
-	        });
-        }
+	        	slider.find(".slider-nav").css("display","none");
+		        slider.mouseenter(function(){
+		        	slider.find(".slider-nav").fadeIn(200);
+		        });
+		        slider.mouseleave(function(){
+			        slider.find(".slider-nav").fadeOut(200);
+		        });
+	        }
         }
         
         // SOCIAL
