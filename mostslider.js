@@ -281,7 +281,8 @@
         });
         //SET WRAPER FOR SLIDE ANIMATION
         if(settings.animation == "slide"){
-	        slider.wrapInner('<div id="slides" style="position:absolute;width:100%;height:100%;overflow:hidden;line-height:0;" />');
+        	// WRAP SLIDES DIV WITH ANOTHER DIV THAT CONTAINS THE ABSOLUTE DIV. SO THUMBNAILS CAN BE POSITIONED CORRECTLY.
+	        slider.wrapInner('<div style="position:relative;width:100%;height:100%;"><div id="slides" style="position:absolute;width:100%;height:100%;overflow:hidden;line-height:0;" /></div>');
         }
         else{
 	        slider.wrapInner('<div id="slides" style="line-height:0;overflow:hidden;" />');
@@ -300,6 +301,10 @@
 		        if((slider.width() < settings.metrics.width) && (settings.solidHeight == false)){
 		        	var tmp = ratio*slider.width();
 			        slider.find("#slides").css("height",tmp).children().css("height",tmp);
+			        
+			        if(settings.animation == "slide"){
+				        slider.css("height",tmp);
+			        }
 		        }
 		        else{
 					slider.find("#slides").css("height",settings.metrics.height).children().css("height",settings.metrics.height);
