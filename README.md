@@ -8,6 +8,12 @@ See demos and documentation at the link below at "Documentation"!
 
 [Github Pages](http://julianhandl.github.io/mostslider/)
 
+#To do
+
+- More examples for Doku
+- More testing
+- Speed up JS
+
 #Releases
 
 ##v1.3.1
