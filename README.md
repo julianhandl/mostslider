@@ -10,6 +10,7 @@ See demos and documentation at the link below at "Documentation"!
 
 #To do
 
+- Support css-transition, velocity.js, GSAP
 - More examples for Doku
 - More testing
 - Speed up JS
