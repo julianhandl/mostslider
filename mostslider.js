@@ -144,11 +144,14 @@
     			 "overflow":"hidden"}).attr("id",index+1);
     		// SPECIAL SETTINGS FOR CSS METHOD
     		if(settings.aniMethod == 'css'){
-	    		$(this).css({
-		    		//'transition': 'opacity ' + settings.aniSpeed + 'ms ease',
+    			$(this).css({
 		    		'display': 'block',
-		    		'opacity': 0,
 	    		});
+    			if(settings.animation == 'fade'){
+	    			$(this).css({
+			    		'opacity': 0,
+		    		});
+    			}
     		}
     		
     		/*****************/
@@ -288,7 +291,7 @@
         //SET WRAPER FOR SLIDE ANIMATION
         if(settings.animation == "slide"){
         	// WRAP SLIDES DIV WITH ANOTHER DIV THAT CONTAINS THE ABSOLUTE DIV. SO THUMBNAILS CAN BE POSITIONED CORRECTLY.
-	        slider.wrapInner('<div style="position:relative;width:100%;height:100%;"><div id="slides" style="position:absolute;width:100%;height:100%;overflow:hidden;line-height:0;" /></div>');
+	        slider.wrapInner('<div style="position:relative;width:100%;height:100%;" id="slides-wrapper"><div id="slides" style="position:absolute;width:100%;height:100%;overflow:hidden;line-height:0;" /></div>');
         }
         else{
 	        slider.wrapInner('<div id="slides" style="line-height:0;overflow:hidden;" />');
@@ -318,7 +321,8 @@
 	        }
 	        else{
 	        	var tmp = slider.find("#slides #1").height();
-		        slider.find("#slides").css("height",tmp).css("height",tmp);
+		        slider.find("#slides").css("height",tmp);
+		        slider.css("height",tmp);
 	        }
 	        initialised = true;
         }
@@ -443,109 +447,234 @@
 						switch (settings.animation) {
 							//FADE
 							case 'fade':
-								if(settings.transparancy == true){
-									slider.find('#slides #' + current).css("z-index",5).fadeIn(settings.aniSpeed);
-									slider.find('#slides #' + last).css("z-index",5).fadeOut(settings.aniSpeed,function(){
-										//HIDE LAST SLIDE
-									    slider.showInner(current);
-									    slider.hideInner(last);
-									    sliding = false;
-									});
-								}
-								else{
-									// STANDARD JQUERY ANIMATION
-									if(settings.aniMethod == 'jQuery'){
-										slider.find('#slides #' + current).css("z-index",5).fadeIn(settings.aniSpeed,function(){
+							
+								var current_slide_obj = slider.find('#slides #' + current);
+								var last_slide_obj = slider.find('#slides #' + last);
+								
+								function fade_jquery(){
+									// TRANSPARANCY JQUERY ANIMATION
+									if(settings.transparancy == true){
+										current_slide_obj.css("z-index",5).fadeIn(settings.aniSpeed);
+										last_slide_obj.css("z-index",5).fadeOut(settings.aniSpeed,function(){
 											//HIDE LAST SLIDE
-										    slider.find('#slides #' + last).css("display","none");
 										    slider.showInner(current);
 										    slider.hideInner(last);
 										    sliding = false;
 										});
 									}
-									// CSS ANIMATION
-									else if(settings.aniMethod == 'css'){
-										slider.find('#slides #' + current).css({
-											'transition': 'opacity ' + settings.aniSpeed + 'ms ease',
+									// STANDARD JQUERY ANIMATION
+									else{
+										current_slide_obj.css("z-index",5).fadeIn(settings.aniSpeed, function(){
+											//HIDE LAST SLIDE
+										    last_slide_obj.css("display","none");
+										    slider.showInner(current);
+										    slider.hideInner(last);
+										    sliding = false;
+										});
+									}
+								}
+								function fade_css(){
+									if(settings.transparancy == true){
+										current_slide_obj.css({
+											'transition': 'opacity ' + settings.aniSpeed + 'ms linear',
 											"z-index": 5,
 											"opacity": 1,
+										});
+										last_slide_obj.css({
+											'transition': 'opacity ' + settings.aniSpeed + 'ms linear',
+											"z-index": 5,
+											"opacity": 0,
 										}).bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
-											slider.find('#slides #' + last).css({
+											last_slide_obj.css({
 												"z-index": 0,
-												"opacity": 0,
+												'transition': '',
 											});
-											slider.find('#slides #' + current).css({
+											current_slide_obj.css({
 												'transition': ''
 											})
 											slider.showInner(current);
 										    slider.hideInner(last);
 										    sliding = false;
 										});
-										
+									}
+									else{
+										current_slide_obj.css({
+											'transition': 'opacity ' + settings.aniSpeed + 'ms ease',
+											"z-index": 5,
+											"opacity": 1,
+										}).bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
+											last_slide_obj.css({
+												"z-index": 0,
+												"opacity": 0,
+											});
+											current_slide_obj.css({
+												'transition': ''
+											})
+											slider.showInner(current);
+										    slider.hideInner(last);
+										    sliding = false;
+										});
 									}
 								}
+								
+								switch (settings.aniMethod) {
+									case 'jQuery':
+										fade_jquery();
+										break;
+									case 'css':
+										fade_css();
+										break;
+								}
+
 								break;
 								
-							//SLIDE DOWN
-							case 'slidedown':
-								slider.find('#slides #' + current).css("z-index",5).slideDown(settings.aniSpeed,function(){
-									//HIDE LAST SLIDE
-								    slider.find('#slides #' + last).css("display","none");
-								    slider.showInner(current);
-								    slider.hideInner(last);
-								    sliding = false;
-								});
-								break;
-								
-							//SLIDE UP
-							case 'slideup':
-								slider.find('#slides #' + current).css({"z-index":5,"display":"block"});
-								slider.find('#slides #' + last).css("z-index",10).slideUp(settings.aniSpeed,function(){
-									//HIDE LAST SLIDE
-								    slider.find('#slides #' + last).css({"z-index":0,"display":"none"});
-								    slider.showInner(current);
-								    slider.hideInner(last);
-								    sliding = false;
-								});
-								break;
 								
 							//SLIDE
 							case 'slide':
-								var current_slide = slider.find('#slides #' + current);
-								var last_slide = slider.find('#slides #' + last);
+								var current_slide_obj = slider.find('#slides #' + current);
+								var last_slide_obj = slider.find('#slides #' + last);
 								
-								// SLIDE DIRECTION
-								switch(direction){
-									//RIGHT
-									case "right":
-										current_slide.css({"margin-left":last_slide.width(),"display":"block"}).animate({
-											"margin-left": 0
-										},settings.aniSpeed);
-										last_slide.css("margin-left",0).animate({
-											"margin-left": last_slide.width()*(-1)
-										},settings.aniSpeed,function(){
-											//HIDE LAST SLIDE
-										    last_slide.css({"z-index":0,"display":"none"});
-										    slider.showInner(current);
-										    slider.hideInner(last);
-										    sliding = false;
-										});
-										break;
+								function slide_jquery(){
+									// SLIDE DIRECTION
+									switch(direction){
+										//RIGHT
+										case "right":
+											current_slide_obj.css({"margin-left":last_slide_obj.width(),"display":"block"}).animate({
+												"margin-left": 0
+											},settings.aniSpeed);
+											last_slide_obj.css("margin-left",0).animate({
+												"margin-left": last_slide_obj.width()*(-1)
+											},settings.aniSpeed,function(){
+												//HIDE LAST SLIDE
+											    last_slide_obj.css({"z-index":0,"display":"none"});
+											    slider.showInner(current);
+											    slider.hideInner(last);
+											    sliding = false;
+											});
+											break;
+											
+										//LEFT
+										case "left":
+											current_slide_obj.css({"margin-left":last_slide_obj.width()*(-1),"display":"block"}).animate({
+												"margin-left": 0
+											},settings.aniSpeed);
+											last_slide_obj.css("margin-left",0).animate({
+												"margin-left": last_slide_obj.width()
+											},settings.aniSpeed,function(){
+												//HIDE LAST SLIDE
+											    last_slide_obj.css({"z-index":0,"display":"none"});
+											    slider.showInner(current);
+											    slider.hideInner(last);
+											    sliding = false;
+											});
+											break;
+									}
+								}
+								function slide_css(){
+									// SLIDE DIRECTION
+									switch(direction){
+										//RIGHT
+										case "right":
+											
+											var obj_width = last_slide_obj.width();
+											
+											current_slide_obj.css({
+												"margin-left": 700,
+												"z-index": 5,
+											});
+											setTimeout(function(){
+												current_slide_obj.css({
+													'transition': 'margin ' + settings.aniSpeed + 'ms ease-in-out',
+													"margin-left": 0,
+												});
+											}, 1);
+																						
+											
+											last_slide_obj.css({
+												"margin-left": 0,
+												"z-index": 5,
+											})
+											setTimeout(function(){
+												last_slide_obj.css({
+													'transition': 'margin ' + settings.aniSpeed + 'ms ease-in-out',
+													"margin-left": (obj_width * (-1)) + 'px',
+												});
+											}, 1);
+											
+											last_slide_obj.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
+												last_slide_obj.css({
+													"margin-left": 0,
+													"z-index": 0,
+													"transition": '',
+													
+												})
+												current_slide_obj.css({
+													"margin-left": 0,
+													"z-index": 5,
+													"transition": '',
+												});
+												sliding = false;
+												
+											});
+											
+											
 										
-									//LEFT
-									case "left":
-										current_slide.css({"margin-left":last_slide.width()*(-1),"display":"block"}).animate({
-											"margin-left": 0
-										},settings.aniSpeed);
-										last_slide.css("margin-left",0).animate({
-											"margin-left": last_slide.width()
-										},settings.aniSpeed,function(){
-											//HIDE LAST SLIDE
-										    last_slide.css({"z-index":0,"display":"none"});
-										    slider.showInner(current);
-										    slider.hideInner(last);
-										    sliding = false;
-										});
+											/*
+											current_slide_obj.css({
+												"margin-left":last_slide_obj.width(),
+												"display":"block"
+											}).css({
+												'transition': 'margin ' + settings.aniSpeed + 'ms ease',
+												"margin-left": 0
+											});
+											
+											last_slide_obj.css({
+												"margin-left": 0
+											}).css({
+												'transition': 'margin ' + settings.aniSpeed + 'ms ease',
+												"margin-left": last_slide_obj.width()*(-1)
+											}).bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
+												//HIDE LAST SLIDE
+											    last_slide_obj.css({
+											    	"z-index":0,
+											    	"opacity":0,
+											    	'transition': ''
+											    });
+											    current_slide_obj.css({
+											    	'transition': ''
+											    });
+											    slider.showInner(current);
+											    slider.hideInner(last);
+											    sliding = false;
+											});
+											*/
+											
+											break;
+											
+										//LEFT
+										case "left":
+											current_slide_obj.css({"margin-left":last_slide.width()*(-1),"display":"block"}).animate({
+												"margin-left": 0
+											},settings.aniSpeed);
+											last_slide_obj.css("margin-left",0).animate({
+												"margin-left": last_slide_obj.width()
+											},settings.aniSpeed,function(){
+												//HIDE LAST SLIDE
+											    last_slide_obj.css({"z-index":0,"display":"none"});
+											    slider.showInner(current);
+											    slider.hideInner(last);
+											    sliding = false;
+											});
+											break;
+									}
+								}
+								
+								switch (settings.aniMethod) {
+									case 'jQuery':
+										slide_jquery();
+										break;
+									case 'css':
+										slide_css();
 										break;
 								}
 								
@@ -754,7 +883,10 @@
         	slider.find('#slides #' + current).css("display","block");
         }
         else if(settings.aniMethod == 'css'){
-	        slider.find('#slides #' + current).css("opacity","1");
+	        slider.find('#slides #' + current).css({
+	        	"opacity": 1,
+	        	"z-index": 5,
+	        });
         }
         
         slider.find('#bullets #' + current).addClass('selected');
