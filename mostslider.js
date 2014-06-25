@@ -11,6 +11,8 @@
             animation: "fade",
             // animation speed
             aniSpeed: 1000,
+            // adnimation method / jQuery, css
+            aniMethod: "jQuery",
             // put slider image as background and center it - only avilable if metrics are set
             background_center: false,
             
@@ -131,83 +133,87 @@
         		});
     		}
         
-        	//DIFFERENT ANIMATIONS
-        	switch (settings.animation) { 
-	        	//FADE, SLIDE-DOWN
-	        	default: 
-	        		$(this).css({"width":"100%",
-	        			 "height":"auto",
-	        			 "line-height":"auto",
-	        			 "position":"absolute",
-	        			 "z-index":0,
-	        			 "display":"none",
-	        			 "overflow":"hidden"}).attr("id",index+1);
-	        		
-	        		/*****************/
-	        		/* SPECIAL CASES */
-	        		/*****************/
-	        		
-	        		//IFRAME (NOT FULLY WORKING)
-	        		if($(this).is("iframe")){
+        	
+        	// CSS FOR SLIDES
+    		$(this).css({"width":"100%",
+    			 "height":"auto",
+    			 "line-height":"auto",
+    			 "position":"absolute",
+    			 "z-index":0,
+    			 "display":"none",
+    			 "overflow":"hidden"}).attr("id",index+1);
+    		// SPECIAL SETTINGS FOR CSS METHOD
+    		if(settings.aniMethod == 'css'){
+	    		$(this).css({
+		    		//'transition': 'opacity ' + settings.aniSpeed + 'ms ease',
+		    		'display': 'block',
+		    		'opacity': 0,
+	    		});
+    		}
+    		
+    		/*****************/
+    		/* SPECIAL CASES */
+    		/*****************/
+    		
+    		//IFRAME (NOT FULLY WORKING)
+    		if($(this).is("iframe")){
+        		$(this).css({
+	        		"width": slider.find("#1").width(),
+	        		"height": slider.find("#1").height()
+        		});
+    		}
+    		//SLIDE IS IMAGE
+    		$(this).find("> img:only-child").css({
+    			"width":"100%",
+    			"height":"auto"
+        	});
+        	
+    		//SLIDE IS IMAGE IN LINK
+    		$(this).find("> a > img:only-child").css({
+    			"width":"100%",
+    			"height":"auto"
+        	});
+    		
+    		// BACKGROUND IMAGES
+    		if($(this).find("img.portrait").length > 0){
+        		$(this).find("img.portrait").css({
+        			"width":"auto",
+        			"height":"100%"
+        		});
+        		settings.transparancy = true
+    		}
+    		
+    		// BACKGROUND IMAGES
+    		if($(this).find("img.bg").length > 0){
+    		
+    			// IF BACKGROUND CENTERING ACTIVE AND METRICS ARE SET (experimental)
+    			if(settings.background_center == true && (settings.metrics.width > 0 && settings.metrics.width != '') && (settings.metrics.height > 0 && settings.metrics.height != '')){
+	        		$(this).css({
+		        		"background-image": 'url(' + $(this).find("img.bg").attr('src') + ')',
+		        		"background-repeat":"no-repeat",
+		        		"background-position":"center center",
+		        		"background-size":"cover",
+		        		"-webkit-background-size":"cover",
+		        		"-moz-background-size":"cover",
+		        		"-o-background-size":"cover",
+	        		});
+	        		if(oldIE){
 		        		$(this).css({
-			        		"width": slider.find("#1").width(),
-			        		"height": slider.find("#1").height()
+			        		"filter":"progid:DXImageTransform.Microsoft.AlphaImageLoader(src=" + $(this).find("img.bg").attr('src') + ",sizingMethod='scale')",
+			        		"-ms-filter": "\"progid:DXImageTransform.Microsoft.AlphaImageLoader(src=" + $(this).find("img.bg").attr('src') + ",sizingMethod='scale')\"",
 		        		});
 	        		}
-	        		//SLIDE IS IMAGE
-	        		$(this).find("> img:only-child").css({
+	        		$(this).find("img.bg").hide();
+        		}
+        		// DEFAULT BG HANDLING
+        		else{
+	        		$(this).find("img.bg").css({
 	        			"width":"100%",
 	        			"height":"auto"
-		        	});
-		        	
-	        		//SLIDE IS IMAGE IN LINK
-	        		$(this).find("> a > img:only-child").css({
-	        			"width":"100%",
-	        			"height":"auto"
-		        	});
+	        		});
+        		}
+    		}
 	        		
-	        		// BACKGROUND IMAGES
-	        		if($(this).find("img.portrait").length > 0){
-		        		$(this).find("img.portrait").css({
-		        			"width":"auto",
-		        			"height":"100%"
-		        		});
-		        		settings.transparancy = true
-	        		}
-	        		
-	        		// BACKGROUND IMAGES
-	        		if($(this).find("img.bg").length > 0){
-	        		
-	        			// IF BACKGROUND CENTERING ACTIVE AND METRICS ARE SET (experimental)
-	        			if(settings.background_center == true && (settings.metrics.width > 0 && settings.metrics.width != '') && (settings.metrics.height > 0 && settings.metrics.height != '')){
-			        		$(this).css({
-				        		"background-image": 'url(' + $(this).find("img.bg").attr('src') + ')',
-				        		"background-repeat":"no-repeat",
-				        		"background-position":"center center",
-				        		"background-size":"cover",
-				        		"-webkit-background-size":"cover",
-				        		"-moz-background-size":"cover",
-				        		"-o-background-size":"cover",
-			        		});
-			        		if(oldIE){
-				        		$(this).css({
-					        		"filter":"progid:DXImageTransform.Microsoft.AlphaImageLoader(src=" + $(this).find("img.bg").attr('src') + ",sizingMethod='scale')",
-					        		"-ms-filter": "\"progid:DXImageTransform.Microsoft.AlphaImageLoader(src=" + $(this).find("img.bg").attr('src') + ",sizingMethod='scale')\"",
-				        		});
-			        		}
-			        		$(this).find("img.bg").hide();
-		        		}
-		        		// DEFAULT BG HANDLING
-		        		else{
-			        		$(this).find("img.bg").css({
-			        			"width":"100%",
-			        			"height":"auto"
-			        		});
-		        		}
-	        		}
-	        		
-	        		break;
-	        }
         	
         	//SOCIAL BUTTONS
 	        if(settings.socialButtons == true){
@@ -432,6 +438,7 @@
 						slider.find('#bullets > #' + current).addClass("selected");
 						// SET LAST SLIDE TO NORMAL Z INDEX
 						slider.find('#slides #' + last).css("z-index",0);
+						
 						// GET CURRENT SLIDE IN FORGOUND AND MOVE
 						switch (settings.animation) {
 							//FADE
@@ -440,20 +447,42 @@
 									slider.find('#slides #' + current).css("z-index",5).fadeIn(settings.aniSpeed);
 									slider.find('#slides #' + last).css("z-index",5).fadeOut(settings.aniSpeed,function(){
 										//HIDE LAST SLIDE
-									    
 									    slider.showInner(current);
 									    slider.hideInner(last);
 									    sliding = false;
 									});
 								}
 								else{
-									slider.find('#slides #' + current).css("z-index",5).fadeIn(settings.aniSpeed,function(){
-										//HIDE LAST SLIDE
-									    slider.find('#slides #' + last).css("display","none");
-									    slider.showInner(current);
-									    slider.hideInner(last);
-									    sliding = false;
-									});
+									// STANDARD JQUERY ANIMATION
+									if(settings.aniMethod == 'jQuery'){
+										slider.find('#slides #' + current).css("z-index",5).fadeIn(settings.aniSpeed,function(){
+											//HIDE LAST SLIDE
+										    slider.find('#slides #' + last).css("display","none");
+										    slider.showInner(current);
+										    slider.hideInner(last);
+										    sliding = false;
+										});
+									}
+									// CSS ANIMATION
+									else if(settings.aniMethod == 'css'){
+										slider.find('#slides #' + current).css({
+											'transition': 'opacity ' + settings.aniSpeed + 'ms ease',
+											"z-index": 5,
+											"opacity": 1,
+										}).bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
+											slider.find('#slides #' + last).css({
+												"z-index": 0,
+												"opacity": 0,
+											});
+											slider.find('#slides #' + current).css({
+												'transition': ''
+											})
+											slider.showInner(current);
+										    slider.hideInner(last);
+										    sliding = false;
+										});
+										
+									}
 								}
 								break;
 								
@@ -721,7 +750,13 @@
         /*******************/
         
         // SHOW THE FIRST ELEMENT
-        slider.find('#slides #' + current).css("display","block");
+        if(settings.aniMethod == 'jQuery'){
+        	slider.find('#slides #' + current).css("display","block");
+        }
+        else if(settings.aniMethod == 'css'){
+	        slider.find('#slides #' + current).css("opacity","1");
+        }
+        
         slider.find('#bullets #' + current).addClass('selected');
         slider.showInner(current);
         
