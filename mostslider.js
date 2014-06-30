@@ -144,12 +144,11 @@
     			 "overflow":"hidden"}).attr("id",index+1);
     		// SPECIAL SETTINGS FOR CSS METHOD
     		if(settings.aniMethod == 'css'){
-    			$(this).css({
-		    		'display': 'block',
-	    		});
+    			
     			if(settings.animation == 'fade'){
 	    			$(this).css({
 			    		'opacity': 0,
+			    		'display': 'block',
 		    		});
     			}
     		}
@@ -352,19 +351,35 @@
 	        $(this).css("display:","inline-block");
         });
         slider.find(".fade").each(function(){
-	        $(this).css("display","none");
+	        $(this).css({
+	        	"opacity": 0,
+	        	"margin": 0,
+	        });
         });
         slider.find(".from-top").each(function(){
-	        $(this).css({"opacity":0,"margin-top":0});
+	        $(this).css({
+	        	"opacity": 0,
+	        	"margin-top": "-20px",
+	        });
         });
         slider.find(".from-bottom").each(function(){
-	        $(this).css({"opacity":0,"margin-top":0});
+	        $(this).css({
+	        	"opacity": 0,
+	        	"margin-top": "20px",
+	        });
         });
         slider.find(".from-left").each(function(){
-	        $(this).css({"opacity":0,"margin-top":0});
+	        $(this).css({
+	        	"opacity": 0,
+	        	"margin-left": "-30px",
+	        	"margin-right": "30px",
+	        });
         });
         slider.find(".from-right").each(function(){
-	        $(this).css({"opacity":0,"margin-top":0});
+	        $(this).css({
+	        	"opacity": 0,
+	        	"margin-left": "30px",
+	        });
         });
         
         
@@ -399,12 +414,29 @@
 	        slider.prepend('<div id="left" class="slider-nav" /><div id="right" class="slider-nav" />');
 	        // HIDE/SHOW ARROWS
 	        if(settings.hideArrows == true){
-	        	slider.find(".slider-nav").css("display","none");
+	        	slider.find(".slider-nav").css("opacity",0);
 		        slider.mouseenter(function(){
-		        	slider.find(".slider-nav").fadeIn(200);
+		        	if(settings.aniMethod == 'jQuery'){
+			        	slider.find(".slider-nav").animate({"opacity":1},200);
+		        	}
+		        	else if(settings.aniMethod == 'css'){
+			        	var nav = slider.find(".slider-nav");
+			        	nav.css({
+				        	"transition": "opacity 200ms ease",
+					        "opacity": 1,
+			        	});
+		        	}
 		        });
 		        slider.mouseleave(function(){
-			        slider.find(".slider-nav").fadeOut(200);
+		        	if(settings.aniMethod == 'jQuery'){
+			        	slider.find(".slider-nav").animate({"opacity":0},200);
+		        	}
+			        else if(settings.aniMethod == 'css'){
+			        	var nav = slider.find(".slider-nav");
+			        	nav.css({
+				        	"opacity": 0,
+			        	});
+		        	}
 		        });
 	        }
         }
@@ -418,6 +450,9 @@
         /***************************/
         /***** PUBLIC FUNCTION *****/
         /***************************/
+        
+        // ALL SLIDES FOR GOTO FUNCTION - IMPORTANT FOR CSS TRANSITIONEND BIND
+        var slides = slider.find('#slides > *');
         
         // GO TO SLIDE
         this.goTo = function (index){
@@ -474,6 +509,10 @@
 									}
 								}
 								function fade_css(){
+								
+									// If transition endend as bind fires multiple times for each transition
+									var transition_end = false;
+									
 									if(settings.transparancy == true){
 										current_slide_obj.css({
 											'transition': 'opacity ' + settings.aniSpeed + 'ms linear',
@@ -485,16 +524,19 @@
 											"z-index": 5,
 											"opacity": 0,
 										}).bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
-											last_slide_obj.css({
-												"z-index": 0,
-												'transition': '',
-											});
-											current_slide_obj.css({
-												'transition': ''
-											})
-											slider.showInner(current);
-										    slider.hideInner(last);
-										    sliding = false;
+											if(transition_end == false){
+												last_slide_obj.css({
+													"z-index": 0,
+													'transition': '',
+												});
+												current_slide_obj.css({
+													'transition': ''
+												})
+												slider.showInner(current);
+											    slider.hideInner(last);
+											    sliding = false;
+											    transition_end = true;
+										    }
 										});
 									}
 									else{
@@ -502,17 +544,24 @@
 											'transition': 'opacity ' + settings.aniSpeed + 'ms ease',
 											"z-index": 5,
 											"opacity": 1,
-										}).bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
-											last_slide_obj.css({
-												"z-index": 0,
-												"opacity": 0,
-											});
-											current_slide_obj.css({
-												'transition': ''
-											})
-											slider.showInner(current);
-										    slider.hideInner(last);
-										    sliding = false;
+										}).bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(event){
+											// execute only if transition_end wasn't set
+											if(transition_end == false){
+												current_slide_obj.css({
+													'transition': ''
+												})
+												last_slide_obj.css({
+													'transition': '',
+													"z-index": 0,
+													"opacity": 0,
+												});
+												
+												slider.showInner(current);
+											    slider.hideInner(last);
+											    
+											    sliding = false;
+											    transition_end = true;
+										    }
 										});
 									}
 								}
@@ -571,6 +620,10 @@
 									}
 								}
 								function slide_css(){
+								
+									// If transition endend as bind fires multiple times for each transition
+									var transition_end = false;
+								
 									// SLIDE DIRECTION
 									switch(direction){
 										//RIGHT
@@ -579,92 +632,92 @@
 											var obj_width = last_slide_obj.width();
 											
 											current_slide_obj.css({
-												"margin-left": 700,
-												"z-index": 5,
+												"margin-left": obj_width,
+												"display": "block",
 											});
+											last_slide_obj.css({
+												"margin-left": 0,
+												"display": "block",
+											})
+											
 											setTimeout(function(){
 												current_slide_obj.css({
 													'transition': 'margin ' + settings.aniSpeed + 'ms ease-in-out',
 													"margin-left": 0,
+													"z-index": 10,
 												});
-											}, 1);
-																						
-											
-											last_slide_obj.css({
-												"margin-left": 0,
-												"z-index": 5,
-											})
-											setTimeout(function(){
 												last_slide_obj.css({
 													'transition': 'margin ' + settings.aniSpeed + 'ms ease-in-out',
 													"margin-left": (obj_width * (-1)) + 'px',
 												});
-											}, 1);
+											}, 0);
 											
-											last_slide_obj.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
-												last_slide_obj.css({
-													"margin-left": 0,
-													"z-index": 0,
-													"transition": '',
-													
-												})
-												current_slide_obj.css({
-													"margin-left": 0,
-													"z-index": 5,
-													"transition": '',
-												});
-												sliding = false;
+											slides.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
+												if(transition_end == false){
+													last_slide_obj.css({
+														"display":"none",
+														"margin":""
+													});
+													current_slide_obj.css({
+														"margin-left": 0,
+														"transition": '',
+														"display": "block",
+													});
+													slider.showInner(current);
+												    slider.hideInner(last);
+													sliding = false;
+													transition_end = true;
+												}
 												
 											});
-											
-											
-										
-											/*
-											current_slide_obj.css({
-												"margin-left":last_slide_obj.width(),
-												"display":"block"
-											}).css({
-												'transition': 'margin ' + settings.aniSpeed + 'ms ease',
-												"margin-left": 0
-											});
-											
-											last_slide_obj.css({
-												"margin-left": 0
-											}).css({
-												'transition': 'margin ' + settings.aniSpeed + 'ms ease',
-												"margin-left": last_slide_obj.width()*(-1)
-											}).bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
-												//HIDE LAST SLIDE
-											    last_slide_obj.css({
-											    	"z-index":0,
-											    	"opacity":0,
-											    	'transition': ''
-											    });
-											    current_slide_obj.css({
-											    	'transition': ''
-											    });
-											    slider.showInner(current);
-											    slider.hideInner(last);
-											    sliding = false;
-											});
-											*/
 											
 											break;
 											
 										//LEFT
 										case "left":
-											current_slide_obj.css({"margin-left":last_slide.width()*(-1),"display":"block"}).animate({
-												"margin-left": 0
-											},settings.aniSpeed);
-											last_slide_obj.css("margin-left",0).animate({
-												"margin-left": last_slide_obj.width()
-											},settings.aniSpeed,function(){
-												//HIDE LAST SLIDE
-											    last_slide_obj.css({"z-index":0,"display":"none"});
-											    slider.showInner(current);
-											    slider.hideInner(last);
-											    sliding = false;
+											
+											var obj_width = last_slide_obj.width();
+											
+											current_slide_obj.css({
+												"margin-left": (obj_width * (-1)),
+												"display": "block",
 											});
+											last_slide_obj.css({
+												"margin-left": 0,
+												"display": "block",
+											})
+											
+											setTimeout(function(){
+												current_slide_obj.css({
+													'transition': 'margin ' + settings.aniSpeed + 'ms ease-in-out',
+													"margin-left": 0,
+													"z-index": 10,
+												});
+												last_slide_obj.css({
+													'transition': 'margin ' + settings.aniSpeed + 'ms ease-in-out',
+													"margin-left": obj_width + 'px',
+												});
+											}, 0);
+											
+											slides.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
+												if(transition_end == false){
+													last_slide_obj.css({
+														"display":"none",
+														"margin":""
+													});
+													current_slide_obj.css({
+														"margin-left": 0,
+														"transition": '',
+														"display": "block",
+													});
+													slider.showInner(current);
+												    slider.hideInner(last);
+													sliding = false;
+													transition_end = true;
+												}
+												
+											});
+											
 											break;
 									}
 								}
@@ -753,44 +806,103 @@
 					
 					//FADE
 					if(content_element.hasClass('fade')){
-						content_element.fadeIn();
+						if(settings.aniMethod == 'jQuery'){
+							content_element.animate({
+								"opacity": 1,
+							});
+						}
+						else if(settings.aniMethod == 'css'){
+							content_element.css({
+								"transition": "opacity 400ms ease-in-out",
+						        "opacity": 1
+					        });
+						}
 					}
 					
 					//FROM TOP
 					else if(content_element.hasClass('from-top')){
-						content_element.css({"margin-top":"-20px"});
-				        content_element.animate({
-					        "margin-top": "0px",
-					        "opacity": 1
-				        });
+						if(settings.aniMethod == 'jQuery'){
+							content_element.animate({
+						        "margin-top": "0px",
+						        "opacity": 1
+					        });
+						}
+						else if(settings.aniMethod == 'css'){
+							setTimeout(function(){
+								content_element.css({
+									"transition": "margin-top 400ms ease-in-out, opacity 400ms ease-in-out",
+							        "margin-top": "0px",
+							        "opacity": 1
+						        });
+							}, 0);
+				        }
 					}
 					
 					//FROM BOTTOM
 					else if(content_element.hasClass('from-bottom')){
-						content_element.css({"margin-top":"20px"});
-				        content_element.animate({
-					        "margin-top": "0px",
-					        "opacity": 1
-				        });
+						if(settings.aniMethod == 'jQuery'){
+							content_element.animate({
+						        "margin-top": "0px",
+						        "opacity": 1
+					        });
+						}
+						else if(settings.aniMethod == 'css'){
+							setTimeout(function(){
+								content_element.css({
+									"transition": "margin-top 400ms ease-in-out, opacity 400ms ease-in-out",
+							        "margin-top": "0px",
+							        "opacity": 1
+						        });
+							}, 0);
+				        }
 					}
 					
 					//FROM LEFT
 					else if(content_element.hasClass('from-left')){
-						content_element.css({"margin-right":"30px"});
-				        content_element.animate({
-					        "margin-right": "0px",
-					        "opacity": 1
-				        });
+						if(settings.aniMethod == 'jQuery'){
+							content_element.animate({
+						        "margin-right": "0px",
+						        "margin-left": "0px",
+						        "opacity": 1
+					        });
+						}
+						else if(settings.aniMethod == 'css'){
+							setTimeout(function(){
+								content_element.css({
+									"transition": "margin-left 400ms ease-in-out, margin-right 400ms ease-in-out, opacity 400ms ease-in-out",
+							        "margin-left": "0px",
+							        "margin-right": "0px",
+							        "opacity": 1
+						        });
+							}, 0);
+				        }
 					}
 					
 					//FROM RIGHT
 					else if(content_element.hasClass('from-right')){
-						content_element.css({"margin-left":"30px"});
-				        content_element.animate({
-					        "margin-left": "0px",
-					        "opacity": 1
-				        });
+						if(settings.aniMethod == 'jQuery'){
+							content_element.animate({
+						        "margin-left": "0px",
+						        "opacity": 1
+					        });
+						}
+						else if(settings.aniMethod == 'css'){
+							setTimeout(function(){
+								content_element.css({
+									"transition": "margin-left 400ms ease-in-out, opacity 400ms ease-in-out",
+							        "margin-left": "0px",
+							        "opacity": 1
+						        });
+							}, 0);
+				        }
 					}
+					
+					// REMOVE TRANSITION
+					/*content_element.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
+						content_element.css({
+							"transition": ""
+						});
+					});*/
 					
 					//END ANIMATING CONTENT
 				}, time)
@@ -801,11 +913,27 @@
         }
         // HIDE INNER ELEMENTS
         this.hideInner = function (slide){
-	        slider.find('#' + slide + ' .fade').css("display","none");
-	        slider.find('#' + slide + ' .from-top').css("opacity",0);
-	        slider.find('#' + slide + ' .from-bottom').css("opacity",0);
-	        slider.find('#' + slide + ' .from-left').css("opacity",0);
-	        slider.find('#' + slide + ' .from-right').css("opacity",0);
+	        slider.find('#' + slide + ' .fade').css({
+	        	"opacity": 0,
+	        	"margin": 0,
+	        });
+	        slider.find('#' + slide + ' .from-top').css({
+	        	"opacity": 0,
+	        	"margin-top": "-20px",
+	        });
+	        slider.find('#' + slide + ' .from-bottom').css({
+	        	"opacity": 0,
+	        	"margin-top": "20px",
+	        });
+	        slider.find('#' + slide + ' .from-left').css({
+	        	"opacity": 0,
+	        	"margin-left": "-30px",
+	        	"margin-right": "30px",
+	        });
+	        slider.find('#' + slide + ' .from-right').css({
+	        	"opacity": 0,
+	        	"margin-left": "30px",
+	        });
 	        
 	        return slider;
         }
@@ -883,10 +1011,18 @@
         	slider.find('#slides #' + current).css("display","block");
         }
         else if(settings.aniMethod == 'css'){
-	        slider.find('#slides #' + current).css({
-	        	"opacity": 1,
-	        	"z-index": 5,
-	        });
+        	if(settings.animation == 'fade'){
+		        slider.find('#slides #' + current).css({
+		        	"opacity": 1,
+		        	"z-index": 5,
+		        });
+	        }
+	        else{
+		        slider.find('#slides #' + current).css({
+		        	"display": "block",
+		        	"z-index": 10,
+		        });
+	        }
         }
         
         slider.find('#bullets #' + current).addClass('selected');
