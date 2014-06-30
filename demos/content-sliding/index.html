@@ -65,11 +65,13 @@
 	    </div>
         
         <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script src="../resources/scripts/modernizr-2.6.2.min.js"></script>
         <script src="../../mostslider.js" type="text/javascript"></script>
         <script>
         	$(document).ready(function(){
 	        	var slider = $("#slider").mostSlider({
                     aniSpeed: 1000,
+                    aniMethod: 'auto',
                     pauseTime: 6000,
                     transparancy: true,
                     metrics: {

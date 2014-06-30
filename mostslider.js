@@ -13,8 +13,10 @@
             animation: "fade",
             // animation speed
             aniSpeed: 1000,
-            // adnimation method / jQuery, css
-            aniMethod: "jQuery",
+            // animation method / jQuery, css, auto
+            aniMethod: "auto",
+            // sets if animation method should consider a fallback if selected method is not supported
+            aniFallback: true,
             // put slider image as background and center it - only avilable if metrics are set
             background_center: false,
             
@@ -105,6 +107,26 @@
         var oldIE = false;
 		if ($('html').is('.ie6, .ie7, .ie8') || $('body').is('.ie6, .ie7, .ie8')) {
 	        oldIE = true;
+	    }
+	    
+	    // aniMethod Fallback and auto
+	    switch (settings.aniMethod){
+		    case 'jQuery':
+		    	settings.aniMethod = 'jQuery';
+		    	break;
+		    case 'css':
+		    	if( (!$('html').hasClass('csstransitions')) && (settings.aniFallback == true) ){
+				    settings.aniMethod = 'jQuery';
+			    }
+			    break;
+			case 'auto':
+				if( $('html').hasClass('csstransitions') ){
+					settings.aniMethod = 'css';
+				}
+				else{
+					settings.aniMethod = 'jQuery';
+				}
+				break;
 	    }
 
 
