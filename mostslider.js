@@ -1,3 +1,5 @@
+/*! Mostslider v1.4.0b | (c) 2005, 2014 Julian Handl | http://julianhandl.github.io/mostslider/ / jquery.org/license */
+
 (function ( $ ) {
 	
 	//DEFINE NAME ON THE FUNCTION
