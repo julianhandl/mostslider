@@ -7,40 +7,6 @@
         var settings = $.extend({
             // SET DEFAULT
             // ANIMATION
-<<<<<<< HEAD
-            animation: "fade",
-            aniSpeed: 1000,
-            // BACKGROUND CENTERING - only avilable if metrics are set
-            background_center: false,
-            
-            // SPEED
-            autoPlay: true,
-            pauseTime: 3000,
-            
-            // METRICS
-            metrics: {
-            	// RATIO
-	            width: 0,
-	            height: 0
-            },
-            
-            // NAVIGATION
-            thumbnails: false,
-            navigation: true,
-            hideArrows: true,
-            
-            // FUNCTION
-            linkable: false,
-            
-            // CONTENT
-            transparancy: false,
-            contentClass: "content",
-            sbsContent: false,
-		    contentAniDelay: 300,
-		    
-		    socialButtons: false,
-		    socialUrl: "",
-=======
             // animation effect
             animation: "fade",
             // animation speed
@@ -103,7 +69,6 @@
 		    // url for social buttons
 		    socialUrl: "",
 		    // twitter id
->>>>>>> parent of 1b6f744... removed unused things
 		    twitterID: ""
         }, options );
  
@@ -132,14 +97,11 @@
         var sliding = false;
         //INITIALISED?
         var initialised = false;
-<<<<<<< HEAD
-=======
         //OLD IE BROWSER
         var oldIE = false;
 		if ($('html').is('.ie6, .ie7, .ie8') || $('body').is('.ie6, .ie7, .ie8')) {
 	        oldIE = true;
 	    }
->>>>>>> parent of 1b6f744... removed unused things
 
 
         /*****************/
@@ -153,8 +115,6 @@
         //STYLE THE SLIDES AND SET A ID/INDEX
         slider.children().each(function(index){
         
-<<<<<<< HEAD
-=======
         	// RESPONSIVE IMAGES
         	if(settings.responsive_images = true){
         		var window_width = $(window).width();
@@ -171,7 +131,6 @@
         		});
     		}
         
->>>>>>> parent of 1b6f744... removed unused things
         	//DIFFERENT ANIMATIONS
         	switch (settings.animation) { 
 	        	//FADE, SLIDE-DOWN
@@ -208,8 +167,6 @@
 		        	});
 	        		
 	        		// BACKGROUND IMAGES
-<<<<<<< HEAD
-=======
 	        		if($(this).find("img.portrait").length > 0){
 		        		$(this).find("img.portrait").css({
 		        			"width":"auto",
@@ -219,7 +176,6 @@
 	        		}
 	        		
 	        		// BACKGROUND IMAGES
->>>>>>> parent of 1b6f744... removed unused things
 	        		if($(this).find("img.bg").length > 0){
 	        		
 	        			// IF BACKGROUND CENTERING ACTIVE AND METRICS ARE SET (experimental)
@@ -233,15 +189,12 @@
 				        		"-moz-background-size":"cover",
 				        		"-o-background-size":"cover",
 			        		});
-<<<<<<< HEAD
-=======
 			        		if(oldIE){
 				        		$(this).css({
 					        		"filter":"progid:DXImageTransform.Microsoft.AlphaImageLoader(src=" + $(this).find("img.bg").attr('src') + ",sizingMethod='scale')",
 					        		"-ms-filter": "\"progid:DXImageTransform.Microsoft.AlphaImageLoader(src=" + $(this).find("img.bg").attr('src') + ",sizingMethod='scale')\"",
 				        		});
 			        		}
->>>>>>> parent of 1b6f744... removed unused things
 			        		$(this).find("img.bg").hide();
 		        		}
 		        		// DEFAULT BG HANDLING
@@ -328,12 +281,8 @@
         });
         //SET WRAPER FOR SLIDE ANIMATION
         if(settings.animation == "slide"){
-<<<<<<< HEAD
-	        slider.wrapInner('<div id="slides" style="position:absolute;width:100%;height:100%;overflow:hidden;line-height:0;" />');
-=======
         	// WRAP SLIDES DIV WITH ANOTHER DIV THAT CONTAINS THE ABSOLUTE DIV. SO THUMBNAILS CAN BE POSITIONED CORRECTLY.
 	        slider.wrapInner('<div style="position:relative;width:100%;height:100%;"><div id="slides" style="position:absolute;width:100%;height:100%;overflow:hidden;line-height:0;" /></div>');
->>>>>>> parent of 1b6f744... removed unused things
         }
         else{
 	        slider.wrapInner('<div id="slides" style="line-height:0;overflow:hidden;" />');
@@ -349,11 +298,6 @@
         	slider.css("display","block");
         	
 	        if((settings.metrics.width > 0) && (settings.metrics.height > 0)){
-<<<<<<< HEAD
-		        if(slider.width() < settings.metrics.width){
-		        	var tmp = ratio*slider.width();
-			        slider.find("#slides").css("height",tmp).children().css("height",tmp);
-=======
 		        if((slider.width() < settings.metrics.width) && (settings.solidHeight == false)){
 		        	var tmp = ratio*slider.width();
 			        slider.find("#slides").css("height",tmp).children().css("height",tmp);
@@ -361,7 +305,6 @@
 			        if(settings.animation == "slide"){
 				        slider.css("height",tmp);
 			        }
->>>>>>> parent of 1b6f744... removed unused things
 		        }
 		        else{
 					slider.find("#slides").css("height",settings.metrics.height).children().css("height",settings.metrics.height);
@@ -377,11 +320,7 @@
         // RESIZING
         $(window).resize(function(){
 	        if((settings.metrics.width > 0) && (settings.metrics.height > 0)){
-<<<<<<< HEAD
-		        if(slider.width() < settings.metrics.width){
-=======
 		        if((slider.width() < settings.metrics.width) && (settings.solidHeight == false)){
->>>>>>> parent of 1b6f744... removed unused things
 			        slider.find("#slides").css("height",ratio*slider.width()).children().css("height",ratio*slider.width());
 		        }
 		        else{
@@ -431,16 +370,12 @@
 	        slider.append('<div id="bullets" />');
 	        for (var i=1;i<=children_number;i++){ 
 	        	if(settings.thumbnails == true){
-<<<<<<< HEAD
-		        	slider.find("#bullets").append('<div class="bullet" id="' + i + '"><img src="' + slider.find("#slides #" + i).attr('data-thumb') + '" /></div>');
-=======
 	        		if(settings.thumb_bg == true){
 		        		slider.find("#bullets").append('<div class="bullet" style="background-image:url(' + slider.find("#slides #" + i).attr('data-thumb') + ');" id="' + i + '"></div>');
 	        		}
 	        		else{
 			        	slider.find("#bullets").append('<div class="bullet" id="' + i + '"><img src="' + slider.find("#slides #" + i).attr('data-thumb') + '" /></div>');
 		        	}
->>>>>>> parent of 1b6f744... removed unused things
 	        	}
 	        	else{
 		        	slider.find("#bullets").append('<div class="bullet" id="' + i + '" />');
@@ -454,16 +389,6 @@
 	        slider.prepend('<div id="left" class="slider-nav" /><div id="right" class="slider-nav" />');
 	        // HIDE/SHOW ARROWS
 	        if(settings.hideArrows == true){
-<<<<<<< HEAD
-        	slider.find(".slider-nav").css("display","none");
-	        slider.mouseenter(function(){
-	        	slider.find(".slider-nav").fadeIn(200);
-	        });
-	        slider.mouseleave(function(){
-		        slider.find(".slider-nav").fadeOut(200);
-	        });
-        }
-=======
 	        	slider.find(".slider-nav").css("display","none");
 		        slider.mouseenter(function(){
 		        	slider.find(".slider-nav").fadeIn(200);
@@ -472,7 +397,6 @@
 			        slider.find(".slider-nav").fadeOut(200);
 		        });
 	        }
->>>>>>> parent of 1b6f744... removed unused things
         }
         
         // SOCIAL
