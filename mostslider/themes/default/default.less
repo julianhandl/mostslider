@@ -1,0 +1,100 @@
+@arrows: url(img/arrow.png);
+
+.slider-wrapper.default{
+	//SLIDER
+	&> div{
+		display: none;
+	
+		//SLIDES
+		#slides{
+			font-weight: 400;
+			color: white;
+			line-height: normal;
+			
+			//NORMALIZE
+			img{
+				border: 0;
+			}
+			&> a{
+				line-height: 0px;
+			}
+			
+			//TEXT
+			h1,h2,h3,h4{			
+				padding: 1% 3% 1% 3%;
+				color: #000;
+				background-color: #ffffff;
+				line-height: normal;
+			}
+			span,p{
+				line-height: normal;
+			}
+		}
+		
+		//SOCIAL
+		.social{
+			position: absolute;
+			top: 4%;
+			left: 3%;
+			z-index: 10000;
+			
+			div{
+				float: left;
+				margin-right: 10px;
+			}
+		}
+	
+		//BULLETS
+		#bullets{
+			height: 10px;
+			position: absolute;
+			top: 4%;
+			right: 3%;
+			z-index: 10000;
+			
+			.bullet{
+				min-height: 12px;
+				min-width: 12px;
+				border-radius: 6px;
+				margin-left: 5px;
+				float: left;
+				
+				cursor: pointer;
+				background-color: #b4b4b4;
+				background-color: rgb(180,180,180);
+				background-color: rgba(255,255,255,0.6);
+				
+				&:hover{
+					background-color: #fff;
+				}
+				&.selected{
+					background-color: #fff;
+				}
+			}
+		}
+		//ARROWS
+		#left{
+			position: absolute;
+			width: 47px;
+			height: 47px;
+			background-image: @arrows;
+			left: 5%;
+			top: 50%;
+			margin-top: -24px;
+			z-index: 999999;
+			cursor: pointer;
+		}
+		#right{
+			position: absolute;
+			width: 47px;
+			height: 47px;
+			background-image: @arrows;
+			background-position: right top;
+			right: 5%;
+			top: 50%;
+			margin-top: -24px;
+			z-index: 999999;
+			cursor: pointer;
+		}
+	}
+}

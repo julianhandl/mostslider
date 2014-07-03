@@ -1,0 +1,135 @@
+@import 'a_variables.less';
+
+// BASE
+.block{
+	display: block;
+	position: relative;
+	.cf;
+	
+	&.block-big{
+		padding-top: 50px;
+		padding-bottom: 50px;
+	}
+	&.block-content{
+		padding-top: 80px;
+		padding-bottom: 50px;
+		@media screen and (max-width: 700px){
+			padding-top: 20px;
+			padding-bottom: 20px;
+		}
+	}
+	&.block-small{
+		padding-top: 20px;
+		padding-bottom: 20px;
+		.block-title{
+			margin-top: 0;
+		}
+	}
+	.block-title{
+		display: inline-block;
+		border-top: 10px solid;
+		padding-top: 10px;
+		margin-top: 20px;
+		margin-bottom: 20px;
+		clear: both;
+	}
+	.block-image{
+		max-width: 100%;
+		height: auto;
+		margin-bottom: 10px;
+	}
+}
+
+// CONTAINER WITH NUMBER OF COLUMNS INSIDE
+.row{
+	.cf;
+	margin-left: -4%;
+	@media screen and (max-width: 700px){
+		margin-left: 0;
+	}
+}
+
+// GRID
+.child-width(@grid-width:12){
+	.cf;
+	@elements: 12 / @grid-width;
+	
+	//width: percentage(((100 - (2 * (@elements - 1))) / @elements) / 100);
+	width: percentage((100 / @elements) / 100);
+	float: left;
+	padding-left: 4%;
+	box-sizing: border-box;
+	&.padding{
+		//width: percentage((((100 - (2 * (@elements - 1))) / @elements) - 4) / 100);
+		width: percentage(((100 - (3 * (@elements - 1))) / @elements) / 100);
+		padding-left: 2%;
+		padding-right: 2%;
+		margin-left: 2%;
+	}
+	
+	@media screen and (max-width: 700px){
+		width: 100%;
+		float: none;
+		clear: both;
+		padding-left: 0;
+		&.padding{
+			width: 100%;
+			padding-left: 2%;
+			padding-right: 2%;
+			margin-right: 0;
+		}
+	}
+}
+// child container
+.col-12{
+	.child-width(@grid-width:12);
+	float: none;
+	padding-left: 0;
+}
+.col-8{
+	.child-width(@grid-width:8);
+}
+.col-6{
+	.child-width(@grid-width:6);
+}
+.col-5{
+	.child-width(@grid-width:5);
+}
+.col-4{
+	.child-width(@grid-width:4);
+}
+.col-3{
+	.child-width(@grid-width:3);
+}
+.col-2{
+	.child-width(@grid-width:2);
+}
+
+
+// COLORS
+.bg-dark{
+	background-color: @color-black;
+	color: #fff;
+	.block-title{
+		color: #fff;
+		border-color: #fff;
+	}
+}
+.bg-light{
+	background-color: @color-white;
+	.block-title{
+		color: #000;
+		border-color: #000;
+	}
+}
+.bg-acc{
+	background-color: @color-acc;
+	color: #fff;
+	.block-title{
+		color: #000;
+		border-color: #000;
+	}
+	.text-acc{
+		color: #fff;
+	}
+}
