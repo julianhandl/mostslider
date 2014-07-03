@@ -34,10 +34,14 @@
         </div>
         
         <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script src="../resources/scripts/modernizr-2.6.2.min.js"></script>
         <script src="../../mostslider.js" type="text/javascript"></script>
         <script>
         	$(document).ready(function(){
-	        	var slider = $("#slider").mostSlider();
+	        	var slider = $("#slider").mostSlider({
+	        		animation: 'slide',
+		        	aniMethod: 'auto',
+	        	});
         	});
         </script>
     </body>

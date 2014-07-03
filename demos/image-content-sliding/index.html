@@ -28,7 +28,7 @@
         <div class="slider-wrapper default">
 	        <div id="slider">
 		        <a href="http://500px.com/photo/47412316" target="_blank">
-		        	<h2 class="content from-left" style="position:absolute;top:70%;right:70%;">Karin</h2>
+		        	<h2 class="content fade" style="position:absolute;top:70%;right:70%;">Karin</h2>
 		        	<img src="../resources/images/1.jpg" class="bg" />
 		        </a>
 		        <a href="http://500px.com/photo/39845938" target="_blank">
@@ -36,17 +36,20 @@
 		        	<img src="../resources/images/2.jpg" class="bg" />
 		        </a>
 		        <a href="http://500px.com/photo/43565628" target="_blank">
-		        	<h2 class="content from-right" style="position:absolute;top:20%;left:70%;">Carina</h2>
+		        	<h2 class="content from-left" style="position:absolute;top:20%;left:70%;">Carina</h2>
 		        	<img src="../resources/images/3.jpg" class="bg" />
 		        </a>
 	        </div>
         </div>
         
         <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script src="../resources/scripts/modernizr-2.6.2.min.js"></script>
         <script src="../../mostslider.js" type="text/javascript"></script>
         <script>
         	$(document).ready(function(){
-	        	var slider = $("#slider").mostSlider();
+	        	var slider = $("#slider").mostSlider({
+		        	aniMethod: 'auto',
+	        	});
         	});
         </script>
     </body>
