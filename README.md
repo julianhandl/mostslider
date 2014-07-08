@@ -17,6 +17,11 @@ See demos and documentation at the link below at "Documentation"!
 
 #Releases
 
+##v1.4.0b
+
+- added css-transition support
+- there may be bugs left. feel free to test.
+
 ##v1.3.1
 
 - fixed really awful thumbnail bug
