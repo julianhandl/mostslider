@@ -1,4 +1,7 @@
-/*! Mostslider v1.4.0b | (c) 2005, 2014 Julian Handl | http://julianhandl.github.io/mostslider/ / jquery.org/license */
+/* MOSTSLIDER
+/* © by Julian Handl
+/* MIT Licence
+*/
 
 (function ( $ ) {
 	

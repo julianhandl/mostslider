@@ -1,2 +1,5 @@
 # OSX
 .DS_Store
+
+# GRUNT
+node_modules

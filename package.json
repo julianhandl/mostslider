@@ -1,0 +1,20 @@
+{
+  "name": "MostSlider",
+  "version": "1.4.0b",
+  "author": "Julian Handl",
+  "homepage": "http://julianhandl.github.io/mostslider",
+  "license" : "MIT",
+  
+  "repository" : {
+  	"type" : "git",
+  	"url" : "http://github.com/julianhandl/mostslider.git"
+  },
+  
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.3",
+    "grunt-contrib-less": "~0.11.0",
+    "grunt-contrib-uglify": "~0.5.0",
+    "grunt-contrib-watch": "~0.5.3"
+  }
+}
