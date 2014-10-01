@@ -17,10 +17,11 @@ See demos and documentation at the link below at "Documentation"!
 
 #Releases
 
-##v1.4.0b
+##v1.4.0
 
 - added css-transition support
-- there may be bugs left. feel free to test.
+- included detection of best animation method certain circumstances
+- social plugins are not loaded if not needed
 
 ##v1.3.1
 
