@@ -90,6 +90,8 @@
         var slider = this;
         //CACHE THE SLIDERS WIDTH
         var width = slider.width();
+        //SLIDERS CURRENT WIDTH
+        var current_width = $(slider).width();
         //SLIDER RATION
         var ratio = settings.metrics.height / settings.metrics.width;
         //CACHE THE SLIDERs CHILDREN/SLIDES
@@ -351,22 +353,27 @@
 		        slider.css("height",tmp);
 	        }
 	        initialised = true;
+	        current_width = slider.width();
         }
         
         // RESIZING
         $(window).resize(function(){
-	        if((settings.metrics.width > 0) && (settings.metrics.height > 0)){
-		        if((slider.width() < settings.metrics.width) && (settings.solidHeight == false)){
-		        	var new_height = ratio*slider.width();
-			        slider.find("#slides").css("height",new_height).children().css("height",new_height);
+        
+        	// DETECT IF SLIDER NEEDS TO BE RESIZED
+        	if( current_width != slider.width() ){
+		        if((settings.metrics.width > 0) && (settings.metrics.height > 0)){
+			        if((slider.width() < settings.metrics.width) && (settings.solidHeight == false)){
+			        	var new_height = ratio*slider.width();
+				        slider.find("#slides").css("height",new_height).children().css("height",new_height);
+			        }
+			        else{
+				        slider.find("#slides").css("height",settings.metrics.height).children().css("height",settings.metrics.height);
+			        }
 		        }
 		        else{
-			        slider.find("#slides").css("height",settings.metrics.height).children().css("height",settings.metrics.height);
+		        	var new_height = slider.find("#slides #1").height();
+			        slider.css("height",new_height).find("#slides").css("height",new_height);
 		        }
-	        }
-	        else{
-	        	var new_height = slider.find("#slides #1").height();
-		        slider.css("height",new_height).find("#slides").css("height",new_height);
 	        }
         });
         
