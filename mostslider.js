@@ -357,14 +357,16 @@
         $(window).resize(function(){
 	        if((settings.metrics.width > 0) && (settings.metrics.height > 0)){
 		        if((slider.width() < settings.metrics.width) && (settings.solidHeight == false)){
-			        slider.find("#slides").css("height",ratio*slider.width()).children().css("height",ratio*slider.width());
+		        	var new_height = ratio*slider.width();
+			        slider.find("#slides").css("height",new_height).children().css("height",new_height);
 		        }
 		        else{
 			        slider.find("#slides").css("height",settings.metrics.height).children().css("height",settings.metrics.height);
 		        }
 	        }
 	        else{
-		        slider.find("#slides").css("height",slider.find("#slides #1").height());
+	        	var new_height = slider.find("#slides #1").height();
+		        slider.css("height",new_height).find("#slides").css("height",new_height);
 	        }
         });
         
