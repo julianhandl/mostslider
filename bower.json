@@ -1,6 +1,6 @@
 {
   "name": "MostSlider",
-  "version": "1.4.0b",
+  "version": "1.4.0",
   "author": "Julian Handl",
   "homepage": "http://julianhandl.github.io/mostslider",
   "license" : "MIT",
@@ -9,11 +9,11 @@
   
   "ignore": [
 	"demos",
+	"node_modules",
 	".bowerrc",
 	".gitignore",
 	".jshintignore",
 	".jshintrc",
-	"bower.json",
 	"gruntfile.js",
 	"package.json",
 	"README.md"

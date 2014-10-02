@@ -91,7 +91,7 @@
         //CACHE THE SLIDERS WIDTH
         var width = slider.width();
         //SLIDERS CURRENT WIDTH
-        var current_width = $(slider).width();
+        var current_width = 0;
         //SLIDER RATION
         var ratio = settings.metrics.height / settings.metrics.width;
         //CACHE THE SLIDERs CHILDREN/SLIDES
@@ -349,8 +349,7 @@
 	        }
 	        else{
 	        	var tmp = slider.find("#slides #1").height();
-		        slider.find("#slides").css("height",tmp);
-		        slider.css("height",tmp);
+		        slider.css("height",tmp).find("#slides").css("height",tmp);
 	        }
 	        initialised = true;
 	        current_width = slider.width();
