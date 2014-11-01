@@ -17,6 +17,10 @@ See demos and documentation at the link below at "Documentation"!
 
 #Releases
 
+##v1.4.1
+
+- fix resizing
+
 ##v1.4.0
 
 - added css-transition support
