@@ -3,6 +3,12 @@
 /* MIT Licence
 */
 
+/**** TO DO ****
+
+- rework autoplay and add option to stop autoplay on hover
+
+/***************/
+
 (function ( $ ) {
 	
 	//DEFINE NAME ON THE FUNCTION
@@ -764,7 +770,10 @@
 						
 					}
 					else{
-						console.log('ERROR in goTo Function: ' + index + ' is an unvalid index. (mostSlider)');
+						if(index != current){
+							console.log('ERROR in goTo Function: ' + index + ' is an unvalid index. (mostSlider)');
+						}
+						sliding = false;
 					}
 				
 					// STOP/CLEAR THE QUEUE
