@@ -103,6 +103,7 @@
 				'ratio': 0,
 				'slides': 0,
 				'current_slide': 1,
+				'sliding': false,
 			}
 			
 			this.init();
@@ -123,6 +124,7 @@
 				
 				// wrap the slides
 				$(slider.obj).wrapInner('<div id="slides" />');
+				$(slider.obj).append('<ul id="bullets" />');
 					
 				// set slides
 				$(slider.obj).find("#slides > *").each(function(index){
@@ -138,6 +140,13 @@
 							$(this).css({
 								"opacity": 0,
 							});
+							if(index == 0){
+								// set first slide
+								$(this).css({
+									"z-index": 10,
+									"opacity": 1
+								});
+							}
 							break;
 					}
 					// get the heighest slide
@@ -150,12 +159,8 @@
 					if($(this).find("img").length > 0){
 						$(this).find("img").addClass("bg");
 					}
-				});
-				
-				// set first slide
-				$(this.slider.obj).find('#slides>*:nth-child(1)').css({
-					"z-index": 10,
-					"opacity": 1
+					// add bullet
+					$(slider.obj).find("#bullets").append('<li data-index="' + (index+1) + '" />');
 				});
 				
 				// init css
@@ -176,27 +181,35 @@
 				slider.ratio = (slider.init_height/$(slider.obj).width()) * 100;
 				$(slider.obj).css("padding-bottom", ( (slider.init_height/$(slider.obj).width()) * 100 ).toString() + '%');
 				
+				$(document).on('mousedown touchstart','#bullets > li',function(){
+					obj.goTo($(this).data("index"));
+				});
+				
 			},
 			goTo: function (index) {
 			
 				var root = this;
 				var current_slide = this.slider.current_slide;
 				
-				// if index isn't out of range
-				if(index>0 && index<=this.slider.slides){
+				// if index isn't out of range and slider is not sliding
+				if(index>0 && index<=this.slider.slides && this.slider.sliding == false){
+				
+					this.slider.sliding = true;
 				
 					switch(this.settings.animation){
 						case 'slide':
 							// css
 							if(this.settings.aniMethod == 'css'){
-								alert("css");
-								$(this.slider.obj).find("#slides").css("left", ((index-1)*100*(-1)).toString() + '%');
+								$(this.slider.obj).find("#slides").css("left", ((index-1)*100*(-1)).toString() + '%').bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
+									root.slider.sliding = false;
+								});
 							}
 							//jQuery
 							else if(this.settings.aniMethod == 'jQuery'){
-								alert("jquery");
 								$(this.slider.obj).find("#slides").animate({
 									"left": ((index-1)*100*(-1)).toString() + '%',
+								},function(){
+									root.slider.sliding = false;
 								});
 							}
 							break;
@@ -213,6 +226,7 @@
 									$(root.slider.obj).find('#slides>*:nth-child(' + current_slide + ')').css({
 										"opacity": 0,
 									});
+									root.slider.sliding = false;
 								});
 							}
 							else if(this.settings.aniMethod == 'jQuery'){
