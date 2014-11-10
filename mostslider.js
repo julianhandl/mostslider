@@ -51,7 +51,7 @@
             thumb_bg: false,
             // en/disable navigation
             navigation: true,
-            // hide the arrows
+            // hide the arrows when mouse not on slider
             hideArrows: true,
             
             // FUNCTION
@@ -108,7 +108,7 @@
 			
 			this.init();
 			
-			setInterval(function(){
+			this.autoplay = setInterval(function(){
 				root.next();
 			}, this.settings.pauseTime);
 	}
@@ -117,37 +117,32 @@
 	$.extend(Plugin.prototype, {
 			init: function () {
 			
-				var obj = this;
+				var root = this;
 				var slider = this.slider;
 				
 				// set aniMethod and Fallback
 				
 				// wrap the slides
-				$(slider.obj).wrapInner('<div id="slides" />');
+				$(slider.obj).wrapInner('<div id="slides" class="' + root.settings.animation + '" />');
+				// add bullet container
 				$(slider.obj).append('<ul id="bullets" />');
+				// add arrows
+				if(root.settings.navigation == true){
+					$(slider.obj).append('<div id="left" />').append('<div id="right" />');
+				}
+				
+				// activate first slide
+				if(root.settings.animation == 'fade'){
+					$(slider.obj).find("#slides > *:first-child").addClass("active");
+				}
 					
 				// set slides
 				$(slider.obj).find("#slides > *").each(function(index){
 					// init css
-					switch(obj.settings.animation){
-						case 'slide':
-							// css for slides
-							$(this).css({
-								"left": 100 * index + '%',
-							});
-							break;
-						case 'fade':
-							$(this).css({
-								"opacity": 0,
-							});
-							if(index == 0){
-								// set first slide
-								$(this).css({
-									"z-index": 10,
-									"opacity": 1
-								});
-							}
-							break;
+					if(root.settings.animation == 'slide'){
+						$(this).css({
+							"left": 100 * index + '%',
+						});
 					}
 					// get the heighest slide
 					if($(this).height() > slider.init_height){
@@ -163,33 +158,73 @@
 					$(slider.obj).find("#bullets").append('<li data-index="' + (index+1) + '" />');
 				});
 				
+				// activate first bullet
+				$(slider.obj).find("#bullets li:first-child").addClass("active");
+				
 				// init css
-				switch(obj.settings.animation){
-					case 'slide':
-						$(slider.obj).find("#slides").css({
-							"transition": "left " + obj.settings.aniSpeed.toString() + "ms ease",
-						});
-						break;
-					case 'fade':
-						$(slider.obj).find("#slides>*").css({
-							"transition": "opacity " + obj.settings.aniSpeed.toString() + "ms ease",
-						});
-						break;
+				if(root.settings.aniMethod == 'css'){
+					switch(root.settings.animation){
+						case 'slide':
+							$(slider.obj).find("#slides").css({
+								"transition": "left " + root.settings.aniSpeed.toString() + "ms ease",
+							});
+							break;
+						case 'fade':
+							$(slider.obj).find("#slides>*").css({
+								"transition": "opacity " + root.settings.aniSpeed.toString() + "ms ease",
+							});
+							break;
+					}
 				}
 				
 				// give slider the correct ratio
 				slider.ratio = (slider.init_height/$(slider.obj).width()) * 100;
 				$(slider.obj).css("padding-bottom", ( (slider.init_height/$(slider.obj).width()) * 100 ).toString() + '%');
 				
-				$(document).on('mousedown touchstart','#bullets > li',function(){
-					obj.goTo($(this).data("index"));
+				// bullet listener
+				$(slider.obj).on('mousedown touchstart','#bullets > li',function(){
+					root.goTo($(this).data("index"));
+					root.restartAutoplay();
+				});
+				// arrow left
+				$(slider.obj).on('mousedown touchstart','#left',function(){
+					root.prev();
+					root.restartAutoplay();
+				});
+				// arrow right
+				$(slider.obj).on('mousedown touchstart','#right',function(){
+					root.next();
+					root.restartAutoplay();
+				});
+				
+				// autoplay
+				var old_time = 0;
+				var new_time = 0;
+				// enter the slider
+				$(slider.obj).on('mouseenter','#slides',function(){
+					root.stopAutoplay();
+					old_time = new Date();
+					old_time = old_time.getTime();
+				});
+				// leave the slider
+				$(slider.obj).on('mouseleave','#slides',function(){
+					new_time = new Date();
+					new_time = new_time.getTime();
+					root.startAutoplay();
+					if( new_time - old_time >= root.settings.pauseTime){
+						root.next();
+					}
+					else if( new_time - old_time < root.settings.pauseTime){
+						setTimeout(function(){
+							root.next();
+						}, root.settings.pauseTime - (new_time - old_time));
+					}
 				});
 				
 			},
 			goTo: function (index) {
 			
 				var root = this;
-				var current_slide = this.slider.current_slide;
 				
 				// if index isn't out of range and slider is not sliding
 				if(index>0 && index<=this.slider.slides && this.slider.sliding == false){
@@ -216,26 +251,44 @@
 						case 'fade':
 							// css
 							if(this.settings.aniMethod == 'css'){
-								$(this.slider.obj).find('#slides>*:nth-child(' + this.slider.current_slide + ')').css({
-									"z-index": 0,
+								var current_slide = this.slider.current_slide;
+								$(this.slider.obj).find('#slides>*:nth-child(' + current_slide + ')').removeClass("active").css({
+									"opacity": 1,
 								});
-								$(this.slider.obj).find('#slides>*:nth-child(' + index + ')').css({
-									"z-index": 10,
-									"opacity": 1
-								}).bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
+								$(this.slider.obj).find('#slides>*:nth-child(' + index + ')').addClass("active").bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
 									$(root.slider.obj).find('#slides>*:nth-child(' + current_slide + ')').css({
-										"opacity": 0,
+										"opacity": "",
 									});
 									root.slider.sliding = false;
 								});
 							}
 							else if(this.settings.aniMethod == 'jQuery'){
 								
+								$(this.slider.obj).find('#slides>*:nth-child(' + current_slide + ')').css({
+									"z-index": 0,
+									"opacity": 1,
+								});
+								$(this.slider.obj).find('#slides>*:nth-child(' + index + ')').css({
+									"z-index": 10,
+								}).animate({
+									"opacity": 1,
+								},root.settings.aniSpeed,function(){
+									$(this).addClass("active").css({
+										"z-index": "",
+										"opacity": "",
+									});
+									$(root.slider.obj).find('#slides>*:nth-child(' + current_slide + ')').css({
+										"z-index": "",
+										"opacity": "",
+									}).removeClass("active");
+									root.slider.sliding = false;
+								});
 							}
 							break;
 					}
 					
 					this.slider.current_slide = index;
+					$(this.slider.obj).find("#bullets li").removeClass("active").filter(':nth-child(' + index + ')').addClass("active");
 				}
 			},
 			next: function () {
@@ -253,7 +306,24 @@
 				else if(this.slider.current_slide == 1){
 					this.goTo(this.slider.slides);
 				}
-			}
+			},
+			restartAutoplay: function () {
+				var root = this;
+				clearInterval(root.autoplay);
+				root.autoplay = setInterval(function(){
+					root.next();
+				}, root.settings.pauseTime);
+			},
+			stopAutoplay: function () {
+				var root = this;
+				clearInterval(root.autoplay);
+			},
+			startAutoplay: function () {
+				var root = this;
+				root.autoplay = setInterval(function(){
+					root.next();
+				}, root.settings.pauseTime);
+			},
 	});
 	
 	// A really lightweight plugin wrapper around the constructor,
