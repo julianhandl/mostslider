@@ -197,6 +197,42 @@
 					root.restartAutoplay();
 				});
 				
+				// swiping
+				var touch_start = 0;
+				var swipe = '';
+				$(slider.obj).on('touchstart','#slides',function(e){
+					touch_start = e.originalEvent.touches[0].pageX;
+					setTimeout(function(){
+						if(swipe == 'left'){
+							root.next();
+							root.restartAutoplay();
+							touch_start = 0;
+							swipe = '';
+						}
+						else if(swipe == 'right'){
+							root.prev();
+							root.restartAutoplay();
+							touch_start = 0;
+							swipe = '';
+						}
+					}, 300);
+				});
+				$(slider.obj).on('touchmove','#slides',function(e){
+					var touch_end = e.originalEvent.touches[0].pageX;
+					if(touch_end - touch_start < 0){
+						var diff = (touch_end - touch_start) * (-1);
+						if(diff > 30){
+							swipe = 'left';
+						}
+					}
+					else if(touch_end - touch_start > 0){
+						var diff = (touch_end - touch_start);
+						if(diff > 30){
+							swipe = 'right';
+						}
+					}
+				});
+				
 				// autoplay
 				var old_time = 0;
 				var new_time = 0;
