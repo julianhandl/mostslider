@@ -68,28 +68,31 @@
 		}
 		
 		//ARROWS
-		#left{
+		.arrow{
+			display: block;
 			position: absolute;
 			width: 47px;
 			height: 47px;
 			background-image: @arrows;
-			left: 5%;
 			top: 50%;
 			margin-top: -24px;
-			z-index: 999999;
+			z-index: 15;
 			cursor: pointer;
+			opacity: 1;
+			&.hidden{
+				opacity: 0;
+			}
+			&.removed{
+				opacity: 0;
+				display: none;
+			}
+		}
+		#left{
+			left: 5%;
 		}
 		#right{
-			position: absolute;
-			width: 47px;
-			height: 47px;
-			background-image: @arrows;
 			background-position: right top;
 			right: 5%;
-			top: 50%;
-			margin-top: -24px;
-			z-index: 999999;
-			cursor: pointer;
 		}
 	}
 }

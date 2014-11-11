@@ -99,6 +99,7 @@
 			this.slider = {
 				'obj': element,
 				'aniMethod': '',
+				'initialised': false,
 				'init_height': 0,
 				'ratio': 0,
 				'slides': 0,
@@ -106,7 +107,18 @@
 				'sliding': false,
 			}
 			
-			this.init();
+			var images = $(this.slider.obj).find("img").length;
+	        $(this.slider.obj).find("img").load(function(){
+	        	if(root.slider.initialised==false){
+		        	root.init();
+		        }
+	        }).each(function(index){
+				if(this.complete && index == images-1){
+					$(this).load();
+				}
+			});
+			
+			
 			
 			this.autoplay = setInterval(function(){
 				root.next();
@@ -138,6 +150,10 @@
 					
 				// set slides
 				$(slider.obj).find("#slides > *").each(function(index){
+					// set bg image
+					if($(this).find("img").length > 0){
+						$(this).find("img").addClass("bg");
+					}
 					// init css
 					if(root.settings.animation == 'slide'){
 						$(this).css({
@@ -145,15 +161,11 @@
 						});
 					}
 					// get the heighest slide
-					if($(this).height() > slider.init_height){
-						slider.init_height = $(this).height();
+					if($(this).find('img.bg').height() > slider.init_height){
+						slider.init_height = $(this).find('img.bg').height();
 					}
 					// get number of slides
 					slider.slides += 1;
-					// set bg image
-					if($(this).find("img").length > 0){
-						$(this).find("img").addClass("bg");
-					}
 					// add bullet
 					$(slider.obj).find("#bullets").append('<li data-index="' + (index+1) + '" />');
 				});
@@ -178,6 +190,10 @@
 				}
 				
 				// give slider the correct ratio
+				if(root.settings.metrics.width > 0 && root.settings.metrics.height > 0){
+					slider.init_width = root.settings.metrics.width;
+					slider.init_height = root.settings.metrics.height;
+				}
 				slider.ratio = (slider.init_height/$(slider.obj).width()) * 100;
 				$(slider.obj).css("padding-bottom", ( (slider.init_height/$(slider.obj).width()) * 100 ).toString() + '%');
 				
@@ -256,6 +272,13 @@
 						}, root.settings.pauseTime - (new_time - old_time));
 					}
 				});
+				
+				// init autoplay
+				if(this.settings.autoPlay == true){
+					root.startAutoplay();
+				}
+				
+				root.slider.initialised = true;
 				
 			},
 			goTo: function (index) {
@@ -343,13 +366,6 @@
 					this.goTo(this.slider.slides);
 				}
 			},
-			restartAutoplay: function () {
-				var root = this;
-				clearInterval(root.autoplay);
-				root.autoplay = setInterval(function(){
-					root.next();
-				}, root.settings.pauseTime);
-			},
 			stopAutoplay: function () {
 				var root = this;
 				clearInterval(root.autoplay);
@@ -359,6 +375,10 @@
 				root.autoplay = setInterval(function(){
 					root.next();
 				}, root.settings.pauseTime);
+			},
+			restartAutoplay: function () {
+				this.stopAutoplay();
+				this.startAutoplay();
 			},
 	});
 	
