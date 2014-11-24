@@ -100,6 +100,7 @@
 				'obj': element,
 				'aniMethod': '',
 				'initialised': false,
+				'init_width': 0,
 				'init_height': 0,
 				'ratio': 0,
 				'slides': 0,
@@ -163,7 +164,31 @@
 					// get the heighest slide
 					if($(this).find('img.bg').height() > slider.init_height){
 						slider.init_height = $(this).find('img.bg').height();
+						slider.init_width = $(this).find('img.bg').width();
 					}
+					// IF BACKGROUND CENTERING ACTIVE AND METRICS ARE SET (experimental)
+	    			if(root.settings.background_center == true && (root.settings.metrics.width > 0 && root.settings.metrics.width != '') && (root.settings.metrics.height > 0 && root.settings.metrics.height != '')){
+		        		$(this).css({
+		        			"width": "100%",
+		        			"height": "100%",
+			        		"background-image": 'url(' + $(this).find("img.bg").attr('src') + ')',
+			        		"background-repeat":"no-repeat",
+			        		"background-position":"center center",
+			        		"background-size":"cover",
+			        		"-webkit-background-size":"cover",
+			        		"-moz-background-size":"cover",
+			        		"-o-background-size":"cover",
+		        		});
+		        		/*
+		        		if(oldIE){
+			        		$(this).css({
+				        		"filter":"progid:DXImageTransform.Microsoft.AlphaImageLoader(src=" + $(this).find("img.bg").attr('src') + ",sizingMethod='scale')",
+				        		"-ms-filter": "\"progid:DXImageTransform.Microsoft.AlphaImageLoader(src=" + $(this).find("img.bg").attr('src') + ",sizingMethod='scale')\"",
+			        		});
+		        		}
+		        		*/
+		        		$(this).find("img.bg").hide();
+	        		}
 					// get number of slides
 					slider.slides += 1;
 					// add bullet
@@ -190,12 +215,13 @@
 				}
 				
 				// give slider the correct ratio
-				if(root.settings.metrics.width > 0 && root.settings.metrics.height > 0){
+				if(root.settings.metrics.width > 0 && root.settings.metrics.width != '' && root.settings.metrics.height > 0 && root.settings.metrics.height != ''){
 					slider.init_width = root.settings.metrics.width;
 					slider.init_height = root.settings.metrics.height;
 				}
-				slider.ratio = (slider.init_height/$(slider.obj).width()) * 100;
-				$(slider.obj).css("padding-bottom", ( (slider.init_height/$(slider.obj).width()) * 100 ).toString() + '%');
+				
+				slider.ratio = (slider.init_height/slider.init_width) * 100;
+				$(slider.obj).css("padding-bottom", ( (slider.init_height/slider.init_width) * 100 ).toString() + '%');
 				
 				// bullet listener
 				$(slider.obj).on('mousedown touchstart','#bullets > li',function(){
