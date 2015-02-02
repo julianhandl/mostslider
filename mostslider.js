@@ -140,7 +140,7 @@
 				}
 				
 				// wrap the slides
-				$(slider.obj).wrapInner('<div id="slides" class="' + root.settings.animation + '" />');
+				$(slider.obj).wrapInner('<div id="slides-wrapper"><div id="slides" class="' + root.settings.animation + '" /></div>');
 				// add bullet container
 				$(slider.obj).append('<ul id="bullets" class="navi bullets" />');
 				// add arrows
@@ -205,12 +205,12 @@
 					switch(root.settings.animation){
 						case 'slide':
 							$(slider.obj).find("#slides").css({
-								"transition": "left " + root.settings.aniSpeed.toString() + "ms linear",
+								"transition": "left " + root.settings.aniSpeed.toString() + "ms ease",
 							});
 							break;
 						case 'fade':
 							$(slider.obj).find("#slides>*").css({
-								"transition": "opacity " + root.settings.aniSpeed.toString() + "ms linear",
+								"transition": "opacity " + root.settings.aniSpeed.toString() + "ms ease",
 							});
 							break;
 					}
