@@ -14,7 +14,7 @@ $username = 'julianhandl';
  * @see https://github.com/settings/tokens/new
  * @var string
  */
-$api_token = 'b4e149d0945b9ca0717ac15cb9b929798165f30f';
+$api_token = 'de54db5d3bb435a0cf1c42891b2b152f1fcc762c';
 
 
 /* Don't touch
