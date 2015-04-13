@@ -10,14 +10,9 @@ See demos and documentation at the link below at "Documentation"!
 
 #To do (v2)
 
-- Solid height option
-- Thumbnails
-- hide nav/arrows
 - linkable slides
 - transparency fix
 - content animation
-- responsive images
-- drop responsive image support
 - social buttons
 
 #Releases

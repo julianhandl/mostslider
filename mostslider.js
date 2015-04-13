@@ -68,14 +68,6 @@
             // time between each content animation step
 		    contentAniDelay: 300,
 		    
-		    // IMAGES
-		    // user different images for different slider sizes
-		    responsive_images: false,
-		    // breakpoint between mobile and tablet (min tablet)
-		    responsive_break_tablet: 481,
-		    // breakpoint between tablet and desktop (min desktop)
-            responsive_break_desktop: 1024,
-		    
 		    // enable social button for each slide
 		    socialButtons: false,
 		    // url for social buttons
@@ -106,6 +98,7 @@
 				'slides': 0,
 				'current_slide': 1,
 				'sliding': false,
+				'pushToNext': undefined,
 			}
 			
 			var images = $(this.slider.obj).find("img").length;
@@ -138,14 +131,22 @@
 				else{
 					root.slider.aniMethod = 'jQuery';
 				}
+				// set ani mathod as class
+				$(slider.obj).addClass(root.slider.aniMethod);
+				// set css arrows hide variable
+				if(root.settings.hideArrows == true){
+					$(slider.obj).addClass('hideArrows');
+				}
 				
 				// wrap the slides
 				$(slider.obj).wrapInner('<div id="slides-wrapper"><div id="slides" class="' + root.settings.animation + '" /></div>');
-				// add bullet container
-				$(slider.obj).append('<ul id="bullets" class="navi bullets" />');
-				// add arrows
 				if(root.settings.navigation == true){
-					$(slider.obj).append('<div id="left" class="navi arrow" />').append('<div id="right" class="navi arrow" />');
+					// add bullet container
+					$(slider.obj).append('<ul id="bullets" class="navi bullets" />');
+					// add arrows
+					if(root.settings.navigation == true){
+						$(slider.obj).append('<div id="left" class="navi arrow" />').append('<div id="right" class="navi arrow" />');
+					}
 				}
 				
 				// activate first slide
@@ -193,8 +194,15 @@
 	        		}
 					// get number of slides
 					slider.slides += 1;
-					// add bullet
-					$(slider.obj).find("#bullets").append('<li data-index="' + (index+1) + '" />');
+					// add bullet and thumbnails
+					if(root.settings.navigation == true){
+						if(root.settings.thumbnails == true && !!$(this).attr('data-thumb')){
+							$(slider.obj).find("#bullets").append('<li data-index="' + (index+1) + '" style="background-image:url(' + $(this).attr('data-thumb') + ');"><img src="' + $(this).attr('data-thumb') + '" /></li>');
+						}
+						else{
+							$(slider.obj).find("#bullets").append('<li data-index="' + (index+1) + '" />');
+						}
+					}
 				});
 				
 				// activate first bullet
@@ -222,8 +230,13 @@
 					slider.init_height = root.settings.metrics.height;
 				}
 				
-				slider.ratio = (slider.init_height/slider.init_width) * 100;
-				$(slider.obj).css("padding-bottom", ( (slider.init_height/slider.init_width) * 100 ).toString() + '%');
+				if(root.settings.solidHeight == true){
+					$(slider.obj).css("height", (root.settings.metrics.height).toString() + 'px');
+				}
+				else{
+					slider.ratio = (slider.init_height/slider.init_width) * 100;
+					$(slider.obj).css("padding-bottom", ( (slider.init_height/slider.init_width) * 100 ).toString() + '%');
+				}
 				
 				// bullet listener
 				$(slider.obj).on('mousedown touchstart','#bullets > li',function(){
@@ -237,6 +250,13 @@
 						root.restartAutoplay();
 					}
 				});
+				if(root.slider.aniMethod == 'jQuery' && root.settings.hideArrows == true){
+					$(slider.obj).hover(function(){
+						$(slider.obj).find(".arrow").fadeIn(300);
+					},function(){
+						$(slider.obj).find(".arrow").fadeOut(300);
+					});
+				}
 				// arrow right
 				$(slider.obj).on('mousedown touchstart','#right',function(){
 					root.next();
@@ -285,11 +305,11 @@
 				var old_time = 0;
 				var new_time = 0;
 				// enter the slider
-				/*
+
 				$(slider.obj).on('mouseenter','#slides',function(){
-					root.stopAutoplay();
 					old_time = new Date();
 					old_time = old_time.getTime();
+					root.stopAutoplay();
 				});
 				// leave the slider
 				$(slider.obj).on('mouseleave','#slides',function(){
@@ -300,12 +320,14 @@
 						root.next();
 					}
 					else if( new_time - old_time < root.settings.pauseTime){
-						setTimeout(function(){
+						clearTimeout(root.slider.pushToNext);
+						root.slider.pushToNext = setTimeout(function(){
+							if(root)
 							root.next();
 						}, root.settings.pauseTime - (new_time - old_time));
 					}
 				});
-				*/
+
 				
 				// init autoplay
 				if(this.settings.autoPlay == true){

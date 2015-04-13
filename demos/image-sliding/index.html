@@ -27,7 +27,7 @@
         
         <div class="slider-wrapper default">
 	        <div id="slider">
-		        <a href="http://500px.com/photo/47412316" target="_blank"><img src="../resources/images/1.jpg" /></a>
+		        <a href="http://500px.com/photo/47412316" target="_blank" data-thumb="../resources/images/1.jpg"><img src="../resources/images/1.jpg" /></a>
 		        <a href="http://500px.com/photo/39845938" target="_blank"><img src="../resources/images/2.jpg" /></a>
 		        <a href="http://500px.com/photo/43565628" target="_blank"><img src="../resources/images/3.jpg" /></a>
 	        </div>
@@ -39,9 +39,13 @@
         <script>
         	$(document).ready(function(){
 	        	var slider = $("#slider").mostSlider({
-	        		animation: 'slide',
+	        		animation: 'fade',
 		        	aniMethod: 'css',
 		        	pauseTime: 6000,
+		        	metrics: {
+			            width: 600,
+			            height: 400,
+		            }
 	        	});
         	});
         </script>
