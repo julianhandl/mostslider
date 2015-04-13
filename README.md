@@ -8,14 +8,28 @@ See demos and documentation at the link below at "Documentation"!
 
 [Github Pages](http://julianhandl.github.io/mostslider/)
 
-#To do
+#To do (v2)
 
-- Support css-transition, velocity.js, GSAP
-- More examples for Doku
-- More testing
-- Speed up JS
+- Solid height option
+- Thumbnails
+- hide nav/arrows
+- linkable slides
+- transparency fix
+- content animation
+- responsive images
+- drop responsive image support
+- social buttons
 
 #Releases
+
+##v2.0.0
+
+- switch to newer plugin architecture
+- use css for resizing
+- speedup JS
+- use CSS as default animation method
+- drop responsive image support (other plugins are way better)
+- new documentation
 
 ##v1.4.1
 

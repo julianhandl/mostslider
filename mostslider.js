@@ -60,7 +60,7 @@
             
             // CONTENT
             // if content has transparancies
-            transparancy: false,
+            transparency: false,
             // specify the content class or animated content
             contentClass: "content",
             // proceed content animation StepByStey
