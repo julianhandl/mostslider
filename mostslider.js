@@ -203,6 +203,13 @@
 							$(slider.obj).find("#bullets").append('<li data-index="' + (index+1) + '" />');
 						}
 					}
+					// hide content elements
+					if(root.slider.aniMethod == 'css'){
+						$(this).find(".ms-content").css("opacity",0);
+					}
+					else{
+						$(this).find(".ms-content").css("display","none");
+					}
 				});
 				
 				// activate first bullet
@@ -352,6 +359,7 @@
 							if(root.slider.aniMethod == 'css'){
 								$(this.slider.obj).find("#slides").css("left", ((index-1)*100*(-1)).toString() + '%').bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
 									root.slider.sliding = false;
+									root.showContent(index);
 								});
 							}
 							//jQuery
@@ -360,6 +368,7 @@
 									"left": ((index-1)*100*(-1)).toString() + '%',
 								},function(){
 									root.slider.sliding = false;
+									root.showContent(index);
 								});
 							}
 							break;
@@ -375,8 +384,10 @@
 										"opacity": "",
 									});
 									root.slider.sliding = false;
+									root.showContent(index);
 								});
 							}
+							//jQuery
 							else if(root.slider.aniMethod == 'jQuery'){
 								var current_slide = root.slider.current_slide;
 								$(this.slider.obj).find('#slides>*:nth-child(' + current_slide + ')').css({
@@ -397,14 +408,33 @@
 										"opacity": "",
 									}).removeClass("active");
 									root.slider.sliding = false;
+									root.showContent(index);
 								});
 							}
 							break;
 					}
 					
+					// why is it immediately set back to 1 ???
+					root.hideContent(root.slider.current_slide);
 					root.slider.current_slide = index;
 					$(this.slider.obj).find("#bullets li").removeClass("active").filter(':nth-child(' + index + ')').addClass("active");
 				}
+			},
+			showContent: function (index) {
+			
+				var root = this;
+				var items = $(root.slider.obj).find("#slides>*:nth-child(" + index + ") .ms-content");
+				
+				$(items).css("opacity",1);
+				
+			},
+			hideContent: function (index) {
+			
+				var root = this;
+				var items = $(root.slider.obj).find("#slides>*:nth-child(" + index + ") .ms-content");
+				
+				$(items).css("opacity",0);
+				
 			},
 			next: function () {
 				if(this.slider.current_slide < this.slider.slides){
