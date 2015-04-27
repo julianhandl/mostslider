@@ -97,6 +97,7 @@
 				'ratio': 0,
 				'slides': 0,
 				'current_slide': 1,
+				'prev_slide': 1,
 				'sliding': false,
 				'pushToNext': undefined,
 			}
@@ -385,6 +386,7 @@
 									});
 									root.slider.sliding = false;
 									root.showContent(index);
+									setTimeout(root.hideContent(root.slider.prev_slide), root.settings.aniSpeed);
 								});
 							}
 							//jQuery
@@ -415,7 +417,9 @@
 					}
 					
 					// why is it immediately set back to 1 ???
-					root.hideContent(root.slider.current_slide);
+					//setTimeout(root.hideContent(root.slider.current_slide), root.settings.aniSpeed);
+					//root.hideContent(root.slider.current_slide);
+					root.slider.prev_slide = root.slider.current_slide;
 					root.slider.current_slide = index;
 					$(this.slider.obj).find("#bullets li").removeClass("active").filter(':nth-child(' + index + ')').addClass("active");
 				}
